@@ -1,0 +1,242 @@
+\section {Pooling across multiple paths: traffic balancing}
+\label{sec:resourcepooling:balancing}
+
+Congestion management typically attempts to share end-to-end capacity for a given path.
+Between each source and destination however multiple routes may be available.
+This section reviews how different entities attempt to explore path diversity in order to perform resource pooling.
+
+%\subsection{Internet routing}
+% Intra - RIP, OSPF, MPLS
+% Inter - EGP, BGP
+\subsection{Traffic engineering}
+
+Providers routinely attempt to balance traffic across available network resources.
+On each provisioning cycle, operators try to adjust their infrastructure to cope with expected demand.
+Between cycles however demand my fluctuate considerably, either due to variations in traffic patterns or alterations in the customer base.
+Given the static nature of physical infrastructure, between provisioning cycles traffic can be \emph{shaped} to avoid overloading the current path, \emph{assigned} to alternate paths, or the path itself may be \emph{reconfigured}.
+The set of tools by which an operator can optimize routing and balance traffic to achieve a desired allocation of traffic across a network is commonly referred to as \ac{TE}.
+% TE taxonomy
+Traffic engineering methods may be applied to attain different \ac{QoS} objectives such as minimizing maximum link load, balancing load distribution or minimizing delay and typically vary in scope and timescale.
+
+The scope of a \ac{TE} method is either restricted to an \emph{intradomain} setting, where traffic is optimized within a single domain, or \emph{interdomain} traffic, in which a network influences the ingress and egress through which traffic crosses its borders.
+Traditionally there has been a stronger focus on intradomain \ac{TE} due to the greater control an operator has over its own resources.
+Additionally, the possibilities and limitations of a traffic engineering process are in large part determined by the underlying routing protocol.
+Traffic engineering was first adopted within \ac{MPLS} networks and then adapted to intradomain routing protocols such as \ac{OSPF} and \ac{IS-IS}.
+Interdomain traffic engineering methods encompassing the \ac{BGP} have proved more convoluted.
+
+The timescale over which \ac{TE} is expected to adapt to traffic demand also varies.
+In \emph{offline} \ac{TE}, a \ac{TM} is collected tracking demand between ingress and egress nodes over a fixed time period.
+This traffic matrix then serves as a forecast of future demand in the next iteration of a recurring routing optimization process.
+The periodicity of routing updates is typically in the order of weeks or months in order to ensure network stability.
+\emph{Online} \ac{TE} on the other hand does not require a prediction of future demand and operates entirely by adapting dynamically to traffic on a timescale of hours or minutes.
+Online methods have remained largely unexplored, in part due to the difficulty in making sure the dynamic system converges in the absence of a global view on traffic.
+
+% offline intra
+\textbf{Offline intradomain \ac{TE}} is the most commonly used variant of traffic engineering, and originally gained momentum with the deployment of \ac{MPLS} \cite{Rosen:2001p147}.
+In \ac{MPLS} networks, packets are forwarded according to labels rather than addresses. 
+At each ingress \ac{LSR}, a packet is encapsulated and assigned to a \ac{FEC}.
+The resulting label is then used to forward the packet along a \ac{LSP} towards the egress \ac{LSR}.
+While there are practical limits in how many paths can be maintained and non-negligible overheads in setting up an \ac{LSP}, the ability to forward packets explicitly along arbitrary routes was instrumental in initial attempts at effective traffic engineering \cite{Xiao:2000p502,YufeiWang:1999p222}.
+
+In contrast, IP-based \ac{TE} solutions are more scalable but less flexible.
+Traffic engineering was first applied to \acp{IGP} such as \ac{OSPF} by Fortz \emph{et al.} \cite{Fortz:2000p350,Fortz:2002p179}, who proposed setting link weights according to traffic demand in order to attain \ac{TE} objectives.
+Theoretical work would further prove that any arbitrary set of loop-free paths could be transformed into shortest paths through a given set of weights \cite{Wang:2001p506}.
+Unlike \ac{MPLS} methods however, traffic cannot be unevenly split natively in IP traffic engineering.
+To do so requires the use of \ac{ECMP}, which balances traffic equally across next hop routers for paths with the same cost.
+Originally \ac{ECMP} was specified to split traffic on a per-packet basis, which may lead to out-of-order delivery and affect transport protocols as a result \cite{Thaler:2000p154}.
+This approach has since been obsoleted and replaced by splitting traffic on a per-flow basis \cite{Feldmann:2000p503}.
+
+\textbf{Online intradomain \ac{TE}} proposals built on their offline counterpart and fulfilled a desire for controlling traffic at a finer granularity. 
+MATE \cite{Elwalid:2002p153} proposes splitting traffic dynamically over precomputed \acp{LSP}. 
+By using probes, MATE continuously monitors packet delay and loss over each path between ingress and egress \ac{LSR} in order to adjust the ratio of traffic to be split at the ingress.
+TeXCP \cite{Kandula:2005p90} improves on MATE by emitting probes which retrieve explicit feedback from intermediate TeXCP-aware routers in a manner similar to \ac{XCP}.
+Furthermore, TeXCP distributes load using FLARE \cite{Sinha:2004p124} which balances traffic by \emph{flowlet} rather than flow.
+Given the bursty nature of \ac{TCP}, traffic splitting may be performed on a smaller scale than a flow so long as there is no risk of causing packet reordering.
+A flowlet is therefore defined as a sequence of packets with an inter-arrival time shorter than the difference in delay between potential paths.
+Balancing by flowlet allows FLARE to achieve not only greater efficiency than flow variants of \ac{ECMP}, but also maintain less state as flowlets expire more rapidly than flows.
+
+A second approach to online intradomain \ac{TE} is to dynamically optimize routes in accordance to demand.
+In \ac{MPLS} networks this may however cause \ac{LSP} interference \cite{Kodialam:2000p508}, in which excessive paths crossing the same critical link are set up resulting in congestion.
+For IP-based \ac{TE} changing link weights dynamically is possible, but strongly discouraged due to potential instability during the convergence process \cite{Labovitz:1998p505}.
+
+
+% inter 
+\textbf{Interdomain \ac{TE}} has received less attention than intradomain traffic engineering and can be further categorized according to whether it is applicable to \emph{outbound} traffic or \emph{inbound} traffic. The methods available in either case are strongly dependent on the path selection process \cite{Quoitin:2003p218} in \ac{BGP}, the prevalent interdomain routing protocol.
+
+Outbound \ac{TE} is most often performed by manipulating the local preference (Local\_pref) attribute of a route for each egress router, with the highest preference assigned to the preferred egress.
+For sufficiently tied outbound routes, in which amongst other metrics the Local\_pref and \ac{AS} path length are equal, the lowest \ac{IGP} weight can be used as a tie breaker. This form of \emph{hot potato} routing, which offloads traffic to another domain as quickly as possible, can be manipulated to achieve \ac{TE} objectives through the appropriate setting of \ac{IGP} weights.
+Explicit interdomain routing is possible using \ac{MPLS} if domains agree on cross border path establishment, but remains rare.
+Proposals for outbound, interdomain \ac{TE} typically attempt to minimize transit costs and delay \cite{Uhlig:2004p144,Goldenberg:2004p93} or provision \ac{QoS} requirements \cite{Howarth:2005p511}.
+
+Research on inbound \ac{TE} has been sparse as the route inbound traffic takes can only be influenced rather than controlled.
+Mechanisms for affecting another operators choice in outbound path include selectively advertising routes from specific ingress links, prepending the announced \ac{AS} path with multiple instances of the same \ac{AS} to discourage its use \cite{Chang:2005p513}, or manipulating the \ac{MED} or community attribute to signal preferences to other domains \cite{Quoitin:2004p512}.
+
+
+As an afterthought in the Internet architecture, traditional traffic engineering suffers from being both hidden from and oblivious to higher layers.
+With no indication as to how \ac{TE} operates, hosts and other networks will continually attempt to balance traffic according to their own needs potentially subverting existing routing optimizations.
+With no understanding of how or why hosts balance traffic, \ac{TE} may be futile in outpacing dynamic traffic patterns \cite{He:2006p504}.
+As a result of this architectural opaqueness, \ac{TE} can neither adapt too quickly or quickly enough.
+This double bind has left traditional \ac{TE} confined to operating over extended timescales largely out of fear of causing disruption \cite{Labovitz:1998p505}.
+That traffic engineering is widely used in spite of being poorly understood only reinforces that it arises from a valid concern, but whether routing optimizations are the most appropriate way of addressing such concerns remains open.
+
+%XXX: load balancing Prabhavat:2012p444
+%XXX: multi topology Psenak:2007p519
+%XXX: diffserv Blake:1998p370
+%XXX: dynamic te Basu:2003p293
+
+\subsection{Resilient routing}
+
+A further concern of the routing architecture is in providing resilience.
+A routing protocol should by design reliably recover from failures, but the degree to which such reliability can be assured depends on the time taken to \emph{detect} a failure and then reach a consensus and \emph{converge} towards a new operating state which bypasses the failure.
+
+Failure detection in link state protocols depends on the frequency of probes confirming network adjacency, typically referred to as Hello packets.
+In \ac{OSPF} this periodicity is configured through the HelloInterval variable, and a failure detection event is triggered once the RouterDeadInterval has been exceeded with no reply from a neighbour to Hello probes.
+Traditionally the HelloInterval has been set to tens of seconds in default configurations.
+Reducing this interval results in faster failure detection \cite{Goyal:2003p515} but doing so excessively may also lead to spurious failure events resulting in routing instability.
+In \ac{IS-IS} the HelloInterval is set at a second granularity and a failure is detected upon the loss of three Hello packets, placing the lowerbound on failure detection at 3 seconds.
+
+The deployment of real time applications with harder constraints on reliability coupled with better failure detection methods embedded in linecards have provided both the motivation and the means for achieving sub-second recovery within \ac{IGP} networks \cite{Francois:2005p514}.
+Even with reduced recovery times, the transient effects of routing changes can still disrupt the forwarding path.
+Under such cases the \ac{FRR} framework, applicable with minor changes to both \ac{IP} \cite{Shand:2010p516} and \ac{MPLS} \cite{Pan:2005p517} based routing protocols, provides repair paths which may be used between the detection of a failure and the convergence of the routing process.
+
+A commonly employed technique for constructing repair paths is to pre-compute \ac{LFA} next hops \cite{Torvi:2008p518}.
+Upon detecting a failure of the default next hop $n_d$, node $s$ may forward a packet towards destination $d$ through backup neighbour $n_b$ in a loop-free manner by verifying the following condition:
+
+\begin{equation}
+cost \left (n_b, d \right) < cost \left(n_b, s \right) + cost \left(s, d \right) 
+\label{eqn:linkprotection}
+\end{equation}
+that is, the cost of routing the packet from the alternate next hop to the destination is less than the packet being looped back to the source en route to the destination.
+While this ensures link protection, failures often occur at nodes. To protect against node failure, a next hop must additionally satisfy:
+
+\begin{equation}
+cost \left (n_d, d \right) < cost \left(n_b, n_d \right) + cost \left(n_d, d \right) 
+\label{eqn:nodeprotection}
+\end{equation}
+that is, the cost of routing the packet from the alternate next hop to the destination is less than routing the packet from alternate next hop to the destination via the default next hop.
+A final condition must be met to avoid routing loops in the presence of multiple failures, ensuring that packets progress towards the destination at all times:
+
+\begin{equation}
+cost \left (n_b, d \right) < cost \left(s, d \right)
+\label{eqn:downstream}
+\end{equation}
+
+\ac{LFA} incurs low computational and memory overhead and requires no changes to the forwarding plane, making it a practical choice for bypassing most failures.
+Further proposals \cite{Atlas:2006p520,Bryant:2007p522,Shand:2011p521} would provide coverage for increasingly complex failure scenarios at higher implementation cost.
+
+A longstanding concern with resilient routing is the potential for cascading failures, in which detouring leads to overload at a separate point in the network and potentially triggers more failures.
+As with traffic engineering the use of multi-topology routing can assist in distributing load through the availability of different routing planes.
+This concept is explored in \ac{MRC} in which successive routing configurations are pre-computed by isolating nodes and links, thereby covering all single failure scenarios.
+Upon detecting a failure, the plane on which a packet is forwarded is switched to the configuration where the failing resource is isolated.
+Overall load distribution is improved through the offline calculation of alternate routes, but guaranteeing recovery from all single failures may not be scalable for some topologies.
+
+Most research in network resilience has been limited to within a single domain.
+In part, this is due to the perception that upon leaving a domain an operator is no longer responsible for verifying traffic is delivered.
+Unfortunately the end-to-end nature traffic often leads to misattribution of blame upon \acp{ISP} in particular, who share the burden of third-party failings through customer support.
+More importantly however, the lack of deployed multipath alternatives for \ac{BGP} reduces the flexibility with which detouring can be performed.
+A practical solution in this space seems inevitable however: in addition to many proposals enabling multipath interdomain routing \cite{Yang:2003p136,Xu:2006p249,Motiwala:2008p107,Godfrey:2009p36}, the emergence of alternate, deployable routing architectures to address scalability concerns such as \ac{ILNP} \cite{Atkinson:2009p525} and \ac{LISP} \cite{Lewis:2012p523} are undergoing standardization.  
+Whether \ac{BGP} is extended or locator and identifier functions become decoupled from existing addressing, the ability to manage interdomain traffic resiliently is likely to improve.
+
+\subsection{Higher layer approaches}
+
+Concurrently to traffic balancing within the network, higher layers have developed different techniques to manage traffic according to their own needs.
+
+The introduction of concerted attempts to balance traffic from the host would arise with the advent of the Web.
+\ac{HTTP} flows were as short as they were numerous and represented a new class of traffic which had not been foreseen when designing \ac{TCP} \cite{Day:2010p187}.
+Scaling infrastructure to cope with thousands of connections robustly would require spreading load efficiently across servers.
+To attain seamless load balancing content providers resorted to an existing layer of indirection: the \ac{DNS} \cite{Mockapetris:1987p527}.
+In replying to a query, a \ac{DNS} server can balance traffic by providing a different answer from a pool of available servers \cite{Brisco:1995p448}.
+Merely iterating through the list in round robin fashion is sufficient to balance traffic coarsely, but efficiency may often be affected since an answer can be cached and re-used by a potentially large set of clients.
+To provide increased fault-tolerance \ac{DNS} load balancers quickly evolved to return results in accordance to server load and availability.
+More recently, the widespread geographic distribution of hosting infrastructure has reasserted the importance of \ac{DNS} in managing traffic and optimizing delay in particular \cite{Ager:2011p528}.
+
+By explicitly selecting a content source, \ac{DNS} load balancing permits hosts to implicitly change the network path.
+The ability for hosts to explicitly change the network path had originally been provisioned in the \ac{IP} specification through source routing, but was quickly obsoleted.
+Source routing was initially intended to both facilitate network debugging and overcome inherent shortcomings in contemporary routing protocols \cite{Sunshine:1977p152}.
+Neither would justify maintaining source routing in the long term as the Internet expanded and became increasingly commercial.
+In its \emph{strict} form, source routing required prior knowledge of every router along a path which was unfeasible given the sheer scale of the topology.
+In its \emph{loose} form, a host could define intermediate routers a packet would traverse. 
+While more practical than strict source routing, loose source routing as defined in \ac{IP} was inherently insecure as the ability to spoof \ac{IP} addresses and establish routing loops could lead to amplification attacks from malicious hosts.
+Critically, operators disliked both forms of source routing, neither willing to share operational details of their network nor keen in supporting a mechanism which allowed users to subvert local routing policies.
+The combination of all of the above would eventually lead to the deprecation of the \ac{LSRR} option.
+
+%source routing
+Despite having been disabled from the current architecture, source routing has been frequently revisited in research.
+Traditionally source routing has been viewed as a host-centric solution, allowing senders to select better performing paths or circumvent traffic discrimination \cite{Mahajan:2008p407,Dischinger:2010p157}.
+More recent research however has attempted to recast source routing as a potential asset to an \ac{ISP}.
+
+Perhaps the greatest benefit source routing offers operators is in reducing the impact of resilience on the routing architecture.
+In \ac{SOSR} \cite{Gummadi:2004p131}, Gummadi et al. investigate the usefulness of one-hop source routing in order to improve reliability.
+Through the use of active measurements over a week to measure path availability, Gummadi estimated an average path availability for servers at 99.6\%, and for broadband hosts at 94.4\%.
+Gummadi then implemented a simple ``random-4'' hop selection which attempts to detour around failures by selecting four random intermediate nodes from a pool of available choices, managing to recover flows in 56\% of possible cases.
+This study provided two important results.
+Firstly, in localizing failures the study asserted that for popular servers failures were more likely to occur in the core of the network than close to the last hop.
+This is likely to correspond to the majority of Internet traffic as content becomes increasingly consolidated \cite{Labovitz:2010p175}.
+Secondly, by investigating different policies for the selection of the detour hop Gummadi further corroborates an intuitive result: that most benefit can be derived from a small number of alternatives.
+
+Detour routing had previously been investigated in the context of overlay networks such as \ac{RON} \cite{Andersen:2002p530}, but implementing such a function at the network layer would require a more opaque form of source routing in order to appeal to network operators.
+In \cite{Yang:2006p405}, Yang and Wetherall propose an incrementally deployable routing deflection scheme through the use of tagging.
+The main contribution resides in the separation of how a deflection is constructed from how a deflection is invoked.
+A router constructs a \emph{deflection set} composed of viable routes to a given destination, in a similar manner to \ac{LFA}, and then forwards packets along deflections in accordance to a tag in the network header.
+Hosts are then responsible for setting this tag and may modify it at any time.
+The resulting scheme can offer much of the potential hinted in \ac{SOSR}, but without the requirement for networks to reveal operational information.
+Hosts merely manipulate their tag until they achieve a desired outcome.
+
+The fundamental tussle between end user intentions and \ac{ISP} control would further be investigated in \cite{Laskowski:2008p244}.
+In analyzing ``user-directed'' routing Laskowski et al. claim that such a tussle can be resolved given a flexible enough payment system.
+While no suggestion is made on what form such a payment system would take, a market-based approach is shown to allow \acp{ISP} to induce any feasible traffic pattern.
+% overlay, flow fairness, etc
+In the absence of a suitable solution for source routing, applications have improved path performance and availability implicitly through the use of overlay architectures.
+Popular peer-to-peer applications such as Skype or Bittorrent already derive many of the benefits of pooling traffic across multiple paths, but do so in a manner which may be detrimental to competing traffic.
+\ac{P2P} applications ensure path diversity by establishing flows to multiple peers.
+With \ac{TCP} sharing bandwidth equally amongst flows, an application making use of multiple flows may gain a significant advantage over traffic flowing through a shared bottleneck.
+In addition to consuming a disproportionate amount of bandwidth, in consistently saturating links such applications may induce significant delays.
+Solutions for attenuating the impact of such traffic would take many forms \cite{Peterson:2009p178}, from traffic shaping to weighted congestion control, but in framing a multipath overlay atop of a single path transport layer a pertinent question would emerge: what form should a multipath-aware transport layer take in an Internet dominated by \ac{TCP}?
+
+% mptcp 
+Multihoming would provide the initial motivation for developing a socket abstraction for the concurrent use of multiple paths \cite{Huitema:1995p543,Hsieh:2002p538,Iyengar:2006p542}.
+These early attempts would mostly focus on the protocol changes required to achieve a robust and efficient multipath transport service.
+The implication of such flows on fairness and the impact of multipath transport on overall system stability would first be explored in theoretical work by Kelly and Voice \cite{Kelly:2005p140} who would use a fluid-flow model to demonstrate traffic balancing can be performed at end-hosts in a stable manner on the same timescale as rate control.
+In evaluating an end-to-end algorithm for joint routing and rate control, the authors conclude that while the network layer is able to provide \emph{structural} information on routing, dynamic routing is more naturally performed by the transport layer.
+Work by Key, Massouli\'{e} and Towsley \cite{Key:2007p130} would corroborate these results. 
+The authors show that the use of parallel connections, a form of \emph{uncoordinated control}, can lead to inefficient equilibria in the presence of \ac{RTT} bias which afflicts most \ac{TCP} variants. Importantly, the use of a \emph{coordinated} congestion controller, which actively shifts load between a set of paths in accordance to their state, can result in a welfare maximising state even if with \ac{RTT} bias.
+These theoretical advances would take shape in \ac{MPTCP} \cite{Wischik:2011p540}, currently undergoing standardization.
+
+While \ac{MPTCP} promises many of the benefits predicted by Kelly and Voice, some practical issues remain unresolved.
+Firstly, access to path diversity is ensured through the use of multihoming. 
+This has the unfortunate side-effect of further overloading the \ac{IP} address as a \emph{path identifier} in addition to locator and host identifier.
+Furthermore, end-host multihoming, while prevalent in mobile devices, is not commonly used.
+Secondly, it is unclear what proportion of flows can resort to \ac{MPTCP}.
+The combination of overhead in setting up multiple sub-flows and time required to adapt the sending rate to the channel capacity limits the applicability of \ac{MPTCP} to long transfers.
+The majority of flows are too short to use \ac{MPTCP}, but could derive much benefit from using multiple paths, particularly in terms of resilience.
+
+\subsection{Rethinking traffic management}
+The proliferation of highly replicated content across \ac{P2P} systems, \acp{CDN} and \ac{OCH} services has motivated research in alternative forms of traffic management.
+By allowing users to download the same content from multiple sources, networks can explore opportunities for load balancing by influencing from \emph{where} or \emph{when} content is retrieved.
+
+% ALTO, P4P, ONO
+Exploiting the prevalence of content replication in \ac{P2P} applications for the purpose of reducing ISP costs was first proposed in \ac{P4P} \cite{Xie:2008p531}.
+\ac{P4P} proposed deploying portals operated by network providers through which peers could query a collection of interfaces detailing network policy, costs or capabilities from a provider's perspective. 
+Given this information, a host could then select a set of remote peers which would minimize the impact of traffic in the network.
+For \acp{ISP}, \ac{P4P} provides a means of signalling costs.
+\ac{P2P} applications on the other hand benefit from not being discriminated against by being sociable, and not having to probe the network to derive network topology or status.
+\ac{P4P} would evolve into \ac{ALTO} and undergo standardization within the \ac{IETF}.
+Similar approaches for reducing cross \ac{ISP} traffic would be explored in ONO \cite{Choffnes:2008p532}, which collects information implicitly available in \acp{CDN} to establish proximity of peers.
+
+Research in harnessing content replication has followed the shift in content distribution from \ac{P2P} software to \acp{CDN} hosting.
+In \cite{Ager:2011p528} the authors investigate CDN and hosting infrastructures to establish the proportion of content unique to a single provider and show that some hosting infrastructures have as much as 93\% of their content available elsewhere.
+%CATE
+This property is exploited in \cite{Frank:2012p533}, in which the authors propose \ac{CaTE}, which allows \acp{ISP} to take advantage of content available in multiple locations to reduce link utilisation. 
+In \ac{CaTE}, an \ac{ISP} influences where a content request is redirected to by intercepting \ac{DNS} requests and selecting a server according to local objectives.
+Interestingly, \ac{CaTE} may still present advantages to content providers, since \acp{ISP} have more accurate information on the location of their customers and tend to choose shorter routes.
+
+In parallel, multiple proposals have explored the potential for shifting delay-tolerant traffic to off-peak hours.
+In \cite{Laoutaris:2008p534} the authors describe a mechanism that offers users higher bandwidth off-peak if they deliberately delay some of their traffic.
+Further contributions \cite{JoeWong:2011p535,Chhabra:2010p536} represent similar attempts to shift traffic in time by providing incentives to users.
+
+Traditional traffic engineering manipulates routing weights given an expected demand.
+Such an approach was acceptable when Internet traffic revolved around communicating endpoints - the source and destination of a flow were assumed to be immutable.
+The Internet has long shifted towards distributing \emph{content}, and with it become characterized by fluid traffic patterns which adapt and react to changes in routing.
+Under such conditions, it is more flexible for operators to subvert \ac{TE} and adjust demand given a set of routes in order to attain an intended \ac{QoS} objective.
+\ac{CaTE} and \ac{ALTO} attempt to reflect network interests in the selection of an end-to-end path and focus on a small set of sources of high volumes of traffic: \ac{P2P} applications and \ac{CDN} downloads.
+While this may currently be effective in load balancing traffic within a network, such application specific approaches may become ineffective in the long run as traffic patterns continue to change with the introduction of novel, disruptive applications.

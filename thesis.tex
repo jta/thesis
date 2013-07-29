@@ -1,0 +1,88 @@
+\documentclass[oneside,phd,10pt]{ucl_thesis}
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{pdfborder={0 0 0}}
+\usepackage[printonlyused]{acronym}
+\usepackage{textcase}
+
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+
+\title{Traffic Re-engineering}
+\author{Jo\~{a}o Taveira Ara\'{u}jo}
+\date{} %The date on the copies of the thesis submitted for examination in November and December should be that of the following year.
+\begin{document}
+\maketitle
+
+\newpage
+
+\hphantom{}\vfill
+\thispagestyle{empty}
+
+%\noindent {\large{Examination Committee:}}\\
+
+%\noindent {\large{External Examiner, Affiliation}}\\
+
+%\noindent {\large{Internal Examiner, Affiliation}}\\
+
+%\noindent {\large{Dr Miguel Rio, University College London}}\\
+
+%\noindent {\small{I, Suksant Sae Lor, confirm that the work presented in this thesis is my own. Where information has been derived from other sources, I confirm that this has been indicated in the thesis.}}\\
+
+\noindent {\small{\copyright\ 2008--2012, Jo\~{a}o Taveira Ara\'{u}jo}}\\
+
+\noindent {\small{Department of Electronic \& Electrical Engineering\\University College London}}
+
+%\pagenumbering{roman}
+\input{chapters/abstract}
+%\input{chapters/acknowledgements}
+
+\newpage
+
+\hphantom{}\vfill
+\thispagestyle{empty}
+
+
+\tableofcontents
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+%%\pagenumbering{arabic}
+%%\setcounter{page}{1}
+
+\input{chapters/introduction}
+\input{chapters/resourcepooling}
+\input{chapters/preflex}
+\input{chapters/cate}
+\input{chapters/malawi}
+\input{chapters/conclusion}
+
+
+%\clearpage
+%\clearpage
+%\phantomsection
+\addcontentsline{toc}{chapter}{Appendices}
+\appendix
+\chapter{Acronyms and Abbreviations}
+\label{appendixa}
+\input{chapters/appendixa}
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+%\bibliographystyle{annotate}
+\bibliographystyle{plain}
+\bibliography{thesis}
+\end{document}

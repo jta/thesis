@@ -1,0 +1,102 @@
+\chapter{Introduction}
+\label{sec:introduction}
+
+% resource pooling
+Strategies for pooling traffic are locally applied by all stakeholders on the Internet in a bid to improve efficiency, resilience and flexibility.
+Operators resort to traffic engineering to load balance traffic across available network resources. 
+Hosts adapt their sending rates to probe available network capacity.
+\ac{P2P} applications often retrieve data chunks from multiple locations in order to efficiently distribute content amongst peers.
+Content providers can manipulate name resolution to balance demand across servers and hosting infrastructure.
+While these mechanisms share similar goals, they do so from different perspectives and as such may be at odds with each other.
+
+% towards multipath transport
+This antagonism is played out within the Internet architecture as network, transport and application layers all attempt to influence how and where traffic flows.
+Against a backdrop of significant shifts in traffic patterns \cite{Cho:2006p104,Cho:2008p488} and greater path diversity \cite{Teixeira:2003p132,Bennett:1999p120,Oliveira:2006p342}, the issue of how best to balance traffic across multiple paths has become more relevant over time.
+Bolstered by strong theoretical groundwork \cite{Kelly:2005p140,Key:2007p130}, support for enshrining traffic balancing at the transport layer has gained momentum, leading to recent efforts in the standardization of multipath transport \cite{Ford:2011p490}.
+The deployment of such protocols however is likely to be hindered by an operational reality; namely that most path diversity is within the network, and that most providers are unwilling to relinquish control of how traffic traverses their networks.
+
+% the network is not enough
+The network alone on the other hand appears incapable of managing traffic efficiently.
+For one, operators are constrained to balancing traffic transparently due to end host expectations.
+On the other hand, routers do not have enough knowledge of end-to-end traffic to make informed decisions on which path each packet should take.
+In many cases operators have enhanced their ability to manage traffic by extracting additional information per-packet, by looking beyond the network header, and per-flow, by reconstructing data streams over time, both of which engrain protocol specific behaviour into the network.
+This increase of network awareness however comes at the expense of innovation at the edges, as developers become increasingly constrained in what type of protocols can be deployed.
+
+% join both?
+Whether applied to providers wishing to reduce costs or hosts attempting to maximize throughput, the proliferation of unilateral solutions for resource pooling are manifestations of an underlying need. 
+Rather than confine resource pooling to a single point of the Internet architecture and risk alienating a subset of stakeholders, this thesis explores how the existing Internet architecture can be extended to accomodate both host and network requirements for resource pooling.
+
+\section{Problem statement}
+\label{sec:introduction:objectives}
+
+This thesis attempts to answer the following question:
+
+\begin{quote}
+\textit{
+Given the nature of Internet traffic, how can the current architecture be realigned to facilitate resource pooling at both network and transport layers?
+}
+\end{quote}
+
+In proposing to \emph{realign the current architecture}, the emphasis of any proposed solution must be applicable to the existing Internet architecture.
+The motivation for avoiding clean-slate solutions was largely due to the nature of the problem at hand.
+The different forms of resource pooling which we are attempting to reconcile are a product of both the Internet architecture and its stakeholders.
+While it is clear that a clean-slate approach to resource pooling would have resulted in a different architecture, it may also have given rise to different stakeholders or different traffic patterns.
+By adhering to existing protocols, any potential solution can be directly applied and, by extension, validated. 
+
+While resource pooling is prevalent across all layers, the focus of this work is mostly restricted to reconciling \emph{network} and \emph{transport} layers. 
+Most forms of resource pooling above the network layer will attempt to benefit the end user, while below the transport layer most resources within a single administrative domain will conspire towards the same ends.
+It is at the intersection of network and transport layers where the juxtaposition of interests is greatest within the Internet architecture.
+
+By \emph{facilitating resource pooling} however, we do not expect to dictate an outcome to the tussle between network and hosts, but rather provide an architecture within which such a tussle can evolve.
+In some cases balancing traffic solely from the hosts may be desirable, while in other cases providers may wish to retain full control.
+Both represent extremes of a range of outcomes which should be possible within a unifying architecture.
+
+Finally, designing an efficient resource pooling architecture must take into account the \emph{nature of Internet traffic}.
+While scaling Internet traffic poses considerable technical challenges, understanding its emergent properties plays a pivotal role in simplifying traffic management.
+Any solution presented must not only address future traffic needs but also exploit its properties.
+
+\section{Contributions}
+
+The first contribution of this thesis is to propose a \ac{PREFLEX} architecture for \emph{mutualistic} resource pooling.
+\ac{PREFLEX} bridges different forms of resource pooling by exposing path diversity to hosts and making the network aware of traffic characteristics which are crucial to effective traffic engineering.
+
+Secondly, a traffic balancer is derived which enables providers to balance congestion rather than load.
+Congestion balancing mimics the way in which multipath transport protocols spread their traffic across links and represents one possible instantiation of \ac{PREFLEX}.
+Balancing congestion from within the network not only benefits flows which are not multipath enabled, but also improves resilience by keeping minimal network state on tracking performance across different paths.
+
+The third contribution is a publicly available dataset, \ac{MALAWI} providing information on the end-to-end characteristics of approximately 5.7 billion TCP data flows collected over five years, and how they relate to their topological and geographical endpoints. The collection and aggregation of flow-level metrics by location over time can provide valuable insight in two key areas. Transport-level information can assist in understanding how TCP behaves: both by tracking how endpoints perceive network performance, and how the protocol is evolving. This can potentially not only assist in protocol design improvements, such as evaluating the adequacy of TCP parameters \cite{Dukkipati:2010p160}, but also in evaluating how widely deployed particular elements of TCP are. Additionally, observed traffic is mapped to the underlying routing system, which can be of value in topics as varied as fragmentation of address space \cite{Cittadini:2010p431}, FIB aggregation \cite{Ballani:2008p199} or informing caching strategies \cite{Psaras:2011p487}.
+
+The final contribution is in using the resulting dataset to attempt to shed light on three fundamental questions: where is traffic flowing, with what characteristics and how has this changed over time? This information is critical in understanding how the characteristics of traffic can be harnessed to manage traffic through simpler and more flexible means.
+
+
+
+\section{Publications}
+\label{sec:introduction:contributions}
+
+\begin{itemize}
+    \item J. Taveira Ara\'{u}jo, R. Landa, K. Fukuda and G. Pavlou. \\
+            \emph{A longitudinal analysis of Internet traffic} \\
+            Under submission.
+    \item J. Taveira Ara\'{u}jo, K. Fukuda. \\
+            \emph{MALAWI: Aggregated longitudinal analysis of the MAWI dataset} \\
+            {ACM CoNEXT Student Workshop 2011}
+    \item J. Taveira Ara\'{u}jo, I. Grandi, R. G. Clegg, M. Rio and G. Pavlou \\
+            \emph{Balancing by PREFLEX: Congestion Aware Traffic Engineering} \\
+            {IFIP Networking 2011}
+    \item J. Taveira Ara\'{u}jo, M. Rio and G. Pavlou \\
+        \emph{A mutualistic resource pooling architecture} \\
+        {ACM ReArch 2010}
+    \item T. Moncaster, L. Krug, M. Menth, J. Ara\'{u}jo, S. Blake, R. Woundy \\
+        \emph{The Need for Congestion Exposure in the Internet} \\
+        {draft-moncaster-conex-problem-00, IETF Internet draft 2010}
+\end{itemize}
+
+\section{Thesis Outline}
+\label{sec:introduction:outline}
+
+This thesis is organized as follows.
+Chapter \ref{sec:resourcepooling} provides an overview of how resource pooling is performed across different layers of the Internet architecture.
+Chapter \ref{sec:preflex} introduces a mutualistic resource pooling architecture, while chapter \ref{sec:cate} explores how such an architecture can be exploited by providers wishing to balance congestion rather than traffic.
+Chapter \ref{sec:malawi} details a measurement study to characterize the evolution of Internet traffic.
+Finally, chapter \ref{sec:conclusions} presents the roadmap for future work and preliminary conclusions.
+
