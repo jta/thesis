@@ -1,4 +1,9 @@
+*converted-to.pdf
+.*.un~
+*.fls
+*.d
 *.make
+*.cookie
 *.aux
 *.glo
 *.idx

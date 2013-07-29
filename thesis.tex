@@ -16,6 +16,11 @@
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{theorem}{Theorem}[chapter]
 
+\includeonly{chapters/introduction,
+             chapters/resourcepooling/all,
+             chapters/appendixa
+}
+
 \title{Traffic Re-engineering}
 \author{Jo\~{a}o Taveira Ara\'{u}jo}
 \date{} %The date on the copies of the thesis submitted for examination in November and December should be that of the following year.
@@ -62,12 +67,12 @@
 %%\pagenumbering{arabic}
 %%\setcounter{page}{1}
 
-\input{chapters/introduction}
-\input{chapters/resourcepooling}
-\input{chapters/preflex}
-\input{chapters/cate}
-\input{chapters/malawi}
-\input{chapters/conclusion}
+\include{chapters/introduction}
+\include{chapters/resourcepooling/all}
+%\input{chapters/preflex}
+%\input{chapters/cate}
+%\input{chapters/malawi}
+%\input{chapters/conclusion}
 
 
 %\clearpage
@@ -77,7 +82,7 @@
 \appendix
 \chapter{Acronyms and Abbreviations}
 \label{appendixa}
-\input{chapters/appendixa}
+\include{chapters/appendixa}
 
 \clearpage
 \phantomsection
