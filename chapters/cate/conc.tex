@@ -1,0 +1,12 @@
+\section{Conclusions}
+
+%Further work might include my idea for more aggressive balancing in
+% the case of persistent flow.
+
+This chapter introduced congestion balancing using \ac{PREFLEX}.  
+\ac{PREFLEX} has been implemented and evaluated in ns-3 for dynamic traffic scenarios where it balances traffic using different strategies which are weighted according to the network conditions it detects.  
+In conditions where loss is deemed significant, \ac{PREFLEX} balances congestion between paths.  
+In the absence of sustained loss \ac{PREFLEX} assigns traffic based on current throughput.  
+By balancing between these strategies \ac{PREFLEX} can operate in a variety of dynamic traffic settings and has been shown to perform as well as the ideal static traffic assignment bandwidths are equal. 
+Where bandwidth asymmetry arises, \ac{PREFLEX} successfully balances loss with no significant degradation of performance as both the number of paths and inherent complexity of balancing increases. 
+

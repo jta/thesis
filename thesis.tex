@@ -1,10 +1,10 @@
 \documentclass[oneside,phd,10pt]{ucl_thesis}
+
 \usepackage{url}
 \usepackage{hyperref}
 \hypersetup{pdfborder={0 0 0}}
 \usepackage[printonlyused]{acronym}
 \usepackage{textcase}
-
 \usepackage{graphicx}
 \usepackage{epsfig}
 \usepackage{amssymb}
@@ -19,8 +19,11 @@
 \newcommand{\chapfolder}{chapters}
 \newcommand{\locfolder}{}
 
+\newcommand{\Esym}{\text{E}}
+\newcommand{\E}[1]{\Esym\left[#1\right]}
+
 \includeonly{\chapfolder/introduction,
-             %\chapfolder/resourcepooling/all,
+             \chapfolder/resourcepooling/all,
              \chapfolder/preflex/all
              \chapfolder/appendixa
 }
@@ -52,7 +55,7 @@
 
 %\pagenumbering{roman}
 \input{\chapfolder/abstract}
-%\input{chapters/acknowledgements}
+\input{\chapfolder/acknowledgements}
 
 \newpage
 
@@ -71,10 +74,10 @@
 %%\pagenumbering{arabic}
 %%\setcounter{page}{1}
 
-\include{chapters/introduction}
-\input{chapters/resourcepooling/all}
-\input{chapters/preflex/all}
-%\input{chapters/cate}
+\input{\chapfolder/introduction}
+\input{\chapfolder/resourcepooling/all}
+\input{\chapfolder/preflex/all}
+\input{\chapfolder/cate/all}
 %\input{chapters/malawi}
 %\input{chapters/conclusion}
 
@@ -86,7 +89,7 @@
 \appendix
 \chapter{Acronyms and Abbreviations}
 \label{appendixa}
-\include{chapters/appendixa}
+\input{chapters/appendixa}
 
 \clearpage
 \phantomsection
