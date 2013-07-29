@@ -1,0 +1,280 @@
+% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~%
+%
+% Here we answer the question: What did we find? It
+% is here that we document the findings and the evidence
+% for them. Given the importance of longitudinal analysis
+% for us, it is here that we document changes with time.
+%
+% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~%
+
+%\renewcommand{\thesubsectiondis}{Assumption \Alph{subsection}.}
+Having processed each daily trace individually, we proceed by aggregating results longitudinally in order to trace the evolution of constraints affecting TCP across both time and spatial/topological dimensions. We frame our analysis as a re-visiting of four commonly held assumptions regarding Internet throughput. Our aim in so doing is to provide much a needed factual verification of these assumptions, which itself can lead to a re-appraisal of Internet throughput modelling efforts. Although all models require simplifying assumptions in the name of analytic tractability, our aim is to inform on which are the best assumptions to make if one is setting out to use or develop an Internet traffic throughput model. 
+
+
+\subsection{ \hspace{15mm} Throughput is primarily shaped by TCP}
+
+% define the assumption
+Internet flow rates are commonly viewed as the output of congestion control embedded at the transport layer. While it is often convenient to model flow throughput according to the steady state behaviour of such algorithms, there are many potential caveats.
+For one, there is an implicit assumption that the network is the bottleneck. Under such conditions, TCP acts as a distributed optimisation algorithm in allocating capacity to flows. Section \ref{section:malawi:methodology} however presents several cases where such an assumption does not hold. The prevalence of application pacing, host limitations or receiver shaping can all condition the accuracy of models which assume only elastic traffic adjusting to network conditions alone.
+
+% explore the results
+\begin{table}%\footnotesize
+\centering
+     \input{data/malawi/fullheader.tex}
+     \input{data/malawi/full.tex}
+     \end{tabular}
+     \caption{
+     Percentage of traffic bytes affected by each constraint by year.\label{table:limits}}
+\end{table}
+
+Table \ref{table:limits} displays the extent to which each of these limitations affects inbound traffic in the MAWI data/malawiset over time. 
+The bulk of the volume in bytes is either conditioned by host limits or application pacing. 
+The use of receiver shaping on the other hand is both small in scale and temporally confined to 2009 and 2010.
+Over five years, the overall effect of the three selected constraints has dropped by close to 10\%.
+
+To understand where these dynamics stem from, table \ref{table:topapplim} further breaks down these findings by autonomous system, listing the effect of each limitation for the five most significant traffic sources per year.
+%It is clear that the underlying traffic observed is in constant flux over time due to changes in both the application landscape and the routing infrastructure.
+Over the observed five years, traffic remains similarly consolidated: approximately 90\% of all inbound traffic is sourced from the top 100 ASes.
+However, the weight of the most significant sources changes considerably.
+In 2007 and 2008, a considerable proportion of the traffic exchanged over the interdomain link was content hosted within Japan (NTT, Limelight). 
+From 2009 onwards, most of these local sources established peering connections, bypassing the observed link entirely.
+This accounts not only for the significant drop of traffic from NTT, but also its altered nature: after 2009 traffic from NTT travelled from further away and was less likely to be application paced.
+
+As the weight of traditional carriers such as Cogent and NTT has waned, ASes known to harbour one-click hosting services such as Choopa, Webazilla, WZ Communications, Carpathia and LeaseWeb have gained significance.
+Since many websites hosted in these ASes facilitate the distribution of copyrighted content, they have an incentive to continue using hosted infrastructure rather than deploying their own and risking prosecution. 
+Furthermore, these domains are more likely to host applications which resort to capping the maximum window size as a means of throttling traffic.
+The increased weight of ASes which resort to these methods, such as Red Hat and Carpathia, significantly contributes to the unexpected increase of host limitations for 2010 displayed in table \ref{table:limits}.
+
+\newcommand{\ASLISTSEP}[1]{\rule{0pt}{3ex}\multirow{5}{*}{\textbf{#1}}}
+\begin{table}\scriptsize
+\centering
+\input{data/malawi/appheader.tex}
+\hline
+\ASLISTSEP{2007}
+\input{data/malawi/app2007.tex}
+\ASLISTSEP{2008}
+\input{data/malawi/app2008.tex}
+\ASLISTSEP{2009}
+\input{data/malawi/app2009.tex}
+\ASLISTSEP{2010}
+\input{data/malawi/app2010.tex}
+\ASLISTSEP{2011}
+\input{data/malawi/app2011.tex}
+\end{tabular}
+\caption{AS-Level analysis of throughput limiting.\label{table:topapplim}}
+\end{table}
+
+% summarize the answer
+\textbf{Overall, we find that flow rates are not typically dictated by TCP congestion control alone.}
+While the impact of application pacing and host limitations on rate control is decreasing, as of early 2012 we find that 60\% of all inbound traffic was subjected to either. 
+The reduction of application pacing however may reflect the nature of the observed link, as many traditional streaming providers have migrated towards peering or CDNs, bypassing interdomain links entirely. As such we expect the effect of application pacing to be more pronounced when considering traffic beyond transit.
+By 2011, successive capacity upgrades have lead to a less congested network, but one where predicting how bandwidth is shared is fundamentally harder due to the influence of stakeholders such as content providers and operating system vendors.
+
+\begin{figure}
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/windowscale}
+        \caption{TCP windowscale deployment over time. \label{fig:windowscale}}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/hostwindow}
+        \caption{CDF of window sizes for host limited flows.\label{fig:hostwindow}}
+    \end{subfigure}%
+    \caption{Longitudinal evolution of TCP window parameters. \label{fig:tcpWindowParams}}
+\end{figure}
+
+
+\begin{figure}
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/med_active_throughput}
+        \caption{Mean congestion window over mean RTT. \label{fig:flowrateactive}}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/med_aggr_throughput}
+        \caption{Flow size over flow duration.\label{fig:flowrateaggr}}
+    \end{subfigure}%
+    \caption{Median throughput for inbound traffic by flow size. \label{fig:flowrate}}
+\end{figure}
+ 
+\begin{figure}
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/windowsize2007}
+        \caption{2007}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/windowsize2011}
+        \caption{2011}
+    \end{subfigure}%
+    \caption{CDF of the average window size by flow size by year. \label{fig:windowsize}}
+\end{figure}
+ 
+
+\subsection{ \hspace{15mm} Throughput is primarily sender driven}
+
+% define the assumption
+A more widely held and less frequently enunciated assumption is that flow throughput is primarily determined at the sender side. Intuitively, it is in a receiver's best interests to maximize the flow rate, while the sender bears the responsibility for sharing network capacity and reducing the overhead incurred due to losses. The Internet architecture however confers the receiver the ability to throttle rates through flow control. From answering the previous assumption, it is clear that throughput \textit{is} mostly determined by the actions of the sender: receiver shaping and host limitations together affect at most 24\% of all traffic. Despite this it is worth understanding the nature of these host limitations in particular, and towards which direction flow control is swinging.
+
+% explore the results
+A critical component in determining the upperbound for the congestion window size is the negotiation of the TCP \emph{windowscale} option during the initial handshake. 
+In its absence, a sender cannot have more than 64KB in flight.
+Furthermore, the \emph{default buffer size} on either end of the connection can also limit the size to which the congestion window can increase.
+Both settings are primarily subject to operating system configuration.
+Given that throughput conditions on the receiver side improve as OS upgrades are rolled out, and that the user base within Japan covered by MAWI has remained relatively stable over time, all things being equal we would expect the whole region to exhibit improvements as time progresses. Hence, if we find significant degradation in host limitations, we reason that it most probably does not stem from OS rollbacks or large sets of users with outdated OSes joining the Japanese networks. Instead, we hypothesise that it will be a product of macroscopic shifts in routing or application popularity which lead to a change in \emph{where} traffic originates from.
+
+We test this hypothesis by first verifying windowscale deployment over time.
+Figure \ref{fig:windowscale} shows the ratio of traffic and flows for which windowscale was successfully negotiated.
+Results are calculated solely over traffic where the initial handshake was observed.
+For added context, data/malawi for the outbound direction is also displayed.
+The first result that stands out is the steady increase over time of windowscale usage, rising from 25\% of all inbound bytes in early 2007 to almost 80\% by late 2011.
+Furthermore, the effects of content consolidation manifest themselves in the disproportionate coverage of bytes when compared to flows.
+With the reduced stake of large ISPs in inbound traffic, transit traffic has become dominated by a small set of centrally managed stakeholders such as Google, lowering the effective barrier for deployment of protocol extensions.
+Conversely, the temporary drop in windowscale adoption for inbound flows in 2009 is due to the increase of traffic from Asian sources, in particular HiNet.
+
+Given the prevalence of windowscaling, the primary source of host limitation should therefore be due to the configuration of socket buffer sizes.
+Figure \ref{fig:hostwindow} shows the distribution of the average window size for flows which are flagged as being host limited.
+While the 64KB limit intrinsic to TCP is a common upperbound on window size, other defaults are apparent and have shifted over time.
+The use of 16KB and 32KB buffer sizes (default buffer sizes for Windows XP and Vista respectively) was progressively phased out over the five year period.
+In addition to traditional power-of-two increments of the window size, different limits are apparent amongst hosting providers: 50KB, 100KB (The Planet), 160KB (Limelight) and 200KB (SoftLayer), reflecting the overall weight such ASes can have in shaping transit traffic.
+The influx of Asian traffic in 2009 led to an increase in observed host windows beneath 16KB.
+
+\begin{table}\scriptsize
+\centering
+  \begin{subtable}[b]{.5\linewidth}
+     \input{data/malawi/hostheader.tex}
+     \input{data/malawi/hostlimin.tex}
+     \end{tabular}
+     \caption{Inbound traffic.}
+  \end{subtable}\\
+  \begin{subtable}[b]{.5\linewidth}
+     \input{data/malawi/hostheader.tex}
+     \input{data/malawi/hostlimout.tex}
+     \end{tabular}
+     \caption{Outbound traffic.}
+  \end{subtable}
+  \caption{\label{table:hostlimited}Percentage of host limited traffic over time by total number of flows and bytes. The proportion for which the receiver side was the bottleneck is also shown.}
+\end{table}
+
+While figure \ref{fig:hostwindow} demonstrates that host limitations for inbound traffic have been lifted over time, it still does not adequately answer on what side of the connection they are imposed.
+Table \ref{table:hostlimited} breaks down the proportion of host limited traffic over time for both inbound and outbound direction.
+In addition to presenting the ratio of flows and bytes affected by host limitations, the relative proportion of traffic identified as being conditioned by the receiver side is also displayed.
+In either direction a very small fraction of flows are affected.
+Small flows are both numerous and unlikely to last long enough for window limits to be reached or reliably detected.
+The affected flows therefore tend to be large, and as such can translate into a significant amount of traffic.
+The proportion of flows and bytes for which the receiver side imposed the maximum window size dropped by 20\% and 15\% respectively over five years for inbound traffic, reflecting the successive OS upgrades performed for hosts within WIDE. 
+Interestingly, these trends do not surface for outbound traffic: hosts outside Japan were consistently more likely to dictate the maximum window size.
+In part, this reflects the different nature of the traffic under observation: outbound traffic for this data/malawiset is more geographically and topologically diverse, with content in many cases being retrieved from Japan by residential hosts from within Asia.
+
+% summarize the answer
+\textbf{The endpoint which ends up dictating the maximum achievable throughput through flow control is typically a function of the OS adoption cycle.}
+With the windowscale option covering 80\% of all inbound traffic, the main source of host level constraints are now conservative buffer sizes.
+For this data/malawiset, hosts internal to WIDE have seemingly been upgraded at a faster rate, or less conservatively, than their remote counterpoints.
+As such, throughput has become increasingly sender driven over time for inbound traffic.
+
+
+\subsection{ \hspace{15mm} Throughput is correlated with flow size}
+
+% define the assumption
+Given host limitations are most likely to affect large flows, it's worth considering whether other constraints are applied disproportionately across flow sizes. 
+A commonly held assumption is that throughput is correlated with flow size, which has been verified empirically in previous studies \cite{oursTCP, Zhang:2002p85}.
+Much of the data/malawi used in these studies however precedes the widespread adoption of high bandwidth connections and use of streaming media, both of which can impact the extent to which contention occurs in the network.
+
+% explore the results
+Figure \ref{fig:flowrate} shows the median throughput as a function of flow size, by year.
+In figure \ref{fig:flowrateactive}, flow throughput is calculated as the ratio between the mean TCP window size (in bytes) and the mean flight length (in seconds).
+Compared to the more commonly used ratio of flow size by flow duration, displayed in figure \ref{fig:flowrateaggr}, this method is less susceptible to application behaviour and as such provides a more accurate estimate of the achievable rate.
+In both cases, flows are binned by size on a logarithmic scale, with median throughput calculated across each bin.
+Due to routing changes and increased congestion, overall throughput in 2009 is lower than other years given there is a greater proportion of traffic from Asian neighbours, particularly over smaller flow sizes.
+For reference the throughput for traffic from the US alone is plotted for 2009,in which case a more natural yearly progression becomes apparent.
+For both plots, a clear disparity is visible across flows sizes: for flows in the 10MB to 100MB range, although throughput has consistently increased with time, it has done so at a lower pace than for flows under 10MB. 
+
+Our results confirm the notion that the highest throughputs are attained by the largest flows, but they also show that improvements in throughput do not apply equally to all flow sizes. Whereas throughput has consistently improved for low-volume traffic, it has not done so for high-volume traffic. Hence, these findings suggest an increased differentiation between high-value, low-volume traffic whose throughput has markedly increased, and low-value, high-volume traffic whose throughput has stagnated.
+Although the reported flow sizes are not a reliable predictor of the overall traffic volume amassed over flow's lifetime given the short time span of each daily trace, this seemingly subverts the notion that flow rates are strongly correlated with flow size in a simple, proportional fashion.  This is expounded by further analysing the average window sizes across flow sizes, displayed in Figure \ref{fig:windowsize}.
+In 2007, there is a visible correlation, with larger flows attaining higher window sizes.
+Furthermore, the distributions cluster prominently around 64KB due to a low rate of windowscale negotiation.
+By 2011, this clustering is less pronounced, with window sizes increasing across the board, but with larger flows often outpaced by shorter counterparts.
+
+% compare aggr vs active
+
+
+\begin{table}\scriptsize
+\centering
+  \begin{subtable}[b]{.5\linewidth}
+     \input{data/malawi/fullheader.tex}
+     \input{data/malawi/fullsmall.tex}
+     \end{tabular}
+  \caption{Flows under 10MB.}
+  \end{subtable}\\
+  \begin{subtable}[b]{.5\linewidth}
+     \input{data/malawi/fullheader.tex}
+     \input{data/malawi/fulllarge.tex}
+     \end{tabular}
+  \caption{Flows over 10MB.}
+  \end{subtable}
+\caption{
+Percentage of traffic in bytes affected by each constraint by year, along with aggregate retransmission ratio.}
+\label{table:full}
+\end{table}
+
+Clearly, the extent to which rates are constrained is closely tied to flow size. 
+In table \ref{table:full} we break down the results from table \ref{table:limits} by flow size. 
+Most limitations will invariably affect larger flows, as applications which shift more traffic, such as streaming media or bulk file transfers, are more likely to either attain or self-impose constraints on flow throughput. 
+Many small flows on the other hand never exit slow start, in which case none of the studied constraints will be reached or readily identified. 
+This dichotomy is reflected on loss rates, which will be higher for flows be regulated by TCP congestion control.
+Additionally, the discrepancy in loss rates is further exacerbated by geographic properties: traffic exchanged over poor infrastructure tends to be smaller, with flows from China exhibiting particularly high end-to-end loss rates. 
+
+\textbf{These results suggest that network upgrades are unlikely to improve performance for significant proportions of traffic.} 
+This is most visible in figure \ref{fig:flowrate}, where improvements in capacity for coping with higher bursts of activity (figure \ref{fig:flowrateactive}) has outpaced the actual delivery rate set by applications (figure \ref{fig:flowrateaggr}).
+Given the popularity of emulating a constant bit rate service over TCP, that no such abstraction is provided at the socket level API is unfortunate.
+
+
+\subsection{ \hspace{15mm} Throttling primarily affects heavy hitters}
+
+% define the assumption
+We have so far observed that flow throughput is subjugated from TCP by external stakeholders.
+A third important element in the ensuing tussle is in understanding the role operators can play in imposing their own preferences upon traffic.
+As such, we now provide a brief overview of the extent, and under what circumstances, customer networks resorted to receiver shaping over the duration of the data/malawiset.
+From preliminary inspection of table \ref{table:full}, it is apparent that receiver shaping was limited in both scope, affecting at most 4\% of bytes, and time, being primarily concentrated within 2009 and 2010.
+A breakdown of receiver shaping by traffic source is provided in table \ref{table:toprecvlim}, listing for each year the five most affected stakeholders within the top twenty ASes, and their respective contribution to the overall traffic and retransmissions observed yearly.
+
+% explore the results
+\begin{table}
+\scriptsize
+\centering
+\input{data/malawi/recvheader.tex}
+\hline
+\ASLISTSEP{2007}
+\input{data/malawi/recv2007.tex}
+\ASLISTSEP{2008}
+\input{data/malawi/recv2008.tex}
+\ASLISTSEP{2009}
+\input{data/malawi/recv2009.tex}
+\ASLISTSEP{2010}
+\input{data/malawi/recv2010.tex}
+\ASLISTSEP{2011}
+\input{data/malawi/recv2011.tex}
+\end{tabular}
+\caption{AS-Level analysis of throughput limiting. \label{table:toprecvlim}}
+\end{table}
+
+Prior to 2009, receiver shaping mostly targeted flows which attained the highest throughput, and may have in part been performed by hosts. 
+In addition to affecting Microsoft, which distributes Windows updates using the same flow control mechanisms exploited by middleboxes, some CDN traffic was also reined in.
+By 2009, and likely as a reaction to increased contention within their networks, the network-level footprint of receiver side throttling shifts from shaping by rate, to shaping by volume.
+Specific targets start to emerge within OVH, Cogent and Level 3 and TeliaNet, all of which hosted significant file-sharing websites at the time which would continue to be affected throughout 2010.
+By 2011, receiver shaping mostly subsided, affecting primarily Lemuria (HotFile) and Mediafire.
+In the presence of increased contention, some customer networks felt obliged to curb traffic which in many cases was already limited by the source.
+The selected targets of shaping however were neither the biggest contributors in terms of volume, nor the most aggressive senders as reflected by the relative proportion of retransmissions, most likely being singled out instead based on the perceived legality of the content downloaded.
+When consulting the overall popularity of these targets in table \ref{table:topapplim}, it is apparent that some of the most throttled ASes such as Carpathia and Lemuria had been far more popular in previous years, suggesting that users may migrate to other content providers when confronted with lower rates.
+While successive bandwidth upgrades alleviated the need for throttling, it is unclear whether the middleboxes responsible were discontinued, or limits were merely raised to the extent where the sender side would once again become the bottleneck.
+
+% summarize the answer
+\textbf{In some cases, multiple stakeholders apply different rate control mechanisms simultaneously, leading to quality degradation and unusual rate behaviours.}
+Conventionally, it is assumed that it is in the best interest of content providers to use network resources as fully as possible, whereas ISPs have it in their best interest to police resource usage and control flow rates. 
+However, as shown here, current business practices can create an alignment of incentives where both content providers and ISPs choose to limit the throughput of a particular class of traffic. 
+This may lead to this traffic suffering from artificially slow rates that are much worse than those experienced by other classes. 
+In these cases, the combination of multiple rate control techniques being applied by different stakeholders may lead to a traffic profile whose rate behaves in a manner quite removed from the commonly assumed TCP dynamics.
+

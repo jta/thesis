@@ -1,0 +1,59 @@
+% % % %% % %% % % % % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %
+%
+%	I. Motivation. 
+%
+%	- Why is it interesting to understand changes in the way
+%	that the application layer pumps traffic into the network?
+%
+%	- What kind of information could this give?
+%
+%	- What is the value of a longitudinal analysis?
+%
+% % % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %%
+
+TCP plays a central role in mediating between application needs and network capacity.
+In the absence of congestion, TCP is responsible for increasing sending rates in a bid to make efficient use of available bandwidth.
+Conversely, should congestion arise, TCP is expected to reduce its rate.
+This form of congestion control embedded in TCP is largely credited with performing resource allocation across the Internet and averting congestion collapse.
+But to what extent does this behaviour describe TCP throughput in practice?
+
+% app limited
+For some types of traffic, throughput is not strictly dictated by the outcome of congestion control.
+For one, inelastic traffic such as streaming media typically has bounds on the amount of capacity required.
+Beyond a certain throughput rate, bandwidth probing by TCP is often unnecessary and occasionally harmful.
+Since TCP drives itself relentlessly towards congestion, real-time applications may suffer from increased latency and jitter.
+Furthermore, content providers may wish to avoid exceeding the streaming rate for content which may not be consumed in its entirety due to user behaviour, for example channel hopping for video streaming services \cite{iptvWorkload}, or client limitations, such as buffering restrictions on mobile devices \cite{Rao:2011p547}.
+% one click?
+Such forms of \emph{application pacing} are often also applied to elastic traffic.
+In some cases, high throughput is perceived and subsequently marketed as a value added service.
+One-click hosting services such Rapidshare and Megaupload \cite{oneclick1, SanjuasCuxart:2012p588} actively monetise access to large amounts of content both through online advertising and subscription models to bandwidth tiers.
+Conversely, file sharing applications such as Bittorrent and other peer-to-peer clients allow users to rate limit transfers in order to reduce impact on competing traffic, or to provide incentives for participation \cite{bittorrentIMC}.
+
+Even beyond such application behaviour, flows may still be constrained by factors not pertaining directly to TCP congestion control.
+The transport layer is subject to strict bounds within which it can operate, potentially impeded by socket buffer sizes set by OS vendors or tuned by network administrators. There is an upper bound on the window size a receiver can advertise back to the sender; in the absence of windowscale negotiation \cite{braden1989rfc}, no TCP connection can exceed a 64KB window. In addition, resource sharing is often subject to local policy.
+In the absence of adequate methods for readjusting how TCP distributes bandwidth, network operators and system administrators often trade efficiency for predictability, shaping traffic to conform to local notions of fairness or in anticipation for expected demand \cite{ispTrafficShaping}.
+
+Given these different potential sources of rate control, \emph{what can we say about their relative impact on Internet traffic at large}?
+This paper investigates this question from the point of view of the un-anonymised MAWI dataset, that comprises a single transit link over a period of five years (from late 2006 to early 2012). By considering in addition routing information external to MAWI, we generate a derived dataset which aggregates flow level metrics across geographic and topological locations. Hence, this paper sheds some light on the asymmetry in global network performance over time and provides a valuable counterpoint to existing US-centric vantage points.
+
+Our main contribution is a re-evaluation of common assumptions regarding Internet flow rates. We achieve this by systematically identifying artificial constraints to TCP traffic throughput across three categories: \emph{application pacing}, \emph{host limiting} and \emph{receiver shaping}. 
+Having reconstructed individual flows, we aggregate these results using an external routing information dataset and relate how each aritificial constraint arises in different contexts and affects different stakeholders over time.  This allows us to show not only that flow rates are not typically dictated by TCP congestion control alone, but also that TCP throughput is mostly determined by the actions of the sender. In particular, we show that host limitations have largely been lifted for small flows, with the windowscale option increasing threefold to cover over 80\% of all inbound traffic by the end of 2011. 
+Similarly, continuing operating system updates have progressively lifted many of the limitations inherent to socket buffer sizes. These changes have allowed smaller flows to increase throughput at a far higher rate than larger flows, which are more often than not affected by other mechanisms of traffic shaping.
+This means that, although there is a correlation between flow volume in bytes and throughput, the relationship between the two is nonlinear and has changed with time.
+Finally, we document the use of receiver shaping on inbound traffic within customer networks as a response to periods of congestion, and show that this technique has been applied mostly on the basis of content charactersitcs, rather than to high-volume traffic sources. 
+
+
+% 
+% Comment: removed this as not sure we want to drive attention to this  given all the stuff that was removed.
+%
+%A second contribution is in characterizing the impact that structural changes at a topological level have had on traffic. Over the timespan of our data, the composition of observed traffic is in constant flux arising from routing changes, application behaviour and commercial policy. The resulting analysis offers an unique insight into the high level changes affecting transit traffic over an extended period of time.
+
+
+% % % %% % %% % % % % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %
+%
+%	IV. Boilerplate shit for paper structure signposting. 
+%
+% % % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %% % %%
+The paper is structured as follows. We present previous relevant contributions in Section \ref{section:malawi:related}, and our dataset in Section \ref{section:malawi:dataset}. We continue by describing our methodology in Section \ref{section:malawi:methodology}, and some of the implications of our findings in Section \ref{section:malawi:analysis}. Finally, we present our conclusions in Section \ref{section:malawi:conclusion}.
+
+%Building on these prior studies, we propose an algorithm that improves the scalable recovery of RTT from one-directional traffic traces. This mechanism improves the current state of the art by a) operating on aggregated \emph{$\mu$-flights}, rather than packet streams; b) processing $\mu$-flight information to reinforce periodic behavior present in the original packet stream; c) performing Fourier analysis to select a set of candidate RTTs, rather than a single one; and d) testing each RTT candidate using a novel, lightweight flight reconstruction algorithm that provides an estimate of how well a candidate RTT fits a given $\mu$-flight stream and labels inter-packet gaps as either transport-related or application-related (i.e. \emph{gaps} in the $\mu$-flight stream). This can then be used to identify flight boundaries and accurately aggregate $\mu$-flights into flights.
