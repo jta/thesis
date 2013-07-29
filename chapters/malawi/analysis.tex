@@ -6,12 +6,14 @@
 % for us, it is here that we document changes with time.
 %
 % %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~%
+\section{Revisiting assumptions}
+\label{section:malawi:analysis}
 
 %\renewcommand{\thesubsectiondis}{Assumption \Alph{subsection}.}
 Having processed each daily trace individually, we proceed by aggregating results longitudinally in order to trace the evolution of constraints affecting TCP across both time and spatial/topological dimensions. We frame our analysis as a re-visiting of four commonly held assumptions regarding Internet throughput. Our aim in so doing is to provide much a needed factual verification of these assumptions, which itself can lead to a re-appraisal of Internet throughput modelling efforts. Although all models require simplifying assumptions in the name of analytic tractability, our aim is to inform on which are the best assumptions to make if one is setting out to use or develop an Internet traffic throughput model. 
 
 
-\subsection{ \hspace{15mm} Throughput is primarily shaped by TCP}
+\subsection{Throughput is primarily shaped by TCP}
 
 % define the assumption
 Internet flow rates are commonly viewed as the output of congestion control embedded at the transport layer. While it is often convenient to model flow throughput according to the steady state behaviour of such algorithms, there are many potential caveats.
@@ -114,7 +116,7 @@ By 2011, successive capacity upgrades have lead to a less congested network, but
 \end{figure}
  
 
-\subsection{ \hspace{15mm} Throughput is primarily sender driven}
+\subsection{Throughput is primarily sender driven}
 
 % define the assumption
 A more widely held and less frequently enunciated assumption is that flow throughput is primarily determined at the sender side. Intuitively, it is in a receiver's best interests to maximize the flow rate, while the sender bears the responsibility for sharing network capacity and reducing the overhead incurred due to losses. The Internet architecture however confers the receiver the ability to throttle rates through flow control. From answering the previous assumption, it is clear that throughput \textit{is} mostly determined by the actions of the sender: receiver shaping and host limitations together affect at most 24\% of all traffic. Despite this it is worth understanding the nature of these host limitations in particular, and towards which direction flow control is swinging.
@@ -176,7 +178,7 @@ For this data/malawiset, hosts internal to WIDE have seemingly been upgraded at 
 As such, throughput has become increasingly sender driven over time for inbound traffic.
 
 
-\subsection{ \hspace{15mm} Throughput is correlated with flow size}
+\subsection{Throughput is correlated with flow size}
 
 % define the assumption
 Given host limitations are most likely to affect large flows, it's worth considering whether other constraints are applied disproportionately across flow sizes. 
@@ -232,7 +234,7 @@ This is most visible in figure \ref{fig:flowrate}, where improvements in capacit
 Given the popularity of emulating a constant bit rate service over TCP, that no such abstraction is provided at the socket level API is unfortunate.
 
 
-\subsection{ \hspace{15mm} Throttling primarily affects heavy hitters}
+\subsection{Throttling primarily affects heavy hitters}
 
 % define the assumption
 We have so far observed that flow throughput is subjugated from TCP by external stakeholders.
