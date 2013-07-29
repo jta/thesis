@@ -1,0 +1,142 @@
+\section{Resolving the tussle}
+
+%Superficially, the ability to offer multiple paths to end-users seems first and foremost to be routing challenge. 
+The ability to evolve beyond single path forwarding has often been misdiagnosed primarily as a routing challenge. 
+The subject is frequently revisited with varying approaches \cite{Sunshine:1977p152,Yang:2003p136,Yang:2006p405,Godfrey:2009p36}. 
+Despite this, multipath routing has remained illusive for end-hosts. 
+The common trait all these proposals share is a failure to identify the tussle over resource control as the primary obstacle in moving towards the use of multiple concurrent paths.
+
+The Internet architecture places resource control at the edges, in what can be viewed as an instance of the end-to-end principle \cite{Saltzer:1984p305}. 
+This represented a fundamental paradigm shift, ultimately conferring the scalability which fueled the growth of the Internet.  
+While unilateral control of a network resource by hosts was already polemic in an academic research network, with the rise of the commercial Internet this notion has slowly been set aside by stakeholders intent on exerting control over their own networks.
+
+%cut rate, reduce volume, shape traffic etc .
+Network operators have now become accustomed to inspect, shape and throttle traffic in an attempt to override resource sharing as implicitly performed by \ac{TCP}. 
+A common cause for such behaviour could derive from the perceived freeriding made possible by \ac{TCP}, whereby a minority of users can gain an disproportionate amount of bandwidth, with detrimental effects for the majority of users. 
+In a broader sense, networks attempt to reflect their own objectives and concerns. 
+Because this was not contemplated when designing the existing resource sharing model, subsequent violations of the end-to-end principle say more about the limitations of the current architecture than the ill intent of the perpetrators. 
+
+%TE, % p2p, overlays - hosts take over.
+Nowhere is this more apparent than in traffic engineering. 
+Network operators rely heavily on \ac{TE} to balance utilisation over long timescales in an attempt to reduce costs by making efficient use of available paths. 
+Since information at the network layer is limited, \ac{TE} optimizes for the wrong metric -- utilization -- in detriment of the congestion it may be causing. 
+Additionally, this optimization is typically executed offline, and re-computed over long timescales to minimize the impact to higher layers and ensure stability. 
+The limiting assumption is that traffic patterns are exogenous. 
+In reality, hosts will often find means of adapting to network conditions, such as establishing overlay networks. 
+This resulting shift in behaviour may in turn conflict with the concurrent traffic engineering process, which will have to readjust to a substantially different traffic matrix in a next iteration. 
+This antagonistic cycle leaves traffic engineering as a whole stuck in a rut, unable to adapt too often, out of fear of disrupting transport protocols, and unable to adapt often enough in order to react to changes in traffic. 
+As a result, there is still considerable space for improvement in existing traffic engineering:
+
+\begin{itemize}
+\item{
+    \textbf{The problem of optimizing routes given an expected demand has been solved.}
+    Solutions for offline traffic engineering \cite{Fortz:2000p350,YufeiWang:1999p222,Wang:2001p506} are often touted to be optimal despite relying on approximate inputs, but for the most part the resulting routing optimizations are \emph{good enough}. 
+    What remains to be solved is how traffic engineering can deal with deviations from the predicted traffic demand.
+    For any form of online traffic engineering, the act of balancing traffic on-the-fly over a multipath routing architecture is perceived as more practical than attempting to design a routing substrate which adapts to traffic demand.
+    Given a stable set of routes, how should traffic be balanced?
+}
+
+\item{
+    \textbf{At a small enough timescale, traffic engineering can replace resilient routing entirely.}
+    For any sufficiently reactive \ac{TE} process, a path failure will lead to a shift of traffic onto alternate paths. 
+    Even online approaches such as MATE and TeXCP have hesitated to be computed at a sub-minute granularity however, and in many cases hosts are more capable of shifting traffic robustly given access to underlying path diversity.
+    How can traffic engineering be designed to offer better resilience than routing protocols, and in what cases can it delegate such functionality to hosts?
+}
+
+\item{
+    \textbf{The distinction between intradomain and interdomain \ac{TE} is a hinderance.}
+    The duality emerges due to traditional traffic engineering being tightly coupled with the underlying routing protocol.
+    All traffic engineering within a single domain however must target the same objectives or risk instability.
+    A further source of instability of \ac{TE} methods is in taking local decisions without taking into account the end-to-end ramifications.
+    How should traffic engineering methods be unified, and how can timely end-to-end information on traffic be collected in a scalable fashion within the network?
+}
+
+\item{
+    \textbf{The network has appropriated flow semantics from the transport layer.}
+    Balancing traffic per-packet has been replaced by a per-flow granularity, further engraining transport behaviour in the network.
+    In part this reflects the changing nature of the \ac{IP} model, which now expects in-order delivery from the network \cite{Thaler:2010p223}.
+    FLARE \cite{Sinha:2004p124} illustrates that maintaining in-order delivery need not span the entirety of a flow, but maintains the notion of the flowlet internal to the network.
+    What are the potential benefits of explicitly decoupling the notion of a transport flow from a network flowlet?
+}
+\end{itemize}
+
+
+%CC
+In stark contrast with traffic engineering, the interest in the use of congestion control to balance traffic across paths has gained significant traction, particularly in the wake of seminal contributions \cite{Key:2007p130,Kelly:2005p140} which provide the theoretical basis for much of the standardization effort behind \ac{MPTCP} \cite{Wischik:2008p137}. 
+\ac{MPTCP} provides the means for stable traffic balancing from the transport layer.
+This alone however is unlikely to overcome significant architectural shortcomings:
+
+\begin{itemize}
+\item{
+    \textbf{Path diversity is in the network}. 
+    Given networks are already concerned with \ac{TCP}'s ability to share bandwidth in its single path incarnation, it remains unlikely \acp{ISP} will consider making path diversity visible to end-hosts. 
+    This opaqueness currently restricts deployment of \ac{MPTCP} to multihomed hosts. 
+    Experiments with one-hop source routing \cite{Gummadi:2004p131} indicate that a small set of network paths can provide the majority of the benefit in terms of resilience. 
+    While multihoming may become popular amongst hosts, it is already a requirement amongst providers. 
+    Diversity is in the network, how can it be pushed outwards?
+}
+
+\item{
+    \textbf{Traffic is best balanced from the edge, but may conflict with network objectives.}
+    Work by Kelly and Voice \cite{Kelly:2005p140} indicates load balancing can be more effectively performed at the transport layer in order to maximize social welfare.
+    However this fails to take into account the requirements of network operators, who are saddled with costs which bear little resemblance to the congestion pricing schemes advocated by Kelly.
+    While \ac{TE} methods are crude, they address valid concerns and accomodating these mechanisms within the Internet architecture is essential in order to minimize conflict with end-to-end resource pooling. 
+    Re-\ac{ECN} \cite{Briscoe:2008p494} demonstrated the value of congestion as a metric within the network, but its operation is too tightly coupled to an ailing protocol. 
+    Additionally, retrofitting accountability into the Internet seems marred in technical pitfalls.
+    If the constraints on providing accurate accountability are relaxed, can some form of congestion exposure provide useful feedback on host preferences to the network?
+}
+
+\item{
+    \textbf{Most flows may not benefit from \ac{MPTCP}.}
+    For short flows, the overhead incurred in multiple subflow establishment is excessive.
+    Furthermore, for long flows with bursty behaviour, such as rate-limited video streaming \cite{Rao:2011p547}, \ac{MPTCP} may not have sufficient time to pool bandwidth across multiple paths efficiently.
+    The transport layer requires probing the network for every connection and with no prior information or limited time to collect information on network state the full benefits of multiple paths for resilience in particular are unlikely to be harnessed.
+    In such cases, how can the network complement, rather than necessarily override, transport balancing?
+}
+
+
+\end{itemize}
+
+%end-to-end is not the point
+Neither congestion control or traffic engineering alone seem fully capable of bridging the divide between networks and end-hosts. 
+The discussion around the relative merits of both is often manichaean and erroneously simplified as a conflict between advocates and opposers of the end-to-end principle. 
+This entirely misses the point. 
+The concern should not revolve around whether an approach is right or wrong, but whether it is applicable within a given context or not. 
+The recognition of the commercial network as a fundamental stakeholder is intrinsic to the evolvability of the current architecture. 
+In the absence of such recognition, the gulf between the perception of how the Internet should behave and how it functions in practice will only widen. 
+Traffic engineering and congestion control represent an explicit duality.
+Underlying both should lay a unifying architecture allowing both to evolve independently while not foregoing cooperation.
+
+% conflict between perceived cost for ISP and transport?
+%\cite{Arkko:2009p122}
+Recent research in resource sharing has suggested that much of the misalignment between network and transport derives from the lack of accountability for congestion.
+While previous work had modelled and analyzed the broken incentive structure subjacent to forwarding traffic from an economic perspective, work on re-feedback and congestion exposure \cite{Briscoe:2005p346} pioneered a practical means of alleviating the tussle surrounding resource sharing.  
+In particular, congestion exposure advocates the use of congestion volume, rather than throughput or traffic volume, as the by-product by which the impact of traffic should be assessed.  
+We build on this approach and present a concept for a joint, mutualistic architecture for congestion control and traffic engineering. 
+
+
+%XXX: dynamic route optimization considered harmful Caesar:2010p343
+%XXX: guidelines for TE \cite{Feamster:2003p221}
+
+%@article{Teixeira:2003p132,
+%title = {In search of path diversity in ISP networks},
+%\cite{Arkko:2009p122}
+%dagstuhl
+
+
+%Resource sharing has evolved haphazardly to being performed by end-hosts and network alike. 
+%This apparent duplication of effort and source of potential conflict suggests a rare lack of foresight within the Internet architecture. 
+%More confounding however is that unlike other architectural mishaps, such as the conflation of locater and identifier within addressing, the absence of progress regarding a solution is rooted in a lack of consensus in identifying the problem.
+
+
+%\begin{itemize}
+%    \item Traffic engineering methods are crude, but address valid concerns. Accomodating these mechanisms within the Internet architecture is essential in order to minimize conflict with end-to-end resource pooling. \textbf{How can finer control over traffic be shifted into the network without breaking end-to-end expectations and without requiring flow state?}
+%    \item \textbf{How can we make network path selection provide resilience?}
+%    \item Experiments with one-hop source routing \cite{} indicate that a small set of network paths can provide the majority of the benefit in terms of resilience. While multihoming may become popular amongst hosts, it is already a requirement amongst providers. \textbf{Diversity is in the network, how can we push it outwards?}
+%\end{itemize}
+%\begin{itemize}
+%    \item FLARE \cite{}
+%    \item Re-feedback
+%    \item Re-ECN \cite{} demonstrated the value of congestion as a metric within the network, but its operation is too tightly coupled to an ailing protocol. Additionally, retrofitting accountability seems marred in technical pitfalls.
+%        \textbf{If we relax the constraints on providing accurate accountability, can some form of congestion exposure provide useful information to the network?}
+%\end{itemize}

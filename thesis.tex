@@ -16,9 +16,13 @@
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{theorem}{Theorem}[chapter]
 
-\includeonly{chapters/introduction,
-             chapters/resourcepooling/all,
-             chapters/appendixa
+\newcommand{\chapfolder}{chapters}
+\newcommand{\locfolder}{}
+
+\includeonly{\chapfolder/introduction,
+             %\chapfolder/resourcepooling/all,
+             \chapfolder/preflex/all
+             \chapfolder/appendixa
 }
 
 \title{Traffic Re-engineering}
@@ -47,7 +51,7 @@
 \noindent {\small{Department of Electronic \& Electrical Engineering\\University College London}}
 
 %\pagenumbering{roman}
-\input{chapters/abstract}
+\input{\chapfolder/abstract}
 %\input{chapters/acknowledgements}
 
 \newpage
@@ -68,8 +72,8 @@
 %%\setcounter{page}{1}
 
 \include{chapters/introduction}
-\include{chapters/resourcepooling/all}
-%\input{chapters/preflex}
+\input{chapters/resourcepooling/all}
+\input{chapters/preflex/all}
 %\input{chapters/cate}
 %\input{chapters/malawi}
 %\input{chapters/conclusion}
