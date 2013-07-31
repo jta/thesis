@@ -8,10 +8,12 @@ From the edges, traffic is implicitly pooled over multiple paths by retrieving c
 Within the network, traffic is explicitly balanced across multiple links through the use of traffic engineering.
 This work explores how the current architecture can be realigned to facilitate resource pooling at both network and transport layers, where tension between stakeholders is strongest.
 
-The central theme of this transfer is that \emph{traffic engineering} can be performed more flexibly, efficiently and robustly through the use of \emph{re-feedback}.
+The central theme of this thesis is that \emph{traffic engineering} can be performed more flexibly, efficiently and robustly through the use of \emph{re-feedback}.
 A mutualistic architecture is proposed enabling resource pooling to be performed both by hosts, who can exploit greater path diversity, and the network, which gains insight into properties of traffic currently only visible at the transport layer.
-A congestion balancer is derived which provides resilient and efficient pooling even in the absence of multipath transport.
+Building on this framework, a congestion balancer is derived which provides efficient pooling even in the absence of multipath transport.
 Opportunities for harnessing the changing properties of Internet traffic are then identified through a longitudinal measurement study of interdomain traffic spanning five years.
+The resulting findings challenge traditional assumptions on the preponderance of congestion control on resource sharing, with over half of all traffic being constrained by limits other than network capacity.
+Drawing on these insights, the proposed traffic management framework is further refined to fulfill the promise of resilient end-to-end transport in the absence of receiver side cooperation.
 
 All of the above represent concerted attempts to rethink and reassert traffic engineering in an Internet where competing solutions for resource pooling proliferate.
 By delegating responsibilities currently overloading the routing architecture towards hosts and re-engineering traffic management around the core strengths of the network, the proposed architectural changes allows the tussle surrounding resource pooling to be drawn out without compromising the scalability and evolvability of the Internet.

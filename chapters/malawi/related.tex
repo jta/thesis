@@ -1,0 +1,32 @@
+\section{Related Work}
+\label{section:malawi:related}
+
+% we are basically reappraisal of zhang
+This paper builds on a wealth of prior work on understanding Internet traffic and serves as a reappraisal of significant past contributions. 
+Much of the underlying motivation is shared with the landmark study by Zhang et al. \cite{Zhang:2002p85} on the characteristics of Internet flow rates.
+Using traces spanning both access, peering and regional links, Zhang et al. analyse traffic according to potential rate limiting factors.
+Amongst other findings, host window limitations were found to affect over 30\% of traffic for the access networks studied.
+Importantly, the authors found a strong correlation between flow throughput and flow size, postulating that this could derive from user behaviour, with large transfers more likely to be performed over higher bandwidth connections.
+
+% other work since
+Flow characteristics and TCP behaviour at large has since been subject to frequent reassessment.
+Of particular relevance to the current work are passive studies which delve into the inner mechanisms of TCP.
+In \cite{Jaiswal:2004p242}, Jaiswal et al. infer the sender's congestion window by identifying the congestion control variant from the behaviour observed during loss recovery.
+The use of separate state machines for each variant however proves unscalable given the many flavours of TCP congestion control which have since been deployed.
+In \cite{Lan:2006p566}, Lan et al. analyse flows according to size, duration, rate and burstiness and characterise the observed correlations for heavy-hitters specifically,
+uncovering evidence of increased application influence on flow rates and burstiness and consequently suggest treating flow size and duration as independent dimensions.
+
+%One central aspect to the analysis of TCP behaviour is the estimation of RTT from packet capture data. In addition to SYN-based methods, Shakkotai et al. \cite{Shakkottai:2004p408} evaluate further techniques to estimate the RTT of a unidirectional flow. The \textit{rate change} method establishes a relation between the RTT and the increase in sending rate, assuming linear window increases during congestion avoidance. Unfortunately, this assumption no longer holds, both due to the proliferation of less conservative congestion control algorithms such as CUBIC \cite{Ha:2008p471}, and due to application-driven flow control. An alternative is the use of frequency-domain techniques \cite{Veal:2005p412,Lance:2005p565,Qian:2009p429}, which are a natural fit given the self-clocking nature of TCP. However, a common difficulty with the application of spectral analysis is extracting the fundamental frequency which corresponds to the RTT in the presence of noise. In applying the Fourier transform to inter-packet arrival 
+%times, for example, Qian et al. \cite{Qian:2009p429} note that less than half of all flows have distinguishable \textit{flow clocks}; likewise, we found FFT-based RTT recovery unreliable even after pre-processing our data to enhance inherent periodicities.
+
+% application space.
+In addition to these general investigations, this paper is equally indebted to comprehensive work of a narrower scope.
+Significant portions of the observed traffic pertain to well known applications which have been previously studied.
+Rao et al. \cite{Rao:2011p547} survey strategies used for video streaming at both Youtube and Netflix and characterise the properties of interleaved \emph{block sending} patterns used to pace streams.
+These patterns are also the subject of \cite{Alcock:2011p575}, in which the burstiness of Youtube traffic in particular is found to result in considerable losses over residential connections.
+A large portion of the traffic observed in the MAWI dataset originates from HTTP file sharing services, commonly referred to as one-click hosting websites \cite{oneclick1}.
+In \cite{SanjuasCuxart:2012p588}, the authors study the characteristics of such traffic over a three month period, detailing the different throttling strategies used by different providers.
+
+% topological influence
+Finally, it is important to elucidate what changes in traffic properties are intrinsic to TCP and data transfer, and which ones arise from large-scale changes in the AS-level topology of the Internet. In the decade since publication of \cite{Zhang:2002p85}, the Internet has undergone significant changes, shifting from a broadly hierarchical form to a flatter, more interconnected structure \cite{Labovitz:2010p175,Ager:2012p567}.
+Given the longitudinal nature of this paper and its focus on interdomain traffic in particular, the insights provided by these studies on the macroscopic effects of content consolidation are discernible within our dataset, and as such are a source of validation for many of the observations herein.
