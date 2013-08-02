@@ -146,23 +146,23 @@ Furthermore, since the flight size is continuous in time, it makes little sense 
 Having obtained flight information from each flow, we next consider what is the predominant factor that affects its throughput. 
 Within the context of TCP, we classify flows as being artificially constrained by three distinct processes: \emph{application pacing}, \emph{host limited} and \emph{receiver shaping}.
 
-\begin{figure*}[!ht]
+\begin{figure}
 \centering
   \centering
-  \begin{subfigure}[b]{1.0\linewidth}
+  \begin{subfigure}{1.0\linewidth}
     \includegraphics[width=1.0\textwidth]{figures/malawi/youtube.pdf}
     \caption{Application paced. \label{fig:youtube}}
   \end{subfigure}\\
-  \begin{subfigure}[b]{1.0\linewidth}
+  \begin{subfigure}{1.0\linewidth}
     \includegraphics[width=1.0\textwidth]{figures/malawi/hostflow.pdf}
     \caption{Partially host limited. \label{fig:hostlimited}}
   \end{subfigure}\\
-  \begin{subfigure}[b]{1.0\linewidth}
+  \begin{subfigure}{1.0\linewidth}
     \includegraphics[width=1.0\textwidth]{figures/malawi/awnd.pdf}
     \caption{Receiver shaped. \label{fig:awnd}}
   \end{subfigure}
   \caption{Flight size over time for flows affected by different artificial constraints. \label{fig:kindsOfFlowEffect}}
-\end{figure*}
+\end{figure}
 
 
 \subsubsection{Application Paced Flows}

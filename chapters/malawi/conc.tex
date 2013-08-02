@@ -1,14 +1,15 @@
 \section{Conclusions}
 \label{section:malawi:conclusion}
 
-The focus of this work has been on elucidating the main factors that affect flow throughput, but which escape traditional TCP modelling based on end-to-end loss and delay. 
-In particular, we explore the changing role of \emph{host limiting}, \emph{application pacing} and \emph{receiver shaping} in defining flow rates across five years of transit traces.
-Our results show that for the observed link, over \emph{half} of all inbound TCP traffic can be ascribed to one of the aforementioned constraints.
-We show that continuing OS upgrades have progressively lifted the artificial throughput constraints imposed by the host stack. In particular, windowscale negotiation for inbound traffic increased threefold in the observed period, covering over 80\% of all observed bytes by 2012; in addition, we show that buffer sizes have also shown continuing increases over time.
+The focus of this chapter has been on elucidating the main factors that affect flow throughput, but which escape traditional TCP modelling based on end-to-end loss and delay. 
+In particular, the changing role of \emph{host limiting}, \emph{application pacing} and \emph{receiver shaping} in defining flow rates across five years of transit traces is explored.
+The results show that for the observed link, over \emph{half} of all inbound TCP traffic can be ascribed to one of the aforementioned constraints.
+Furthermore, continuing OS upgrades are responsible for having progressively lifted the artificial throughput constraints imposed by the host stack. 
+In particular, windowscale negotiation for inbound traffic increased threefold in the observed period, covering over 80\% of all observed bytes by 2012; in addition, buffer sizes have also shown continuing increases over time.
 
-These developments have significantly improved throughput, in particular for smaller flows. However, we also found evidence of throughput limiting effects independent from available end-to-end capacity. This means that no amount of bandwidth will directly improve TCP rates for a considerable amount of traffic.
-We show that application-driven techniques for chunked transfer are widely used, accounting for 40\% of all inbound traffic observed in 2011.
-%, and that this behaviour is endemic to a wider range of stakeholders than in 2007.
-Finally, we uncover evidence of significant receiver traffic shaping prior to 2011 based on the modification of the receiver advertised window in a bid to curtail congestion.
-%Uncover evidence of receiver shaping during period of relative contention.
+These developments have significantly improved throughput, in particular for smaller flows. However, evidence of throughput limiting effects independent from available end-to-end capacity was also uncovered. 
+This means that no amount of bandwidth will directly improve TCP rates for a considerable amount of traffic.
+Application-driven techniques for chunked transfer in particular are widely used, accounting for 40\% of all inbound traffic observed in 2011.
+Finally, there is significant evidence of receiver traffic shaping prior to 2011 based on the modification of the receiver advertised window in a bid to curtail congestion.
+
 

@@ -6,7 +6,7 @@
 % for us, it is here that we document changes with time.
 %
 % %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~%
-\section{Revisiting assumptions}
+\section{Revisiting assumptions on flow rates}
 \label{section:malawi:analysis}
 
 %\renewcommand{\thesubsectiondis}{Assumption \Alph{subsection}.}
@@ -20,7 +20,7 @@ Internet flow rates are commonly viewed as the output of congestion control embe
 For one, there is an implicit assumption that the network is the bottleneck. Under such conditions, TCP acts as a distributed optimisation algorithm in allocating capacity to flows. Section \ref{section:malawi:methodology} however presents several cases where such an assumption does not hold. The prevalence of application pacing, host limitations or receiver shaping can all condition the accuracy of models which assume only elastic traffic adjusting to network conditions alone.
 
 % explore the results
-\begin{table}%\footnotesize
+\begin{table}\footnotesize
 \centering
      \input{data/malawi/fullheader.tex}
      \input{data/malawi/full.tex}
@@ -47,8 +47,8 @@ Since many websites hosted in these ASes facilitate the distribution of copyrigh
 Furthermore, these domains are more likely to host applications which resort to capping the maximum window size as a means of throttling traffic.
 The increased weight of ASes which resort to these methods, such as Red Hat and Carpathia, significantly contributes to the unexpected increase of host limitations for 2010 displayed in table \ref{table:limits}.
 
-\newcommand{\ASLISTSEP}[1]{\rule{0pt}{3ex}\multirow{5}{*}{\textbf{#1}}}
-\begin{table}\scriptsize
+\newcommand{\ASLISTSEP}[1]{\rule{0pt}{5ex}\multirow{5}{*}{\textbf{#1}}}
+\begin{table}[t]\footnotesize
 \centering
 \input{data/malawi/appheader.tex}
 \hline
@@ -72,7 +72,7 @@ While the impact of application pacing and host limitations on rate control is d
 The reduction of application pacing however may reflect the nature of the observed link, as many traditional streaming providers have migrated towards peering or CDNs, bypassing interdomain links entirely. As such we expect the effect of application pacing to be more pronounced when considering traffic beyond transit.
 By 2011, successive capacity upgrades have lead to a less congested network, but one where predicting how bandwidth is shared is fundamentally harder due to the influence of stakeholders such as content providers and operating system vendors.
 
-\begin{figure}
+\begin{figure}[t]
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/malawi/windowscale}
@@ -85,7 +85,6 @@ By 2011, successive capacity upgrades have lead to a less congested network, but
     \end{subfigure}%
     \caption{Longitudinal evolution of TCP window parameters. \label{fig:tcpWindowParams}}
 \end{figure}
-
 
 \begin{figure}
     \begin{subfigure}[b]{.5\linewidth}
@@ -144,19 +143,21 @@ The use of 16KB and 32KB buffer sizes (default buffer sizes for Windows XP and V
 In addition to traditional power-of-two increments of the window size, different limits are apparent amongst hosting providers: 50KB, 100KB (The Planet), 160KB (Limelight) and 200KB (SoftLayer), reflecting the overall weight such ASes can have in shaping transit traffic.
 The influx of Asian traffic in 2009 led to an increase in observed host windows beneath 16KB.
 
-\begin{table}\scriptsize
+\begin{table}\footnotesize
 \centering
   \begin{subtable}[b]{.5\linewidth}
-     \input{data/malawi/hostheader.tex}
-     \input{data/malawi/hostlimin.tex}
-     \end{tabular}
-     \caption{Inbound traffic.}
-  \end{subtable}\\
+    \centering
+    \input{data/malawi/hostheader.tex}
+    \input{data/malawi/hostlimin.tex}
+    \end{tabular}
+    \caption{Inbound traffic.}
+  \end{subtable}%
   \begin{subtable}[b]{.5\linewidth}
-     \input{data/malawi/hostheader.tex}
-     \input{data/malawi/hostlimout.tex}
-     \end{tabular}
-     \caption{Outbound traffic.}
+    \centering
+    \input{data/malawi/hostheader.tex}
+    \input{data/malawi/hostlimout.tex}
+    \end{tabular}
+    \caption{Outbound traffic.}
   \end{subtable}
   \caption{\label{table:hostlimited}Percentage of host limited traffic over time by total number of flows and bytes. The proportion for which the receiver side was the bottleneck is also shown.}
 \end{table}
@@ -203,18 +204,20 @@ By 2011, this clustering is less pronounced, with window sizes increasing across
 % compare aggr vs active
 
 
-\begin{table}\scriptsize
+\begin{table}\footnotesize
 \centering
-  \begin{subtable}[b]{.5\linewidth}
-     \input{data/malawi/fullheader.tex}
-     \input{data/malawi/fullsmall.tex}
-     \end{tabular}
+  \begin{subtable}[b]{1.0\linewidth}
+    \centering
+    \input{data/malawi/fullheader.tex}
+    \input{data/malawi/fullsmall.tex}
+    \end{tabular}
   \caption{Flows under 10MB.}
-  \end{subtable}\\
-  \begin{subtable}[b]{.5\linewidth}
-     \input{data/malawi/fullheader.tex}
-     \input{data/malawi/fulllarge.tex}
-     \end{tabular}
+  \end{subtable}
+  \begin{subtable}[b]{1.0\linewidth}
+    \centering
+    \input{data/malawi/fullheader.tex}
+    \input{data/malawi/fulllarge.tex}
+    \end{tabular}
   \caption{Flows over 10MB.}
   \end{subtable}
 \caption{
@@ -244,8 +247,8 @@ From preliminary inspection of table \ref{table:full}, it is apparent that recei
 A breakdown of receiver shaping by traffic source is provided in table \ref{table:toprecvlim}, listing for each year the five most affected stakeholders within the top twenty ASes, and their respective contribution to the overall traffic and retransmissions observed yearly.
 
 % explore the results
-\begin{table}
-\scriptsize
+\begin{table}[t]
+\footnotesize
 \centering
 \input{data/malawi/recvheader.tex}
 \hline
