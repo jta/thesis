@@ -1,0 +1,85 @@
+\chapter{Conclusions and future work}
+\label{sec:conclusions}
+
+This upgrade report collects the following contributions.
+
+\textbf{Identifying the problem}.
+Resource pooling has evolved to being performed by different stakeholders unilaterally.
+End-hosts, network operators and content providers all attempt to pool traffic by differing means, and in a potentially conflicting manner.
+While recent work has lent credence to pushing resource pooling towards the edge, this ignores the tussle over how traffic is managed between these stakeholders.
+Path diversity is in the network, and operators attempt to exploit it through a combination of route optimization and traffic balancing.
+Collectively, these traffic engineering methods assist networks in minimizing the costs incurred by shifting traffic.
+Conversely, hosts are increasingly capable of pooling traffic across paths either through the use of overlay networks or multipath congestion control, neither of which necessarily share the objectives of the underlying network.
+The problem statement arises from the confluence of these two trends: given the nature of Internet traffic, how can the current architecture be realigned to facilitate resource pooling at both network and transport layers?
+
+
+\textbf{Proposing the architectural realignment of traffic engineering}.
+Given the Internet architecture should not dictate the outcome of the tussle between end-host and network solutions for resource pooling, the \ac{PREFLEX} architecture attempts to make both aware of each other.
+\acf{LEX} transmits information on loss as viewed by the transport layer to network resources, allowing traffic engineering to be performed taking into account end-to-end path quality.
+\acf{PREF} offers the ability for the network to select and offer paths to hosts, thereby unlocking the path diversity which already exists at stub domains such as \acp{ISP}, \acp{CDN} and enterprise networks.
+
+\ac{PREFLEX} permits more efficient, reliable and flexible traffic balancing whilst allowing for a range of outcomes in how burden of resource pooling is shared between host and network.
+One extreme outcome, in which the network is responsible for all resource pooling, is explored in depth in chapter \ref{sec:cate}.
+A congestion balancer is derived in which \ac{PREFLEX} can reap much of the benefit of \ac{MPTCP} by balancing flowlets according to loss.
+Unlike most existing \ac{TE} methods, \ac{PREFLEX} is designed to minimize the impact of route changes on the transport layer and as such is assessed by its impact on transport metrics rather than traffic aggregates.
+The use of congestion balancing in the network not only leads to a more efficient use of network capacity, but also a reduction of flow completion times for flows.
+
+\textbf{Investigating the evolution of Internet transit traffic}.
+Understanding the characteristics of Internet traffic is intrinsic to designing any form of resource pooling.
+For long-lived flows, the transport layer has sufficient time to collect information on network state to efficiently pool traffic across multiple paths.
+If traffic is dispersed across many prefixes, scaling dynamic traffic engineering may be problematic.
+By relating five years of packet traces from an interdomain transit link with topological and geographic information, preliminary results suggest neither is strictly true.
+The continuing consolidation of traffic for both inbound and outbound directions allows most traffic to be balanced by manipulating a small number of traffic prefixes.
+This work has corroborated previous findings \cite{Labovitz:2010p175} showing a shift in content distribution, with \acf{P2P} applications being slowly replaced by \acfp{CDN} and \acf{OCH} infrastructure.
+The novelty has come from being able to relate traffic trends at a finer granularity, both by reconstructing \ac{TCP} behaviour and relating these changes to network prefixes, which can in turn be used to assess the practicality of dynamic traffic engineering methods.
+
+\textbf{Future work}. The task of processing multiple data sources to produce \ac{MALAWI} was a significant undertaking which has only recently started to bear results.
+Chapter \ref{sec:malawi} presents the preliminary results of relating the spatial, behavioural and longitudinal properties of Internet transit traffic.
+Moving forward, future work on \ac{MALAWI} will focus on investigating properties of traffic which are relevant to \ac{PREFLEX}:
+
+\begin{itemize}
+\item{
+    \textbf{Evolution of flowlets}. Recent work on video streaming \cite{Rao:2011p547} , which represents a significant portion of Internet traffic, 
+    has shown different sending strategies are adopted depending on the application type (web browser or native) and container (HTML5 or Flash).
+    The most popular strategies rely on on/off sending patterns of varying chunk sizes, a form of rate-limiting may affect how efficiently \ac{TCP} can probe for bandwidth.
+    A methodology for processing flowlets within the \ac{MAWI} packet traces is being developed to understand the evolution of flowlet sizes within Internet traffic and quantify the potential benefits of balancing at a flowlet granularity as proposed in \ac{PREFLEX}.
+}
+
+\item{
+    \textbf{Delay}: The effect of path latency has not been considered in designing \ac{PREFLEX}.
+    In balancing by congestion delay is implicitly taken into account when using a conservative approach, as \ac{TCP} presents a bias towards shorter \acp{RTT}.
+    In some cases however the difference in delay between paths may be significant enough to affect overall performance.
+    In its current guise \ac{PREFLEX} does not discard the usage of paths, even if they present a impractically large end-to-end delay.
+    The simplest way to avoid their usage would be to render paths unusable through the routing architecture, but this cannot be done in an automated manner taking into account delay.
+    Work is undergoing in quantifying the differences in delay between paths to a same destination for the \ac{MAWI} dataset, and the repercussions that may have on \ac{PREFLEX}.
+}
+\end{itemize}
+
+Furthermore, since the inception of \ac{PREFLEX}, work within \ac{MALAWI} and concurrent research has justified many of its design choices, but also put into question some of its traits.
+In moving forward the following issues must be addressed:
+
+\begin{itemize}
+\item{
+    \textbf{Loss}: The \ac{MAWI} traces demonstrate that outbound loss is receding.
+    Whether this is due to higher bandwidth, changes in application usage or shift in where traffic flows to is inconsequent: for many network prefixes, the resolution of loss as a signal may be too low to be used effectively by \ac{PREFLEX}.
+    In part, this is due to the scaling properties of \ac{TCP} which dictate loss events will be increasingly spaced out in time as bandwidth increases.
+    \ac{PREFLEX} would function best with less conservative forms of congestion control, such as Relentless \ac{TCP} or \ac{DCTCP}.
+    In the absence of such approaches, it is important to identify under what conditions congestion balancing makes sense, and improve the design of \ac{PREFLEX} accordingly.
+}
+
+\item{
+    \textbf{Pricing}: Congestion balancing represents a corner case where network and hosts are fully aligned. 
+    Much of the motivation for this work derived from the discrepancy how network resources are shared and how they are priced.
+    Whether applied to \acp{ISP} or data centers, an operator should be able to influence how traffic is routed in order to minimize costs.
+    This requires extending the work in section \ref{sec:cate} to cover popular pricing models such as the 95th percentile.
+}
+\end{itemize}
+
+A promising application scenario for \ac{PREFLEX} is in balancing data center traffic.
+Results from \ac{MALAWI} corroborate the increase in proportion of traffic originating in co-location sites already described in \cite{Labovitz:2010p175}.
+Data centers provide an ideal setting for \ac{PREFLEX} as a single entity is responsible for managing infrastructure, alleviating the possibility of hosts overriding network preferences.
+The simplicity of the sender-side changes mean \ac{PREFLEX} can be implemented in the hypervisor and run transparently to hosted virtual machines, an approach already used in \cite{Wu:2010p556}.
+In comparison to the use of \ac{MPTCP} in data center traffic \cite{Raiciu:2011p539}, \ac{PREFLEX} may be more suitable for \acp{CDN} dominated by short flows such as web traffic, rate-limited flows such as video streaming, or traffic bound for legacy hosts which cannot support changes to the networking stack.
+
+
+
