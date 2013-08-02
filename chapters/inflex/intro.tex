@@ -1,0 +1,47 @@
+\section{Beyond PREFLEX}
+
+The obtained results are also significant in challenging some of the assumptions made in section \ref{sec:preflex} in constructing PREFLEX.
+In particular, we recover three statements which warrant further consideration:
+
+\begin{itemize}
+\item{
+    \textbf{Most flows may not benefit from \ac{MPTCP}.}
+    This statement has largely been supported by the significant proportion of traffic in the MAWI dataset which makes no attempt to probe for more bandwidth.
+    Our original deliberations however severely underestimated the inherent difficulties in deploying protocol extensions, even at the transport layer.
+    The MAWI dataset demonstrates that even the deployment of innocous TCP options such as TCP Windowscale are protracted and subject to lengthy OS deployment cycles.
+    While recent developments in packet I/O frameworks may yet foster efficient and flexible userspace network stacks, existing OS communities are justifiably weary of significant changes to the kernel without careful instrumentation.
+}
+
+\item{
+    \textbf{The network has appropriated flow semantics from the transport layer.}
+    PREFLEX advocated decoupling the notion of a transport flow and a network \emph{flowlet}.
+    The symptoms of this dichotomy were correctly identified and entirely justified by the MAWI dataset, with many transfers being multiplexed or chunked over a same transport association.
+    The extent to which these flowlets occur in practice however was surprising.
+    Within PREFLEX, a packet marked as FNE would signal to the network the start of a new flowlet, allowing packets requiring further processing to be easily identified by PREFLEX routers.
+
+}
+
+\item{
+    \textbf{At a small enough timescale, traffic engineering can replace resilient routing entirely.}
+}
+
+\end{itemize}
+
+\subsection{Deployment limitations}
+\subsection{Effects of traffic consolidation}
+\subsection{Software-defined networking}
+
+\section{Inflex Architecture}
+
+\subsection{Outbound pipeline}
+\subsection{Inflection request}
+\subsection{Inbound pipeline}
+
+\section{Northbound API}
+\subsection{Path request}
+\subsection{Traffic balancing}
+\subsection{Policer}
+
+\section{Analysis}
+
+\section{Conclusion}
