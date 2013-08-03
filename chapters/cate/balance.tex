@@ -1,8 +1,8 @@
-\section{Balancing congestion}
-While the previous chapter provides an architecture within which transport and network layers exchange relevant information, it does not define how networks select outgoing paths. 
-In this chapter we present a possible solution for balancing traffic according to expected congestion which works in a wide variety of network conditions.
+While the previous chapter provides an architecture within which transport and network layers exchange relevant information, it does not define how networks should select outgoing paths. 
+This chapter presents a possible solution for balancing traffic according to expected congestion which works under a wide range of network conditions.
 
-\subsection{Model}
+\section{A model for congestion balancing}
+
 %2.2) Mathematical detail of balancing equation -- motivate
 % parameterisedequation with equal share vs conservative vs loss-based
 Consider \ac{LEX}-capable traffic, that is explicitly marked as either being retransmitted or non-retransmitted, from a single origin prefix to a single destination prefix, with a number of possible paths and within a single time period.  
@@ -38,7 +38,7 @@ T'_i = \frac{T T_i^2}{R_i \sum_j (T_j^2/R_j)}.
 \end{equation}
 
 There is, of course, a problem when $R_i = 0$.  
-Because of the assumption that the traffic is assigned in inverse proportion to loss rate then a branch with no loss would naturally have all the traffic assigned to it. To correct this, we increment $R_i$ for each path by one maximum segment size (MSS). 
+Because of the assumption that the traffic is assigned in inverse proportion to loss rate then a branch with no loss would naturally have all the traffic assigned to it. To correct this, $R_i$ is incremented for each path by one maximum segment size (MSS). 
 This problem will be further discussed in subsequent sections.
 
 \subsection{Understanding the design space}
@@ -93,16 +93,16 @@ f'_i = \frac{T'_i}{T} =  \beta_E \frac{1}{N} + \beta_C \frac{T_i}{T} +
 \end{equation}
 
 
-While \eqref{eqn:Tdashi} describes a very broad design space, we provide some intuition on how each component acts through a simple example, which is described in full in section \ref{section:methodology}. 
+While \eqref{eqn:Tdashi} describes a very broad design space, intuition on how each component performs is provided through a simple example, which is described in full in section \ref{section:methodology}. 
 Consider a network balancing traffic to a given prefix between two paths with equal bottleneck capacity $L_1=L_2=120$Mbps.
 For the duration of the experiment, a source sends traffic according to the same distribution.
 At $t=300$s, cross-traffic is generated towards client $C$ through $L_1$.
 At $t=600$s, a greater quantity cross-traffic is generated towards client $C$ through $L_2$.
-The results for this example are shown in figure \ref{fig:two} in four different guises, and in each case we show the throughput, loss rate and the proportion of flows assigned to each path as computed by the \ac{PREFLEX} balancer.
+The respective throughput, loss rate and the proportion of flows assigned to each path as computed by the \ac{PREFLEX} balancer are shown in figure \ref{fig:two} for each of the four variants.
 
-We first investigate the effect of equalisation, which is necessary to ensure all paths are continually probed. 
-Equalisation alone however leads to an inefficient use of the network if there is a mismatch in path capacity, as is clearly visible in figure \ref{fig:twoequal} as congestion arises on either link. 
-Such behaviour arises in traditional traffic engineering, which resorts to equalising traffic weighted by a local link's capacity.  
+The effect of equalisation is the first to be considered, given it is necessary to ensure all paths are continually probed. 
+Equalisation alone however leads to an inefficient use of the network if there is a mismatch in path capacity, as made apparent in figure \ref{fig:twoequal} as congestion occurs on either link. 
+Such behaviour arises in traditional traffic engineering, which resorts to equalising traffic weighted by local link capacity.  
 Where a bottleneck is remote and distinct however, such behaviour will lead traffic across all links to be roughly bound by the capacity of the slowest path, as can be seen between $t=300$s and $t=600$s where throughput over the first path is dragged down by congestion on a second path.  
 Figure \ref{fig:twocons} and \ref{fig:twoloss} on the other hand show distinctive behaviour when using a solely conservative or solely loss-driven approach. 
 Predictably for small values of loss the loss-driven approach overreacts and flaps between either path. 
@@ -116,11 +116,11 @@ While this may seem advantageous, in reality we shall show that this behaviour i
 
 \subsection{Balancing between conservative and loss-driven}
 
-We wish to tune \ac{PREFLEX} to balance between conservative and loss-driven modes for differing regimes of loss. 
+Ideally the proposed balancer should adjust between conservative and loss-driven modes for differing regimes of loss.
 Equalisation is required in some measure as every path must attract some traffic if it is not to fall out of use (\cite{Kelly:2005p140}, remark 2). 
-If this is not the case, a path with relatively high loss will never be probed to determine whether it has improved. 
-The remaining two components must be adjusted to be able to respond adequately to loss while not being overly sensitive to statistically insignificant fluctuations in loss. 
-We define $\gamma$ to replace both $\beta_C$ and $\beta_L$ in \eqref{eqn:Tdashi} and adjust between conservative and loss-driven modes:
+If this were not the case, a path with relatively high loss would never be probed to determine whether congestion has subsided.
+The remaining two components must be balanced to be able to respond adequately to loss while not being overly sensitive to statistically insignificant fluctuations in loss. 
+Let $\gamma$ replace both $\beta_C$ and $\beta_L$ in \eqref{eqn:Tdashi} and adjust between conservative and loss-driven modes:
 \begin{equation}
 f'_i = \beta_E \frac{1}{N} + \left( 1-\beta_E \right) \left(
 \gamma \frac{T_i}{T} + \left(1-\gamma\right) \frac{T_i^2}{R_i \sum_j
@@ -165,17 +165,19 @@ The value of $\mu_{min}$ was set to $0.005$.
 % regime where different parameters are needed (e.g. equal traffic on
 % all pathsprobes unused paths, conservative works in low loss regime,
 % loss-basedworks in high loss regime).
-Another issue is how often to update the flow split considering the sparseness of loss.
+Another issue is how often the flow split should be updated considering the sparseness of loss.
 Assume that for a given prefix packet loss is measured over a given time period $\tau$.  
 It would be useful to tune this $\tau$ per prefix in order that the loss estimate was ``accurate".  
 If $\tau$ is short then only a very small number of packets will be lost.  
 On the other hand, if $\tau$ is long then the control system will be unable to react quickly to changes.  
-The idea is to set $\tau$ sufficiently small that an accurate measure of loss can be obtained.  
-It is useful therefore, to have a rough estimate of a time period over which it is necessary to measure in order that estimates of loss are accurate to a given degree.  
-Because this time period of measurement is per prefix, this must to some extent take account of how important a given measurement is to the system as a whole (for example, not slowing down measurements because one route with a tiny amount of traffic has an inaccurate measurement).  
+$\tau$ should therefore be sufficiently small that an accurate measure of loss can be obtained.  
+As a result, it is useful to have a rough estimate of the measurement period required to ensure accurate loss estimates.
+Since this time period of measurement is per prefix, this must to some extent reflect the importance a given measurement to the system as a whole.
+For example, the overall system should not be held up by a single route with insufficient traffic for an accurate measurement to be obtained.
 This will be achieved with the concept of a weighted coefficient of variation.
 
-Let $t_i$ be the number of packets transmitted down path $i$ in the time period $\tau$ and let $l_i$ be the number of packets which were lost in this time period (to prevent divide by zero issue set $l_i = 1$ if no packets are lost).
+Let $t_i$ be the number of packets transmitted down path $i$ in the time period $\tau$ and let $l_i$ be the number of packets which were lost in this time period.
+To prevent the aforementioned divide by zero issue, $l_i = 1$ if no packets are lost.
 
 Let $p_i$ be the probability that a given packet is lost on path $i$ and assume that packet loss is a Bernoulli process.  
 An unbiased estimate of $p_i$ is $\hat{p_i} = l_i/t_i$ (it is important to what follows that $\hat{p_i}$ is only an estimate of $p_i$ by ``chance" more or fewer packets may have been lost).  
