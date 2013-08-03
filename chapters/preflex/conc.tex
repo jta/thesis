@@ -1,6 +1,6 @@
 \section{Closing the loop}
 
-We have broadly described an architecture which shares the responsibility for resource pooling between endhosts and edge networks, but does not explicitly dictate an outcome. \ac{PREFLEX} has been designed to take into account the inevitable tussle which will occur between both, and we envisage use cases where control over resource pooling could feasibly shift entirely in one direction or the other. 
+This chapter broadly describes an architecture which shares the responsibility for resource pooling between endhosts and edge networks, but does not explicitly dictate an outcome. \ac{PREFLEX} has been designed to take into account the inevitable tussle which will occur between both, and envisages use cases where control over resource pooling could feasibly shift entirely in one direction or the other. 
 
 At its most liberal, \ac{PREFLEX} enables resource pooling to be entirely performed by end-hosts. At its most conservative, \ac{PREFLEX} affords edge network providers more fine-grained control over traffic than before. Between either extreme, the resulting mutualistic architecture offers greater transparency, control and robustness by realigning the interface between network and transport in order to accommodate the needs of both.
 
@@ -34,7 +34,7 @@ While this necessarily reduces the amount of path diversity which can be explore
 \end{itemize}
 
 The resulting architecture provides many benefits. 
-The balancing is both transport agnostic and allows flow state to be kept to a minimum, requiring policing at the edges only if congestion accountability is required. 
+Balancing is both transport agnostic and allows flow state to be kept to a minimum, requiring policing at the edges only if congestion accountability is required. 
 Additionally, path selection is receiver driven, aligning the stakeholder who can decide when to issue \ac{FNE} packets with the stakeholder who benefits the most. 
 The key to path selection is the information provided by the sender (point 7 in figure \ref{fig:preflexout} ), which allows the network to estimate path loss on the same timescale as hosts. 
 By pooling loss information from multiple hosts, the network may additionally be made aware of path failures sooner than hosts using \ac{TCP} inference.

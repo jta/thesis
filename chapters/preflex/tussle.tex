@@ -4,9 +4,9 @@
 The ability to evolve beyond single path forwarding has often been misdiagnosed primarily as a routing challenge. 
 The subject is frequently revisited with varying approaches \cite{Sunshine:1977p152,Yang:2003p136,Yang:2006p405,Godfrey:2009p36}. 
 Despite this, multipath routing has remained illusive for end-hosts. 
-The common trait all these proposals share is a failure to identify the tussle over resource control as the primary obstacle in moving towards the use of multiple concurrent paths.
+The common trait all these proposals share is a failure to identify the tussle over resource control as a significant obstacle in moving towards the use of multiple concurrent paths.
 
-The Internet architecture places resource control at the edges, in what can be viewed as an instance of the end-to-end principle \cite{Saltzer:1984p305}. 
+The Internet architecture places resource control at the edges, in what can be viewed as an instantiation of the end-to-end principle \cite{Saltzer:1984p305}. 
 This represented a fundamental paradigm shift, ultimately conferring the scalability which fueled the growth of the Internet.  
 While unilateral control of a network resource by hosts was already polemic in an academic research network, with the rise of the commercial Internet this notion has slowly been set aside by stakeholders intent on exerting control over their own networks.
 
@@ -104,16 +104,14 @@ This entirely misses the point.
 The concern should not revolve around whether an approach is right or wrong, but whether it is applicable within a given context or not. 
 The recognition of the commercial network as a fundamental stakeholder is intrinsic to the evolvability of the current architecture. 
 In the absence of such recognition, the gulf between the perception of how the Internet should behave and how it functions in practice will only widen. 
-Traffic engineering and congestion control represent an explicit duality.
-Underlying both should lay a unifying architecture allowing both to evolve independently while not foregoing cooperation.
+Traffic engineering and congestion control represent an explicit duality -- underlying both should lay a unifying architecture allowing either to evolve independently while not foregoing cooperation.
 
 % conflict between perceived cost for ISP and transport?
 %\cite{Arkko:2009p122}
 Recent research in resource sharing has suggested that much of the misalignment between network and transport derives from the lack of accountability for congestion.
 While previous work had modelled and analyzed the broken incentive structure subjacent to forwarding traffic from an economic perspective, work on re-feedback and congestion exposure \cite{Briscoe:2005p346} pioneered a practical means of alleviating the tussle surrounding resource sharing.  
 In particular, congestion exposure advocates the use of congestion volume, rather than throughput or traffic volume, as the by-product by which the impact of traffic should be assessed.  
-We build on this approach and present a concept for a joint, mutualistic architecture for congestion control and traffic engineering. 
-
+Building upon this approach, the next section presents PREFLEX, a joint, mutualistic architecture for congestion control and traffic engineering. 
 
 %XXX: dynamic route optimization considered harmful Caesar:2010p343
 %XXX: guidelines for TE \cite{Feamster:2003p221}
