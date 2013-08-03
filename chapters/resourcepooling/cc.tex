@@ -252,7 +252,7 @@ If either bit was set, both hosts had established the usage of \ac{ECN} during t
 Having detected the onset of congestion according to a given \ac{AQM} discipline, an \ac{ECN} enabled queues would then set both bits to encode the \ac{CE} codepoint.
 Unlike DECbit, a single \ac{CE} marking would be sufficient motive for a sender to decrease its congestion window, making \ac{ECN} compatible with probabilistic \ac{AQM} mechanisms such as \ac{RED} \cite{Floyd:1993p492}.
 Furthermore, the multiplicative decrease was more conservative than in DECbit, and followed the existing \ac{TCP} standard of halving the congestion window.
-This conscious decision to make \ac{ECN} enabled traffic perform similarly to legacy \ac{TCP} over large timescales, would strip it of a potentially important competitive advantage in deployment whilst retaining one of the less scalable components of \ac{TCP}.
+This conscious decision to make \ac{ECN} enabled traffic perform similarly to legacy \ac{TCP} over large timescales would strip it of a potentially important competitive advantage in deployment whilst retaining one of the less scalable components of \ac{TCP}.
 
 Both DECbit and \ac{ECN} proved to be \emph{too little, too late}. 
 Proposed at the same time as \ac{TCP} congestion control, DECbit was initially shunned in favour of a practical solution which could be rapidly deployed and rectified.
