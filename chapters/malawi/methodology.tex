@@ -42,7 +42,7 @@ it follows that $t_l - t_j = 2T$, and this value will also be included in $\math
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{figures/malawi/rttbin.pdf}
-  \caption{$H(t)$ for flow displayed in Figure \ref{fig:hostLimited}. The horizontal line delimits $\overline{H}$ while the highlighted bin denotes the bidirectional RTT estimate.\label{fig:histogram}}
+  \caption{$H(t)$ for flow displayed in Figure \ref{fig:hostlimited}. The horizontal line delimits $\overline{H}$ while the highlighted bin denotes the bidirectional RTT estimate.\label{fig:histogram}}
 \end{figure}
 
 
@@ -177,7 +177,7 @@ One such example is illustrated in figure \ref{fig:youtube}, in which a stream i
 The resulting network-level behaviour is distinct from traditional congestion control: short bursts are interspersed with protracted silence.
 Application limited flights, which terminate on non-MSS packets, are highlighted at the end of each burst.
 
-This behaviour is in stark contrast to that exhibited in figure \ref{fig:hostLimited}, where distinct transfers are multiplexed on top of a single transport association over time.
+This behaviour is in stark contrast to that exhibited in figure \ref{fig:hostlimited}, where distinct transfers are multiplexed on top of a single transport association over time.
 From the perspective of the network, there is little to distinguish the behaviour of such traffic from independent TCP flows.
 Application paced connections such as Youtube traffic however exhibit a degree of regularity which can potentially be exploited by the network in predicting demand or smoothing bursts.
 
@@ -198,8 +198,8 @@ In order to identify the flat-lined behaviour of a host limited flow, we first f
 We then select the maximum flight size observed for each RTT interval, and declare a sequence of flights to be host limited if the same maximum was observed over six consecutive RTTs (this is twice the period suggested in \cite{Zhang:2002p85}).
 In practice, increasing the period over which the maximum window size is tracked allows us to more accurately discern between host limited behaviour and more conservative bandwidth probing, such as that performed during the convex phase of TCP CUBIC \cite{Ha:2008p471}.
 
-A flow may be host limited for only brief periods of its lifetime, as illustrated in figure \ref{fig:hostLimited}.
-To filter out such cases where host limitations are not the predominant factor in defining flow throughput, we further enforce that in addition to host-limited flights, the average window size must over a flow lifetime should be within 10\% of the inferred host limit, which is not the case in figure \ref{fig:hostLimited}.
+A flow may be host limited for only brief periods of its lifetime, as illustrated in figure \ref{fig:hostlimited}.
+To filter out such cases where host limitations are not the predominant factor in defining flow throughput, we further enforce that in addition to host-limited flights, the average window size must over a flow lifetime should be within 10\% of the inferred host limit, which is not the case in figure \ref{fig:hostlimited}.
 
 In practice, flows can exhibit both application pacing and host limitations, with bursts being sent at a capped window size followed by application pauses.
 In such cases, a flow will still be classified as being \emph{application paced} if it meets the requirements set out in the previous section, as doing so provides evidence that it controls throughput in spite of the degraded performance provided further down the stack. 

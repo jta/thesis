@@ -3,8 +3,8 @@ In the previous chapter necessarily artificial end-to-end behaviour was used in 
 Modelling how congestion can be balanced more accurately however requires understanding the inherent characteristics of Internet traffic at large.
 
 This chapter provides a longitudinal analysis of the characteristics of end-to-end Internet traffic, describing the shifting trends in interdomain traffic as viewed from WIDE, a Japanese academic provider.
-Over time, our vantage point is subject to upgrades, changes in routing policy and congestion events, all of which can hinder the interpretation of data.
-We overcome these limitations by looking further afield, searching for clues within shifts in the geographical and topological makeup of inbound and outbound traffic and how these trends relate to end-to-end performance.
+Over time, this vantage point is subject to upgrades, changes in routing policy and congestion events, all of which can hinder the interpretation of data.
+These limitations are overcome by looking further afield, searching for clues within shifts in the geographical and topological makeup of inbound and outbound traffic and how these trends relate to end-to-end performance.
 
 \section{Motivation}
 
@@ -30,14 +30,8 @@ Even beyond such application behaviour, flows may still be constrained by factor
 The transport layer is subject to strict bounds within which it can operate, potentially impeded by socket buffer sizes set by OS vendors or tuned by network administrators. There is an upper bound on the window size a receiver can advertise back to the sender; in the absence of windowscale negotiation \cite{braden1989rfc}, no TCP connection can exceed a 64KB window. In addition, resource sharing is often subject to local policy.
 In the absence of adequate methods for readjusting how TCP distributes bandwidth, network operators and system administrators often trade efficiency for predictability, shaping traffic to conform to local notions of fairness or in anticipation for expected demand \cite{ispTrafficShaping}.
 
-Given these different potential sources of rate control, \emph{what can we say about their relative impact on Internet traffic at large}?
-This chapter investigates this question from the point of view of the un-anonymised MAWI dataset, that comprises a single transit link over a period of five years (from late 2006 to early 2012). By considering in addition routing information external to MAWI, we generate a derived dataset which aggregates flow level metrics across geographic and topological locations. Hence, this work sheds some light on the asymmetry in global network performance over time and provides a valuable counterpoint to existing US-centric vantage points.
-
-The main contribution is a re-evaluation of common assumptions regarding Internet flow rates. This is achieved by systematically identifying artificial constraints to TCP traffic throughput across three categories: \emph{application pacing}, \emph{host limiting} and \emph{receiver shaping}. 
-Having reconstructed individual flows, the results are aggregated using an external routing information dataset and relate how each aritificial constraint arises in different contexts and affects different stakeholders over time. This allows us to show not only that flow rates are not typically dictated by TCP congestion control alone, but also that TCP throughput is mostly determined by the actions of the sender. In particular, we show that host limitations have largely been lifted for small flows, with the windowscale option increasing threefold to cover over 80\% of all inbound traffic by the end of 2011. 
-Similarly, continuing operating system updates have progressively lifted many of the limitations inherent to socket buffer sizes. These changes have allowed smaller flows to increase throughput at a far higher rate than larger flows, which are more often than not affected by other mechanisms of traffic shaping.
-This means that, although there is a correlation between flow volume in bytes and throughput, the relationship between the two is nonlinear and has changed with time.
-Finally, we document the use of receiver shaping on inbound traffic within customer networks as a response to periods of congestion, and show that this technique has been applied mostly on the basis of content charactersitcs, rather than to high-volume traffic sources. 
+Given these different potential sources of rate control, \emph{what can be said about their relative impact on Internet traffic at large}?
+This chapter investigates this question from the point of view of the un-anonymised MAWI dataset, that comprises a single transit link over a period of five years (from late 2006 to early 2012). Through the addition of routing information external to MAWI, a derived dataset is produced which aggregates flow level metrics across geographic and topological locations. Hence, this work sheds some light on the asymmetry in global network performance over time and provides a valuable counterpoint to existing US-centric vantage points.
 
 %The paper is structured as follows. We present previous relevant contributions in Section \ref{section:malawi:related}, and our dataset in Section \ref{section:malawi:dataset}. We continue by describing our methodology in Section \ref{section:malawi:methodology}, and some of the implications of our findings in Section \ref{section:malawi:analysis}. Finally, we present our conclusions in Section \ref{section:malawi:conclusion}.
 

@@ -1,6 +1,17 @@
 \chapter{Conclusions and future work}
 \label{sec:conclusions}
 
+{\COMMENT
+    %copy pasted from INFOCOM intro
+
+The main contribution is a re-evaluation of common assumptions regarding Internet flow rates. This is achieved by systematically identifying artificial constraints to TCP traffic throughput across three categories: \emph{application pacing}, \emph{host limiting} and \emph{receiver shaping}. 
+Having reconstructed individual flows, the results are aggregated using an external routing information dataset and relate how each aritificial constraint arises in different contexts and affects different stakeholders over time. This allows us to show not only that flow rates are not typically dictated by TCP congestion control alone, but also that TCP throughput is mostly determined by the actions of the sender. In particular, we show that host limitations have largely been lifted for small flows, with the windowscale option increasing threefold to cover over 80\% of all inbound traffic by the end of 2011. 
+Similarly, continuing operating system updates have progressively lifted many of the limitations inherent to socket buffer sizes. These changes have allowed smaller flows to increase throughput at a far higher rate than larger flows, which are more often than not affected by other mechanisms of traffic shaping.
+This means that, although there is a correlation between flow volume in bytes and throughput, the relationship between the two is nonlinear and has changed with time.
+Finally, we document the use of receiver shaping on inbound traffic within customer networks as a response to periods of congestion, and show that this technique has been applied mostly on the basis of content charactersitcs, rather than to high-volume traffic sources. 
+}
+
+
 This upgrade report collects the following contributions.
 
 \textbf{Identifying the problem}.

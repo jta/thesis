@@ -1,47 +1,46 @@
-\section{Beyond PREFLEX}
+\section{Introduction}
 
-The obtained results are also significant in challenging some of the assumptions made in section \ref{sec:preflex} in constructing PREFLEX.
-In particular, we recover three statements which warrant further consideration:
+Fueled largely by economies of scale in both software management and hardware acquisition and maintenance, the emergence of cloud computing and content distribution networks has lead to a profound shift in Internet traffic.
 
-\begin{itemize}
-\item{
-    \textbf{Most flows may not benefit from \ac{MPTCP}.}
-    This statement has largely been supported by the significant proportion of traffic in the MAWI dataset which makes no attempt to probe for more bandwidth.
-    Our original deliberations however severely underestimated the inherent difficulties in deploying protocol extensions, even at the transport layer.
-    The MAWI dataset demonstrates that even the deployment of innocous TCP options such as TCP Windowscale are protracted and subject to lengthy OS deployment cycles.
-    While recent developments in packet I/O frameworks may yet foster efficient and flexible userspace network stacks, existing OS communities are justifiably weary of significant changes to the kernel without careful instrumentation.
-}
 
-\item{
-    \textbf{The network has appropriated flow semantics from the transport layer.}
-    PREFLEX advocated decoupling the notion of a transport flow and a network \emph{flowlet}.
-    The symptoms of this dichotomy were correctly identified and entirely justified by the MAWI dataset, with many transfers being multiplexed or chunked over a same transport association.
-    The extent to which these flowlets occur in practice however was surprising.
-    Within PREFLEX, a packet marked as FNE would signal to the network the start of a new flowlet, allowing packets requiring further processing to be easily identified by PREFLEX routers.
+Whereas the advent of broadband connections init
+In contrast to the highly distributed nature of peer-to-peer software which 
 
-}
+For one, never has so much been distributed by so few to so many.
+% AS dist graph
+% netflix
 
-\item{
-    \textbf{At a small enough timescale, traffic engineering can replace resilient routing entirely.}
-}
+% Accountability, resilience
+Alongside this increased centralization of resources comes a heightened sense of accountability.
+The commercial nature of the agreements between customers and cloud hosting companies such as AWS \cite{} often involve the establishment of service level agreements.
+Even where such agreements are not explicit, such as the base option of tiered services such as Dropbox or Heroku, there is an inherent need to minimize the impact of outages -- non paying customers may be less demanding, but they are also less sensitive to the switching cost incurred in changing service provider.
 
-\end{itemize}
+Unfortunately, the federated, best-effort nature of the Internet seemingly does not lend itself to such high expectations.
+All intervening equipment is subject to failure along a network path, with recovery time depending not only on \emph{what} happened, but also \emph{where}.
+Within their networks, operators are free to instrument and deploy arbitrarily complex tools to meet requirements. 
+This freedom has lead to a proliferation of proposed improvements in resilience for intradomain settings \cite{}.
+Outside their networks however, operators are reduced to negotiating service level agreements with their own providers who are invariably unable to cater for such specialized demands \cite{}.
+Even if such terms were met, the Internet architecture provides limited visibility beyond one's own domain.
+This opaqueness, in addition to the fact that failures themselves may be distributed in nature \cite{}, severely limits the ability for a customer network to trace remote problems to a single source \cite{}.
+With no means to hold providers accountable for failures, there is little to enforce the terms of a truly end-to-end SLA.
 
-\subsection{Deployment limitations}
-\subsection{Effects of traffic consolidation}
-\subsection{Software-defined networking}
+The establishment of SLAs for network availability have traditionally been prefered within the telecom industry in particular, and represent one possible approach to ensuring resilience. An alternative approach is offered by the end-to-end principle. 
+Since end hosts possess both inherent knowledge of application needs and fine-grained measurements on end-to-end path characteristics, the transport layer is often identified as a more natural fit for dealing with fault tolerance at an Internet scale.
+Both SCTP \cite{} and MPTCP \cite{} enable transparent fail-over through multihoming.
+In spite of providing significant features, neither is likely to be widely deployed in the near future: the former lacks critical middlebox support, while the latter is still undergoing standardization.
+Furthermore, the requirement for end-host multihoming has also posed a barrier to deployment.
+Finally, all transport approaches to fail-over confine knowledge of faults within an individual flow: each flow must detect failures independently, even when many flows are affected by the same fault.
 
-\section{Inflex Architecture}
 
-\subsection{Outbound pipeline}
-\subsection{Inflection request}
-\subsection{Inbound pipeline}
 
-\section{Northbound API}
-\subsection{Path request}
-\subsection{Traffic balancing}
-\subsection{Policer}
 
-\section{Analysis}
 
-\section{Conclusion}
+
+
+
+
+% Transport is not the answer
+
+% Can we do better with SDN?
+
+
