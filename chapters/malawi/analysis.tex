@@ -29,7 +29,7 @@ For one, there is an implicit assumption that the network is the bottleneck. Und
      Percentage of traffic bytes affected by each constraint by year.\label{table:limits}}
 \end{table}
 
-Table \ref{table:limits} displays the extent to which each of these limitations affects inbound traffic in the MAWI data/malawiset over time. 
+Table \ref{table:limits} displays the extent to which each of these limitations affects inbound traffic in the MAWI dataset over time. 
 The bulk of the volume in bytes is either conditioned by host limits or application pacing. 
 The use of receiver shaping on the other hand is both small in scale and temporally confined to 2009 and 2010.
 Over five years, the overall effect of the three selected constraints has dropped by close to 10\%.
@@ -130,7 +130,7 @@ Given that throughput conditions on the receiver side improve as OS upgrades are
 We test this hypothesis by first verifying windowscale deployment over time.
 Figure \ref{fig:windowscale} shows the ratio of traffic and flows for which windowscale was successfully negotiated.
 Results are calculated solely over traffic where the initial handshake was observed.
-For added context, data/malawi for the outbound direction is also displayed.
+For added context, data for the outbound direction is also displayed.
 The first result that stands out is the steady increase over time of windowscale usage, rising from 25\% of all inbound bytes in early 2007 to almost 80\% by late 2011.
 Furthermore, the effects of content consolidation manifest themselves in the disproportionate coverage of bytes when compared to flows.
 With the reduced stake of large ISPs in inbound traffic, transit traffic has become dominated by a small set of centrally managed stakeholders such as Google, lowering the effective barrier for deployment of protocol extensions.
@@ -170,12 +170,12 @@ Small flows are both numerous and unlikely to last long enough for window limits
 The affected flows therefore tend to be large, and as such can translate into a significant amount of traffic.
 The proportion of flows and bytes for which the receiver side imposed the maximum window size dropped by 20\% and 15\% respectively over five years for inbound traffic, reflecting the successive OS upgrades performed for hosts within WIDE. 
 Interestingly, these trends do not surface for outbound traffic: hosts outside Japan were consistently more likely to dictate the maximum window size.
-In part, this reflects the different nature of the traffic under observation: outbound traffic for this data/malawiset is more geographically and topologically diverse, with content in many cases being retrieved from Japan by residential hosts from within Asia.
+In part, this reflects the different nature of the traffic under observation: outbound traffic for this dataset is more geographically and topologically diverse, with content in many cases being retrieved from Japan by residential hosts from within Asia.
 
 % summarize the answer
 \textbf{The endpoint which ends up dictating the maximum achievable throughput through flow control is typically a function of the OS adoption cycle.}
 With the windowscale option covering 80\% of all inbound traffic, the main source of host level constraints are now conservative buffer sizes.
-For this data/malawiset, hosts internal to WIDE have seemingly been upgraded at a faster rate, or less conservatively, than their remote counterpoints.
+For this dataset, hosts internal to WIDE have seemingly been upgraded at a faster rate, or less conservatively, than their remote counterpoints.
 As such, throughput has become increasingly sender driven over time for inbound traffic.
 
 
@@ -184,7 +184,7 @@ As such, throughput has become increasingly sender driven over time for inbound 
 % define the assumption
 Given host limitations are most likely to affect large flows, it's worth considering whether other constraints are applied disproportionately across flow sizes. 
 A commonly held assumption is that throughput is correlated with flow size, which has been verified empirically in previous studies \cite{oursTCP, Zhang:2002p85}.
-Much of the data/malawi used in these studies however precedes the widespread adoption of high bandwidth connections and use of streaming media, both of which can impact the extent to which contention occurs in the network.
+Much of the data used in these studies however precedes the widespread adoption of high bandwidth connections and use of streaming media, both of which can impact the extent to which contention occurs in the network.
 
 % explore the results
 Figure \ref{fig:flowrate} shows the median throughput as a function of flow size, by year.
@@ -242,7 +242,7 @@ Given the popularity of emulating a constant bit rate service over TCP, that no 
 % define the assumption
 We have so far observed that flow throughput is subjugated from TCP by external stakeholders.
 A third important element in the ensuing tussle is in understanding the role operators can play in imposing their own preferences upon traffic.
-As such, we now provide a brief overview of the extent, and under what circumstances, customer networks resorted to receiver shaping over the duration of the data/malawiset.
+As such, we now provide a brief overview of the extent, and under what circumstances, customer networks resorted to receiver shaping over the duration of the dataset.
 From preliminary inspection of table \ref{table:full}, it is apparent that receiver shaping was limited in both scope, affecting at most 4\% of bytes, and time, being primarily concentrated within 2009 and 2010.
 A breakdown of receiver shaping by traffic source is provided in table \ref{table:toprecvlim}, listing for each year the five most affected stakeholders within the top twenty ASes, and their respective contribution to the overall traffic and retransmissions observed yearly.
 

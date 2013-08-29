@@ -1,46 +1,100 @@
 \section{Introduction}
 
-Fueled largely by economies of scale in both software management and hardware acquisition and maintenance, the emergence of cloud computing and content distribution networks has lead to a profound shift in Internet traffic.
+% generic "failures are bad"
+Despite being broadly designed for robustness, the current Internet architecture remains remarkably vulnerable to failures.
+Managing faults effectively poses a significant operational challenge, in part because faults differ widely in both source and nature, potentially occuring at any layer of the stack and along any element along a path.
+
+% neither is transport
+\LOREM
+\LOREM
+
+% network methods
+Given the commercial nature of the Internet, the onus of providing resilience has instead shifted to network operators.
+Traditionally this has been achieved by overloading the routing architecture.
+The deployment of real time applications with harder constraints on reliability coupled with better failure detection methods embedded in linecards have provided both the motivation and the means for achieving sub-second recovery within IGP networks \cite{}.
+Even with reduced recovery times however, the transient effects of routing changes can still disrupt the forwarding path. 
+Under such cases diverse proposals such as Fast Re-Route \cite{}, Loop-Free Alternate next hops \cite{} or Packet Re-cycling \cite{} can provide repair paths for use between the detection of a failure and the convergence of the routing process.
+
+Unfortunately, such methods are rarely sufficient.
+Firstly, their application is circumscribed to individual domains, and as such cannot provide end-to-end coverage in a federated, best-effort Internet.
+Secondly, there are many faults which do not directly pertain to routing, such as middlebox misconfiguration or hardware malfunctions, and as such go undetected.
+Finally, reparation often disregards and potentially disrupts the transport layer by causing out-of-order delivery of packets.
+
+% why now. datacenter, SDN
+\LOREM
+\LOREM
+\LOREM
+
+% layout?
+\LOREM
+\LOREM
 
 
-Whereas the advent of broadband connections init
-In contrast to the highly distributed nature of peer-to-peer software which 
+%Outside their networks however, operators are reduced to negotiating service level agreements with their own providers who are invariably unable to cater for such specialized demands \cite{}.
+%Even if such terms were met, the Internet architecture provides limited visibility beyond one's own domain.
+%This opaqueness, in addition to the fact that failures themselves may be distributed in nature \cite{}, severely limits the ability for a customer network to trace remote problems to a single source \cite{}.
+%With no means to hold providers accountable for failures, there is little to enforce the terms of a truly end-to-end SLA.
+%
+%Unfortunately, such intradomain methods 
 
-For one, never has so much been distributed by so few to so many.
-% AS dist graph
-% netflix
 
-% Accountability, resilience
-Alongside this increased centralization of resources comes a heightened sense of accountability.
-The commercial nature of the agreements between customers and cloud hosting companies such as AWS \cite{} often involve the establishment of service level agreements.
-Even where such agreements are not explicit, such as the base option of tiered services such as Dropbox or Heroku, there is an inherent need to minimize the impact of outages -- non paying customers may be less demanding, but they are also less sensitive to the switching cost incurred in changing service provider.
-
-Unfortunately, the federated, best-effort nature of the Internet seemingly does not lend itself to such high expectations.
-All intervening equipment is subject to failure along a network path, with recovery time depending not only on \emph{what} happened, but also \emph{where}.
-Within their networks, operators are free to instrument and deploy arbitrarily complex tools to meet requirements. 
-This freedom has lead to a proliferation of proposed improvements in resilience for intradomain settings \cite{}.
-Outside their networks however, operators are reduced to negotiating service level agreements with their own providers who are invariably unable to cater for such specialized demands \cite{}.
-Even if such terms were met, the Internet architecture provides limited visibility beyond one's own domain.
-This opaqueness, in addition to the fact that failures themselves may be distributed in nature \cite{}, severely limits the ability for a customer network to trace remote problems to a single source \cite{}.
-With no means to hold providers accountable for failures, there is little to enforce the terms of a truly end-to-end SLA.
-
-The establishment of SLAs for network availability have traditionally been prefered within the telecom industry in particular, and represent one possible approach to ensuring resilience. An alternative approach is offered by the end-to-end principle. 
-Since end hosts possess both inherent knowledge of application needs and fine-grained measurements on end-to-end path characteristics, the transport layer is often identified as a more natural fit for dealing with fault tolerance at an Internet scale.
-Both SCTP \cite{} and MPTCP \cite{} enable transparent fail-over through multihoming.
-In spite of providing significant features, neither is likely to be widely deployed in the near future: the former lacks critical middlebox support, while the latter is still undergoing standardization.
-Furthermore, the requirement for end-host multihoming has also posed a barrier to deployment.
-Finally, all transport approaches to fail-over confine knowledge of faults within an individual flow: each flow must detect failures independently, even when many flows are affected by the same fault.
+%Alongside this increased centralization of resources comes a heightened sense of accountability.
+%The commercial nature of the agreements between customers and cloud hosting companies such as AWS \cite{} often involve the establishment of service level agreements.
+%Even where such agreements are not explicit, such as the base option of tiered services such as Dropbox or Heroku, there is an inherent need to minimize the impact of outages -- non paying customers may be less demanding, but they are also less sensitive to the switching cost incurred in changing service provider.
+%
+%Unfortunately, the federated, best-effort nature of the Internet seemingly does not lend itself to such high expectations.
 
 
 
+%Under such cases, a network operator is currently expected to detect, repair and recover from such faults.
+%Detection often requires scale -- the reliability with which a fault can be identified relies on the proportion of traffic affected. 
+%In many cases, faults affecting single flows may go undetected by the network.
+%Once detected, reparation varies according to the nature and origin of the fault.
+%For some cases, such as intradomain routing, this process is often automated and robust.
+%For many others however, such as faulty hardware or misconfigured devices, recovery is difficult and error-prone.
+%In either case, the amount of time expended in detection and repair can often preclude recovery, since most flows will terminate after successive timeouts.
+%
+
+%Fueled largely by economies of scale in both software management and hardware acquisition and maintenance, the emergence of cloud computing and content distribution networks has lead to a profound shift in Internet traffic.
+%
+%
+%Whereas the advent of broadband connections init
+%In contrast to the highly distributed nature of peer-to-peer software which 
+%
+%
+%For one, never has so much been distributed by so few to so many.
+%% AS dist graph
+%% netflix
+%
+%\LOREM
+%
+%% Accountability, resilience
+
+%All intervening equipment is subject to failure along a network path, with recovery time depending not only on \emph{what} happened, but also \emph{where}.
+%Within their networks, operators are free to instrument and deploy arbitrarily complex tools to meet requirements. 
+%This freedom has lead to a proliferation of proposed improvements in resilience for intradomain settings \cite{}.
 
 
-
-
+%The establishment of SLAs for network availability have traditionally been prefered within the telecom industry in particular, and represent one possible approach to ensuring resilience. An alternative approach is offered by the end-to-end principle. 
+%Since end hosts possess both inherent knowledge of application needs and fine-grained measurements on end-to-end path characteristics, the transport layer is often identified as a more natural fit for dealing with fault tolerance at an Internet scale.
+%Both SCTP \cite{} and MPTCP \cite{} enable transparent fail-over through multihoming.
+%In spite of providing significant features, neither is likely to be widely deployed in the near future: the former lacks critical middlebox support, while the latter is still undergoing standardization.
+%Furthermore, the requirement for end-host multihoming has also posed a barrier to deployment.
+%Finally, all transport approaches to fail-over confine knowledge of faults within an individual flow: each flow must detect failures independently, even when many flows are affected by the same fault.
+%
 
 
 % Transport is not the answer
 
 % Can we do better with SDN?
+
+
+%A default forwarding plane, corresponding to the label 0, must be defined and cater for all traffic destinations.
+%As with existing routing infrastructure, this single default plane will suffice for most traffic.
+
+%Invariably however, path failures will arise which may affect any number of flows.
+%Rather than expecting the network to address end-to-end failures, hosts are allowed to proactively request an overlay plane from the network.
+
+
 
 
