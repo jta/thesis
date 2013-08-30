@@ -79,7 +79,7 @@ However, since a core objective of this work is to augment this time-based infor
 Location information is added by mapping the original source and destination \ac{IP} addresses to its geographical and topological counterpoints. 
 The \emph{routeviews} archives are used to reconstruct the mapping between each \ac{IP} and both \ac{AS} and network prefix; bi-hourly dumps of \ac{BGP} \acp{RIB} are available in the \ac{WIDE} archives since mid 2003. 
 A daily \ac{RIB} is reconstructed based on the views provided by contributing ASes, in particular \ac{IIJ} and \ac{APNIC}.
-Since exact routes are not disclosed (there is no record of local policy), there is no prior knowledge of the route taken by packets; this however does not hinder the ability to consistently map \acp{IP} to \acp{AS}es. 
+Since exact routes are not disclosed (there is no record of local policy), there is no prior knowledge of the route taken by packets; this however does not hinder the ability to consistently map \acp{IP} to {\COMMENT\acp{AS}}.
 While discrepancies in \ac{AS} destinations exist between different routeviews contributors, this happens almost exclusively on prefixes for which no actual traffic is seen. 
 
 Mapping \ac{IP} to country is done through the use of GeoLite \cite{maxmind}, a commercial geolocation database. 
@@ -88,5 +88,5 @@ Most geographic emphasis will be placed on capturing macroscopic shifts in time 
 The archive for geolocation data only extends to 2009, before which we must rely on the earliest match. 
 Additionally, the administrative mapping up until mid 2009 for a destination or source \ac{AS} is verified to have remained the same in the relevant \ac{RIR} archives in order for a flow to be assigned a geographical location.
 % bridging paragraphs to save space.
-After associating flows to country, region, \ac{AS} and network prefix for both source and destination IPs, flow statistics are aggregated over each location identifier. 
+After associating flows to country, region, \ac{AS} and network prefix for both source and destination \acp{IP}, flow statistics are aggregated over each location identifier. 
 This generates a daily collection of location identifiers and associated flow properties, from which the geographic and topological properties of the dataset can be sketched over time.
