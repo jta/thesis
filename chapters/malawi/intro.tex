@@ -2,23 +2,23 @@ By readjusting traffic according to end-to-end metrics, \ac{PREFLEX} is unique i
 In the previous chapter necessarily artificial end-to-end behaviour was used in order to gain insight into how \ac{PREFLEX} works.
 Modelling how congestion can be balanced more accurately however requires understanding the inherent characteristics of Internet traffic at large.
 
-This chapter provides a longitudinal analysis of the characteristics of end-to-end Internet traffic, describing the shifting trends in interdomain traffic as viewed from WIDE, a Japanese academic provider.
+This chapter provides a longitudinal analysis of the characteristics of end-to-end Internet traffic, describing the shifting trends in interdomain traffic as viewed from \ac{WIDE}, a Japanese academic provider.
 Over time, this vantage point is subject to upgrades, changes in routing policy and congestion events, all of which can hinder the interpretation of data.
 These limitations are overcome by looking further afield, searching for clues within shifts in the geographical and topological makeup of inbound and outbound traffic and how these trends relate to end-to-end performance.
 
 \section{Motivation}
 
-TCP plays a central role in mediating between application needs and network capacity.
-In the absence of congestion, TCP is responsible for increasing sending rates in a bid to make efficient use of available bandwidth.
-Conversely, should congestion arise, TCP is expected to reduce its rate.
-This form of congestion control embedded in TCP is largely credited with performing resource allocation across the Internet and averting congestion collapse.
-But to what extent does this behaviour describe TCP throughput in practice?
+\ac{TCP} plays a central role in mediating between application needs and network capacity.
+In the absence of congestion, \ac{TCP} is responsible for increasing sending rates in a bid to make efficient use of available bandwidth.
+Conversely, should congestion arise, \ac{TCP} is expected to reduce its rate.
+This form of congestion control embedded in \ac{TCP} is largely credited with performing resource allocation across the Internet and averting congestion collapse.
+But to what extent does this behaviour describe \ac{TCP} throughput in practice?
 
 % app limited
 For some types of traffic, throughput is not strictly dictated by the outcome of congestion control.
 For one, inelastic traffic such as streaming media typically has bounds on the amount of capacity required.
-Beyond a certain throughput rate, bandwidth probing by TCP is often unnecessary and occasionally harmful.
-Since TCP drives itself relentlessly towards congestion, real-time applications may suffer from increased latency and jitter.
+Beyond a certain throughput rate, bandwidth probing by \ac{TCP} is often unnecessary and occasionally harmful.
+Since \ac{TCP} drives itself relentlessly towards congestion, real-time applications may suffer from increased latency and jitter.
 Furthermore, content providers may wish to avoid exceeding the streaming rate for content which may not be consumed in its entirety due to user behaviour, for example channel hopping for video streaming services \cite{iptvWorkload}, or client limitations, such as buffering restrictions on mobile devices \cite{Rao:2011p547}.
 % one click?
 Such forms of \emph{application pacing} are often also applied to elastic traffic.
@@ -26,12 +26,16 @@ In some cases, high throughput is perceived and subsequently marketed as a value
 One-click hosting services such Rapidshare and Megaupload \cite{oneclick1, SanjuasCuxart:2012p588} actively monetise access to large amounts of content both through online advertising and subscription models to bandwidth tiers.
 Conversely, file sharing applications such as Bittorrent and other peer-to-peer clients allow users to rate limit transfers in order to reduce impact on competing traffic, or to provide incentives for participation \cite{bittorrentIMC}.
 
-Even beyond such application behaviour, flows may still be constrained by factors not pertaining directly to TCP congestion control.
-The transport layer is subject to strict bounds within which it can operate, potentially impeded by socket buffer sizes set by OS vendors or tuned by network administrators. There is an upper bound on the window size a receiver can advertise back to the sender; in the absence of windowscale negotiation \cite{braden1989rfc}, no TCP connection can exceed a 64KB window. In addition, resource sharing is often subject to local policy.
-In the absence of adequate methods for readjusting how TCP distributes bandwidth, network operators and system administrators often trade efficiency for predictability, shaping traffic to conform to local notions of fairness or in anticipation for expected demand \cite{ispTrafficShaping}.
+Even beyond such application behaviour, flows may still be constrained by factors not pertaining directly to \ac{TCP} congestion control.
+The transport layer is subject to strict bounds within which it can operate, potentially impeded by socket buffer sizes set by \ac{OS} vendors or tuned by network administrators. 
+There is an upper bound on the window size a receiver can advertise back to the sender; in the absence of windowscale negotiation \cite{braden1989rfc}, no \ac{TCP} connection can exceed a 64\ac{KB} window. 
+In addition, resource sharing is often subject to local policy.
+In the absence of adequate methods for readjusting how \ac{TCP} distributes bandwidth, network operators and system administrators often trade efficiency for predictability, shaping traffic to conform to local notions of fairness or in anticipation for expected demand \cite{ispTrafficShaping}.
 
 Given these different potential sources of rate control, \emph{what can be said about their relative impact on Internet traffic at large}?
-This chapter investigates this question from the point of view of the un-anonymised MAWI dataset, that comprises a single transit link over a period of five years (from late 2006 to early 2012). Through the addition of routing information external to MAWI, a derived dataset is produced which aggregates flow level metrics across geographic and topological locations. Hence, this work sheds some light on the asymmetry in global network performance over time and provides a valuable counterpoint to existing US-centric vantage points.
+This chapter investigates this question from the point of view of the un-anonymised \ac{MAWI} dataset, that comprises a single transit link over a period of five years (from late 2006 to early 2012). 
+Through the addition of routing information external to \ac{MAWI}, a derived dataset is produced which aggregates flow level metrics across geographic and topological locations. 
+Hence, this work sheds some light on the asymmetry in global network performance over time and provides a valuable counterpoint to existing US-centric vantage points.
 
 %The paper is structured as follows. We present previous relevant contributions in Section \ref{section:malawi:related}, and our dataset in Section \ref{section:malawi:dataset}. We continue by describing our methodology in Section \ref{section:malawi:methodology}, and some of the implications of our findings in Section \ref{section:malawi:analysis}. Finally, we present our conclusions in Section \ref{section:malawi:conclusion}.
 

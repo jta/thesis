@@ -1,16 +1,19 @@
 \section{Dataset}
 \label{section:malawi:dataset}
 
-This section provides an overview of the datasets used in this work and some of the data processing required before approaching the longitudinal study of Internet traffic rate limiting. We use the original, unanonymised traffic traces of the MAWI \cite{mawi} dataset, a set of daily traces from the WIDE backbone network which provides connectivity to universities and research institutes in Japan. Traffic is captured daily for 15 minutes starting at 14:00JST. Although this dataset extends back largely uninterrupted from late 2001, we focus on just over five years of data following a network upgrade to the monitored link on October 2006.
+This section provides an overview of the datasets used in this work and some of the data processing required before approaching the longitudinal study of Internet traffic rate limiting. 
+We use the original, unanonymised traffic traces of the \ac{MAWI} \cite{mawi} dataset, a set of daily traces from the \ac{WIDE} backbone network which provides connectivity to universities and research institutes in Japan. 
+Traffic is captured daily for 15 minutes starting at 14:00\ac{JST}. 
+Although this dataset extends back largely uninterrupted from late 2001, the present work focuses on just over five years of data following a network upgrade to the monitored link on October 2006.
 
-The monitored link carries mostly trans-Pacific commodity traffic between WIDE customers and non-Japanese commercial networks. 
-We will refer to traffic towards WIDE as \emph{inbound} traffic, whereas traffic originating from within WIDE is referred to as \emph{outbound} traffic.
+The monitored link carries mostly trans-Pacific commodity traffic between \ac{WIDE} customers and non-Japanese commercial networks. 
+Traffic towards \ac{WIDE} is referred to as \emph{inbound} traffic, whereas traffic originating from within \ac{WIDE} is referred to as \emph{outbound} traffic.
 
 \begin{table}[!htp]
 \scriptsize
 \centering
     \begin{tabular}{r|cccccc}
-        & & TCP data & \multicolumn{2}{c}{Traffic (TB)} & \multicolumn{2}{c} {Count ($\times10^3$)} \\
+        & & \ac{TCP} data & \multicolumn{2}{c}{Traffic (TB)} & \multicolumn{2}{c} {Count ($\times10^3$)} \\
         Year & Days & flows (x$10^6$) & In & Out & AS & Prefixes \\
         \hline
         2006 & 91 & 20.52 & 0.43& 0.45 & 10.90 & 56.86\\
@@ -28,22 +31,26 @@ We will refer to traffic towards WIDE as \emph{inbound} traffic, whereas traffic
 \end{table}
 
 A preliminary overview of the dataset used is provided in table \ref{table:overview}. 
-In total, 5.7 billion flows containing data are traced over five largely uninterrupted years; this represents approximately 30 terabytes of TCP traffic. For the purposes of this work, we will focus exclusively on inbound traffic, 60\% to 80\% of which originates from port 80, referring only to analysis of outbound traffic when providing a wider context for our findings.
+In total, 5.7 billion flows containing data are traced over five largely uninterrupted years; this represents approximately 30 terabytes of \ac{TCP} traffic. For the purposes of this work, we will focus exclusively on inbound traffic, 60\% to 80\% of which originates from port 80, referring only to analysis of outbound traffic when providing a wider context for our findings.
 Given the sender side plays a critical role in shaping traffic, analysing traffic for which the source is restricted to a small set of networks within Japan would be of limited use in accurately depicting traffic trends at large.
 We instead fix hosts within Japan as sinks, thus sharing a similar perspective on inbound traffic as many other networks. 
 
-\subsection{Tracing TCP Metrics}
+\subsection{Tracing \ac{TCP} Metrics}
 
-All TCP flows are reassembled and analysed for each daily trace.
-In addition to the five tuple used to define each connection, we impose two additional restrictions: a contiguous sequence number space and a three minute timeout. These restrictions are helpful to deal with port reuse and unterminated flows respectively.  
-Although the total number of TCP flows increased dramatically in 2011, the number of flows \emph{for which data payload was seen} has remained stable, averaging over 100 million data flows traced per year.  
+All \ac{TCP} flows are reassembled and analysed for each daily trace.
+In addition to the five tuple used to define each connection, we impose two additional restrictions: a contiguous sequence number space and a three minute timeout. 
+These restrictions are helpful to deal with port reuse and unterminated flows respectively.  
+Although the total number of \ac{TCP} flows increased dramatically in 2011, the number of flows \emph{for which data payload was seen} has remained stable, averaging over 100 million data flows traced per year.  
 
-There is much prior work with regards to reconstructing TCP flow from passive measurements and using this information to understand the end-to-end properties of traffic \cite{firstRTT,Jaiswal:2007p233,Rewaskar:2007p195,Shakkottai:2004p408}. However, the MAWI traces impose two constraints which require careful consideration, and ultimately led to the use of a custom TCP tracer. 
+There is much prior work with regards to reconstructing \ac{TCP} flow from passive measurements and using this information to understand the end-to-end properties of traffic \cite{firstRTT,Jaiswal:2007p233,Rewaskar:2007p195,Shakkottai:2004p408}. 
+However, the \ac{MAWI} traces impose two constraints which require careful consideration, and ultimately led to the use of a custom \ac{TCP} tracer. 
 The first one is the proportion of bidirectional flows, that is flows, where both forward and reverse path are seen. 
 In the dataset used this fluctuates between 40\% and 60\% over five years.
-Most available TCP tracers either ignore or are inadequate at processing unidirectional flows. 
+Most available \ac{TCP} tracers either ignore or are inadequate at processing unidirectional flows. 
 The second one is the short duration of each individual trace file. 
-At only 15 minutes of line-rate data capture per day, it is wasteful to ignore flows which are not complete. Although the number of flows for which a SYN and FIN in either direction is observed has remained consistently high until late 2011, these flows are normally \emph{mice}, i.e. flows that tend to be brief and which carry little traffic individually. In contrast, most \emph{elephants} (flows that carry significant traffic individually) have durations that exceed that of each trace file. 
+At only 15 minutes of line-rate data capture per day, it is wasteful to ignore flows which are not complete. 
+Although the number of flows for which a SYN and FIN in either direction is observed has remained consistently high until late 2011, these flows are normally \emph{mice}, i.e. flows that tend to be brief and which carry little traffic individually. 
+In contrast, most \emph{elephants} (flows that carry significant traffic individually) have durations that exceed that of each trace file. 
 
 %rtts traced
 %While many metrics are extracted for each flow, for the purposes of this paper we will focus only on detailing how we collected delay and loss.
@@ -62,27 +69,29 @@ At only 15 minutes of line-rate data capture per day, it is wasteful to ignore f
 Loss is inferred by accounting for \emph{retransmissions} in the upstream data and \emph{out-of-order packets} in downstream data; for the remainder of the paper we will refer to the \emph{end-to-end loss} as the sum of out of order and retransmitted data bytes over the total data bytes in a given direction.
 % XXX: remove RTT ref?
 %Tracking both retransmissions and out-of-order packets accurately requires a reliable RTT estimate, which can only be obtained for bidirectional flows. We forfeit some precision by not taking this into account, as we wish to be consistent in how we estimate both metrics independently of the type of flow and aggregation. 
-Pragmatically, we found this to be an adequate indicator of loss --- with the exception of \emph{hanging} TCP connections. 
+Pragmatically, this was found to be an adequate indicator of loss --- with the exception of \emph{hanging} \ac{TCP} connections. 
 In these cases where connectivity is lost, a host will proceed to retransmit packets while performing an exponential backoff. 
 Although this results in negligible overall traffic, it can significantly skew the inferred loss ratio for uncommon destinations for which little traffic exists. 
 To account for these cases, we imposed a 3-second timeout on retransmissions after which we consider the congestion feedback loop to be broken. 
 
 Each daily trace in the dataset is processed from a packet level capture into a collection of flow level statistics. 
-This gives us insight into the end-to-end characteristics of traffic. However, since a core objective of this work is to augment this time-based information with data describing the endpoints of each flow, aggregating by location is also required. 
+This gives us insight into the end-to-end characteristics of traffic. 
+However, since a core objective of this work is to augment this time-based information with data describing the endpoints of each flow, aggregating by location is also required. 
 
 \subsection{Aggregating by Location}
 
-Location information is added by mapping the original source and destination IP addresses to its geographical and topological counterpoints. 
-We use the \emph{routeviews} archives to reconstruct the mapping between each IP and both AS and network prefix; bi-hourly dumps of BGP RIBs are available in the WIDE archives since mid 2003. 
-We reconstruct a daily RIB based on the views provided by contributing ASes, in particular IIJ and APNIC. 
-Since exact routes are not disclosed (there is no record of local policy), we have no knowledge of the route taken by packets; this of course does not hinder our ability to consistently map IPs to ASes. While discrepancies in AS destinations exist between different routeviews contributors, we note that this happens almost exclusively on prefixes for which no actual traffic is seen. 
+Location information is added by mapping the original source and destination \ac{IP} addresses to its geographical and topological counterpoints. 
+We use the \emph{routeviews} archives to reconstruct the mapping between each \ac{IP} and both \ac{AS} and network prefix; bi-hourly dumps of \ac{BGP} \acp{RIB} are available in the \ac{WIDE} archives since mid 2003. 
+We reconstruct a daily \ac{RIB} based on the views provided by contributing ASes, in particular \ac{IIJ} and \ac{APNIC}.
+Since exact routes are not disclosed (there is no record of local policy), we have no knowledge of the route taken by packets; this of course does not hinder our ability to consistently map \acp{IP} to \acp{AS}es. 
+While discrepancies in \ac{AS} destinations exist between different routeviews contributors, we note that this happens almost exclusively on prefixes for which no actual traffic is seen. 
 
-Mapping IP to country is done through the use of GeoLite \cite{maxmind}, a commercial geolocation database. 
+Mapping \ac{IP} to country is done through the use of GeoLite \cite{maxmind}, a commercial geolocation database. 
 While the accuracy of this solution is often disputed, we are not overly concerned with locating traffic at a fine granularity. 
-We will mostly focus on tracking traffic by country and, for larger countries such as the U.S, by region, in order to capture shifts over time.
+We will mostly focus on tracking traffic by country and, for larger countries such as the United States, by region, in order to capture shifts over time.
 GeoLite proves adequate on both counts.
 The archive for geolocation data only extends to 2009, before which we must rely on the earliest match. 
-Additionally, we verify if the destination or source AS have maintained the same administrative mapping up until mid 2009 in the relevant RIR (regional internet registry) archives; otherwise, we do not associate a flow to a geographical location.
+Additionally, we verify if the destination or source AS have maintained the same administrative mapping up until mid 2009 in the relevant \ac{RIR} archives; otherwise, we do not associate a flow to a geographical location.
 % bridging paragraphs to save space.
-After associating flows to country, region, AS and network prefix for both source and destination IPs, we aggregate flow statistics over each location identifier. 
+After associating flows to country, region, \ac{AS} and network prefix for both source and destination IPs, we aggregate flow statistics over each location identifier. 
 This generates a daily collection of location identifiers and associated flow properties, from which we can sketch the geographic and topological properties of the dataset over time.

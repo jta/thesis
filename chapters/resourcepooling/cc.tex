@@ -84,7 +84,6 @@ The importance of congestion control within \ac{TCP} was first highlighted by Na
 Working at Ford Motor Company, which operated the only private \ac{TCP}/\ac{IP} long-haul network at the time, Nagle reported periods of excessive load and unusual congestion problems. 
 Nagle proposed alterations to address the small-packet problem, in which an excessive number of small packets were generated for the transmission of keyboard strokes, and to improve the handling of \ac{ICMP} Source Quench messages. 
 Neither would prove sufficient in the long run.  
-
 As issues arising from congestion increased, so too did the interest within the community to address the problem. 
 Independent work by Jain and Ramakrishnan at \ac{DEC}, Phil Karn, Lixia Zhang and Craig Partridge had all begun to converge on similar solutions for managing congestion, but ultimately it would be Van Jacobson who would synthesize the model for congestion control which is still prevalent today.
 
@@ -118,7 +117,7 @@ The resulting changes were quickly deployed as \ac{TCP} Tahoe and proved instrum
     \label{fig:tcpcc}
 \end{figure}
 
-Congestion control became a staple of networking research. Successive refinements, including the addition of \textit{fast recovery} resulted in \ac{TCP} Reno \cite{Stevens:1997p466} and then \ac{TCP} NewReno \cite{Paxson:1999p467}, which would become the most commonly accepted and widely deployed congestion control algorithm for over a decade. Variants such as Vegas \cite{Brakmo:1994p468} and \ac{FAST} \cite{Wei:2006p469} would complement the use of loss with the estimation of queuing delay, and adjust rates accordingly. \ac{BIC} and CUBIC \cite{Xu:2004p470,Ha:2008p471} addressed rate adjustment as a binary search problem and would be adopted by Linux distributions. Finally, \ac{CTCP} \cite{Zhang:2012p472}, deployed from Windows Vista onwards, would use loss and delay as a combined congestion signal, tracking both as separate components before calculating an overall congestion window.
+Congestion control would go on to become a staple of networking research. Successive refinements, including the addition of \textit{fast recovery} resulted in \ac{TCP} Reno \cite{Stevens:1997p466} and then \ac{TCP} NewReno \cite{Paxson:1999p467}, which would become the most commonly accepted and widely deployed congestion control algorithm for over a decade. Variants such as Vegas \cite{Brakmo:1994p468} and \ac{FAST} \cite{Wei:2006p469} would complement the use of loss with the estimation of queuing delay, and adjust rates accordingly. \ac{BIC} and CUBIC \cite{Xu:2004p470,Ha:2008p471} addressed rate adjustment as a binary search problem and would be adopted by Linux distributions. Finally, \ac{CTCP} \cite{Zhang:2012p472}, deployed from Windows Vista onwards, would use loss and delay as a combined congestion signal, tracking both as separate components before calculating an overall congestion window.
 
 In spite of these changes, the core of \ac{TCP} congestion control algorithms can still be directly traced to Van Jacobson's initial proposal. 
 That a stop-gap solution has managed to sustain the growth of the Internet for over two decades is an outcome even Van Jacobson could not have anticipated. 
@@ -249,7 +248,7 @@ DECbit proved promising enough to be ported to \ac{IP} with minor changes as the
 \ac{ECN} would reuse two bits from the \ac{ToS} field to retrieve binary network feedback.
 If neither bit was set, a packet is deemed to be non-\ac{ECT} and therefore legacy traffic.
 If either bit was set, both hosts had established the usage of \ac{ECN} during the initial handshake and the packet belongs to an \ac{ECT} flow.
-Having detected the onset of congestion according to a given \ac{AQM} discipline, an \ac{ECN} enabled queues would then set both bits to encode the \ac{CE} codepoint.
+Having detected the onset of congestion according to a given \ac{AQM} discipline, an \ac{ECN} aware queue would then set both bits to encode the \ac{CE} codepoint.
 Unlike DECbit, a single \ac{CE} marking would be sufficient motive for a sender to decrease its congestion window, making \ac{ECN} compatible with probabilistic \ac{AQM} mechanisms such as \ac{RED} \cite{Floyd:1993p492}.
 Furthermore, the multiplicative decrease was more conservative than in DECbit, and followed the existing \ac{TCP} standard of halving the congestion window.
 This conscious decision to make \ac{ECN} enabled traffic perform similarly to legacy \ac{TCP} over large timescales would strip it of a potentially important competitive advantage in deployment whilst retaining one of the less scalable components of \ac{TCP}.
@@ -332,7 +331,7 @@ In prioritizing queue drainage and system stability however \ac{XCP} presented a
 Under high utilization, only a small proportion of bandwidth would be reshuffled resulting in a potentially slow convergence to flow fair rates for short-lived flows.
 Recognizing the importance such flows had in overall user experience, Dukkipati et al proposed the \ac{RCP}.
 Building on the explicit congestion control framework proposed by \ac{XCP}, \ac{RCP} emulates processor sharing by emphasizing the \ac{AFCT} rather than delay stability \cite{Dukkipati:2005p78}.
-Rather than calculating a change to source \ac{cwnd}, the equivalent \ac{FC} in an \ac{RCP} system calculates the explicit maximum rate $R$ to be set for flows traversing a router at interval $n$:
+Rather than calculating a change to the source \ac{cwnd}, the equivalent \ac{FC} in an \ac{RCP} system calculates the explicit maximum rate $R$ to be set for flows traversing a router at interval $n$:
 \begin{equation}
 R_n = R_{n-1} + \frac{F}{N}
 \end{equation}
@@ -364,7 +363,6 @@ Furthermore Kelly showed that such a scheme could be easily realized by charging
 Kelly's work proved a radical departure from conventional wisdom. 
 By sharing capacity equally amongst flows \ac{TCP} had been hard-wired with a single concept of fairness.
 That social welfare was shown to be maximized only when users were forced to weigh demand according to expected cost suggested that flow fairness was sub-optimal.
-
 As ever the notion of charging a user variable costs proved unpopular \cite{Odlyzko:2004p290}, while charging the receiver instead of the sender proved impractical.
 Building on Kelly's work, Briscoe would resolve both shortcomings.
 

@@ -1,34 +1,39 @@
-\section{Introduction}
-
 % generic "failures are bad"
 Despite being broadly designed for robustness, the current Internet architecture remains remarkably vulnerable to failures.
 Managing faults effectively poses a significant operational challenge, in part because faults differ widely in both source and nature, potentially occuring at any layer of the stack and along any element along a path.
-
-% neither is transport
-\LOREM
-\LOREM
+This inherent diversity has traditionally favoured placing resilience mechanisms at the transport layer.
+Since endpoints possess both inherent knowledge of application needs and fine-grained measurements on end-to-end path characteristics, transport protocols offer a natural fit for providing scalable resilience.
+To this end, transparent fail-over through multihoming is a significant feature of modern transport protocols such as SCTP \cite{rfc4960} and MPTCP \cite{Wischik:2008p137}.
+Neither is likely to be widely deployed in the near future however: the former lacks critical middlebox support, while the latter is still undergoing standardization.
+Furthermore, the requirement for end-host multihoming has also posed a barrier to deployment.
+Finally, all transport approaches to fail-over confine knowledge of faults within an individual flow: each flow must detect failures independently, even when many flows are affected by the same fault.
 
 % network methods
 Given the commercial nature of the Internet, the onus of providing resilience has instead shifted to network operators.
 Traditionally this has been achieved by overloading the routing architecture.
-The deployment of real time applications with harder constraints on reliability coupled with better failure detection methods embedded in linecards have provided both the motivation and the means for achieving sub-second recovery within IGP networks \cite{}.
+The deployment of real time applications with harder constraints on reliability coupled with better failure detection methods embedded in linecards have provided both the motivation and the means for achieving sub-second recovery within IGP networks \cite{Francois:2005p514}.
 Even with reduced recovery times however, the transient effects of routing changes can still disrupt the forwarding path. 
-Under such cases diverse proposals such as Fast Re-Route \cite{}, Loop-Free Alternate next hops \cite{} or Packet Re-cycling \cite{} can provide repair paths for use between the detection of a failure and the convergence of the routing process.
-
+Under such cases different frameworks \cite{Bryant:2007p522,Torvi:2008p518,Lor:2010:PRE:1868447.1868449} can provide repair paths for use between the detection of a failure and the convergence of the routing process.
 Unfortunately, such methods are rarely sufficient.
-Firstly, their application is circumscribed to individual domains, and as such cannot provide end-to-end coverage in a federated, best-effort Internet.
-Secondly, there are many faults which do not directly pertain to routing, such as middlebox misconfiguration or hardware malfunctions, and as such go undetected.
+Firstly, their application is circumscribed to individual domains, and as such cannot provide end-to-end coverage in a federated, best-effort Internet. 
+In order to detect remote failures an operator may employ active monitoring techniques \cite{DBLP:conf/im/FokLMLLCC13}, but such approaches can neither scale to cover most destinations nor operate at a small enough timescale to ensure timely recovery.
+Secondly, there are many faults which do not directly pertain to routing \cite{Turner:2010:CFL:2043164.1851220}, such as middlebox misconfiguration or hardware malfunctions, and as such go undetected.
 Finally, reparation often disregards and potentially disrupts the transport layer by causing out-of-order delivery of packets.
 
-% why now. datacenter, SDN
-\LOREM
-\LOREM
-\LOREM
+A potential tool for improving network resilience is the emergence of software-defined networking (SDN) \cite{McKeown:2008:OEI:1355734.1355746}, which unlocks much greater flexibility at the control plane.
+Many of the aforementioned shortcomings however are not directly solved by the decoupling of control and data planes alone, instead being rooted in the lack of end-to-end insight into network traffic.
+Building on afforded by SDN, this paper presents INFLEX, an architecture for network resilience which provides on-demand path fail-over for IP traffic.
+The architecture is both unilaterally deployable, providing benefits even when adopted by individual domains, and inherently end-to-end, potentially covering third party failures.
+INFLEX is an extension to the network abstraction provided by the IP protocol and as such can be used by all transport protocols.
+At the host, INFLEX provides such protocols the means for switching paths at a timescale which avoids flow disruption and which can be transparently integrated into existing congestion control mechanisms.
+Within the network, the proposed architecture provides both greater insight into end-to-end path quality, assisting fault detection, and more control over path assignment, enabling more effective fault recovery.
+The resulting architecture is verified experimentally, with modifications to both network stack and network controller being implemented and made publicly available.
 
-% layout?
-\LOREM
-\LOREM
-
+The remainder of the paper is structured as follows.
+Section \ref{section:background} provides a brief background on software-defined networks.
+Section \ref{section:design} reviews some of the design decisions in the light of longitudinal measurements performed on the MAWI dataset \cite{MAWI}.
+An overview of the proposed architecture is the presented in section \ref{section:arch}, followed by an evaluation of INFLEX in section \ref{section:eval}.
+Finally, conclusions are drawn in section \ref{section:conc}.
 
 %Outside their networks however, operators are reduced to negotiating service level agreements with their own providers who are invariably unable to cater for such specialized demands \cite{}.
 %Even if such terms were met, the Internet architecture provides limited visibility beyond one's own domain.
@@ -53,48 +58,3 @@ Finally, reparation often disregards and potentially disrupts the transport laye
 %For some cases, such as intradomain routing, this process is often automated and robust.
 %For many others however, such as faulty hardware or misconfigured devices, recovery is difficult and error-prone.
 %In either case, the amount of time expended in detection and repair can often preclude recovery, since most flows will terminate after successive timeouts.
-%
-
-%Fueled largely by economies of scale in both software management and hardware acquisition and maintenance, the emergence of cloud computing and content distribution networks has lead to a profound shift in Internet traffic.
-%
-%
-%Whereas the advent of broadband connections init
-%In contrast to the highly distributed nature of peer-to-peer software which 
-%
-%
-%For one, never has so much been distributed by so few to so many.
-%% AS dist graph
-%% netflix
-%
-%\LOREM
-%
-%% Accountability, resilience
-
-%All intervening equipment is subject to failure along a network path, with recovery time depending not only on \emph{what} happened, but also \emph{where}.
-%Within their networks, operators are free to instrument and deploy arbitrarily complex tools to meet requirements. 
-%This freedom has lead to a proliferation of proposed improvements in resilience for intradomain settings \cite{}.
-
-
-%The establishment of SLAs for network availability have traditionally been prefered within the telecom industry in particular, and represent one possible approach to ensuring resilience. An alternative approach is offered by the end-to-end principle. 
-%Since end hosts possess both inherent knowledge of application needs and fine-grained measurements on end-to-end path characteristics, the transport layer is often identified as a more natural fit for dealing with fault tolerance at an Internet scale.
-%Both SCTP \cite{} and MPTCP \cite{} enable transparent fail-over through multihoming.
-%In spite of providing significant features, neither is likely to be widely deployed in the near future: the former lacks critical middlebox support, while the latter is still undergoing standardization.
-%Furthermore, the requirement for end-host multihoming has also posed a barrier to deployment.
-%Finally, all transport approaches to fail-over confine knowledge of faults within an individual flow: each flow must detect failures independently, even when many flows are affected by the same fault.
-%
-
-
-% Transport is not the answer
-
-% Can we do better with SDN?
-
-
-%A default forwarding plane, corresponding to the label 0, must be defined and cater for all traffic destinations.
-%As with existing routing infrastructure, this single default plane will suffice for most traffic.
-
-%Invariably however, path failures will arise which may affect any number of flows.
-%Rather than expecting the network to address end-to-end failures, hosts are allowed to proactively request an overlay plane from the network.
-
-
-
-
