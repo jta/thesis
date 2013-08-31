@@ -28,7 +28,7 @@ Use the dash notation for the same quantities in the next time period.
 In typical time periods $\E{T'} = \E{T}$ (since, for example, if the next time period on average had more traffic, the overall amount of traffic would be growing -- while this is true in the year-on-year setting, this effect is negligible in the time scale discussed here). 
 Now $\rho'_i = R'_i/T'_i = k T'_i/B'_i$.  
 Choose the $T'_i$ to make all $R'_i/T'_i = C$ (hence all equal) where $C$ is some unknown constant.  
-Therefore $T'_i = C B'_i/k'_i$ but if this is still near our locally linear region then $B'_i/k'_i \simeq B_i/k_i$ and $B_i/k_i$ is determined by \eqref{eqn:bik} hence the predicted distribution is $ T'_i = C T_i^2/R_i$.  
+Therefore $T'_i = C B'_i/k'_i$ but if this is still near the locally linear region then $B'_i/k'_i \simeq B_i/k_i$ and $B_i/k_i$ is determined by \eqref{eqn:bik} hence the predicted distribution is $ T'_i = C T_i^2/R_i$.  
 Now it is necessary to calculate $C$ by summing over $i$.  
 $T = C \sum_i T_i^2/R_i$ and hence $C = T/\sum_i T_i^2/R_i$.
 This gives the final answer:
@@ -38,8 +38,9 @@ T'_i = \frac{T T_i^2}{R_i \sum_j (T_j^2/R_j)}.
 \end{equation}
 
 There is, of course, a problem when $R_i = 0$.  
-Because of the assumption that the traffic is assigned in inverse proportion to loss rate then a branch with no loss would naturally have all the traffic assigned to it. To correct this, $R_i$ is incremented for each path by one maximum segment size (MSS). 
-This problem will be further discussed in subsequent sections.
+Because of the assumption that the traffic is assigned in inverse proportion to loss rate then a branch with no loss would naturally have all the traffic assigned to it. 
+To correct this, $R_i$ is incremented for each path by one maximum segment size (MSS). 
+This problem is further explored in subsequent sections.
 
 \subsection{Understanding the design space}
 
@@ -68,10 +69,10 @@ This problem will be further discussed in subsequent sections.
         \caption{Balanced}\label{fig:twopreflex}
     \end{subfigure}%
 
-    \caption{Simulation using PREFLEX to balance traffic over two paths.
-        \label{fig:two}
+    \caption[Simulation using PREFLEX to balance traffic over two paths.]
+    {Simulation using PREFLEX to balance traffic over two paths. \label{fig:two}
         Each simulation demonstrates the dynamics of a single mode, except for
-        \subref{fig:twopreflex} which balances between conservative and loss-driven components.  }
+        (\subref{fig:twopreflex}) which balances between conservative and loss-driven components.  }
 \end{figure}
 
 
@@ -80,7 +81,7 @@ It is also useful to send a small amount of probe traffic down each route even i
 In the absence of other information (for example when there is no loss) it is useful to assign traffic according to the current traffic throughput split.  Therefore there are three tendencies to be accounted for, the loss-equalisation tendency from \eqref{eqn:routesplitloss}, the conservative tendency to keep the traffic split the same as the throughput split in the previous period and the equalisation tendency to keep the traffic equally split on all interfaces.  
 Call the traffic split assigned to path $i$  by each of these schemes $T(E)_i$, $T(C)_i$ and $T(L)_i$ where $E$, $C$ and $L$ stand for ``equal", ``conservative" and ``loss-driven".
 
-Then our final distribution of traffic across all links is:
+The final distribution of traffic across all links is then:
 $$
 T'_i = \beta_E T'(E)_i + \beta_C T'(C)_i + \beta_L T'(L)_i,
 $$
@@ -112,7 +113,7 @@ More worryingly, a pure conservative approach demonstrates the wrong dynamics, a
 Despite being saturated, the balancer continues to push more traffic towards path 1 while the second path remains under-utilized, dropping its throughput further.
 
 Note that in figure \ref{fig:two} the conservative approach obtains higher throughput than its loss-driven counterpart once loss settles in. 
-While this may seem advantageous, in reality we shall show that this behaviour is detrimental to the system as a whole and only by balancing loss can social welfare be optimized \cite{Kelly:2005p140}. 
+While this may seem advantageous, in reality this behaviour will be shown to be detrimental to the system as a whole: only by balancing loss can social welfare be optimized \cite{Kelly:2005p140}.
 
 \subsection{Balancing between conservative and loss-driven}
 
@@ -124,12 +125,12 @@ Let $\gamma$ replace both $\beta_C$ and $\beta_L$ in \eqref{eqn:Tdashi} and adju
 \begin{equation}
 f'_i = \beta_E \frac{1}{N} + \left( 1-\beta_E \right) \left(
 \gamma \frac{T_i}{T} + \left(1-\gamma\right) \frac{T_i^2}{R_i \sum_j
-(T_j^2/R_j)} \right)
+(T_j^2/R_j)} \right).
 \label{eqn:gamma}
 \end{equation}
 
 As a result, $\beta_E$ may now vary between $[0,1]$. 
-A simple but effective value for $\gamma$ is to define a minimum average loss $\mu_{min}$ below which we do not react to loss, and react increasingly as the average loss $\mu$ becomes more significant:
+A simple but effective value for $\gamma$ is to define a minimum average loss $\mu_{min}$ below which there loss is tolerated, and react increasingly as the average loss $\mu$ becomes more significant:
 \begin{equation}
 \gamma = 
 \begin{cases} 
@@ -145,17 +146,15 @@ The value of $\mu_{min}$ was set to $0.005$.
 \begin{figure}
     \begin{subfigure}[b]{.5\linewidth}
         \centering
-        \includegraphics[width=2.25in]{figures/cate/gamma}
-        \caption{}
-        \label{fig:gamma}
+        \includegraphics[width=2.5in]{figures/cate/gamma}
+        \caption{$\gamma$ \label{fig:gamma}}
     \end{subfigure}
     \begin{subfigure}[b]{.5\linewidth}
         \centering
-        \includegraphics[width=2.25in]{figures/cate/tau}
-        \caption{}
-        \label{fig:tau}
+        \includegraphics[width=2.5in]{figures/cate/tau}
+        \caption{$\tau'$ \label{fig:tau}}
     \end{subfigure}
-    \caption{Parameters $\gamma$ (left) and $\tau'$ (right) as seen in in example in figure \ref{fig:twopreflex}.}
+    \caption[Parameters $\gamma$ and $\tau'$]{Self-tuning parameters for example in figure \ref{fig:twopreflex}.}
     \label{fig:tune}
 \end{figure}
 
@@ -165,10 +164,10 @@ The value of $\mu_{min}$ was set to $0.005$.
 % regime where different parameters are needed (e.g. equal traffic on
 % all pathsprobes unused paths, conservative works in low loss regime,
 % loss-basedworks in high loss regime).
-Another issue is how often the flow split should be updated considering the sparseness of loss.
+A further potential issue is how often the flow split should be updated considering the sparseness of loss.
 Assume that for a given prefix packet loss is measured over a given time period $\tau$.  
-It would be useful to tune this $\tau$ per prefix in order that the loss estimate was ``accurate".  
-If $\tau$ is short then only a very small number of packets will be lost.  
+It would be practical to tune this $\tau$ per prefix according to the accuracy afforded by the loss estimate.
+If $\tau$ is short then only a very small number of packets will be lost. 
 On the other hand, if $\tau$ is long then the control system will be unable to react quickly to changes.  
 $\tau$ should therefore be sufficiently small that an accurate measure of loss can be obtained.  
 As a result, it is useful to have a rough estimate of the measurement period required to ensure accurate loss estimates.
@@ -182,18 +181,18 @@ To prevent the aforementioned divide by zero issue, $l_i = 1$ if no packets are 
 Let $p_i$ be the probability that a given packet is lost on path $i$ and assume that packet loss is a Bernoulli process.  
 An unbiased estimate of $p_i$ is $\hat{p_i} = l_i/t_i$ (it is important to what follows that $\hat{p_i}$ is only an estimate of $p_i$ by ``chance" more or fewer packets may have been lost).  
 If packet loss is Bernoulli then $l_i$ has a binomial distribution and its variance $\sigma^2$ is given by $t_i p(1-p)$.  
-The coefficient of variation (CV), is a dimensionless measure given by the standard deviation over the mean $c_v= \sigma/\mu$.  
-Keeping the coefficient of variation within some bound $\delta$ is a measure of the amount by which an estimate is likely to vary from the true mean (note, however, that this is not technically a confidence interval).
+The \ac{CV}, is a dimensionless measure given by the standard deviation over the mean $c_v= \sigma/\mu$.  
+Keeping the coefficient of variation within some bound $\delta$ is a measure of the amount by which an estimate is likely to vary from the true mean \footnote{note, however, that this is not technically a confidence interval.}.
 
-For the number of lost packets on a given prefix $i$ the estimated CV is $\hat{c_v(i)} = \sqrt{t_i \hat{p_i}(1- \hat{p_i})}/t_i\hat{p_i}$.
+For the number of lost packets on a given prefix $i$ the estimated \ac{CV} is $\hat{c_v(i)} = \sqrt{t_i \hat{p_i}(1- \hat{p_i})}/t_i\hat{p_i}$.
 Let $r_i$ be the rate of packet arrival per unit time on $i$ giving $t_i= r_i \tau$.  
-Define $W$ the CV weighted by transmitted packets over the prefix as $W= \sum_i t_i/t \hat{c_v(i)}$ where $t= \sum_i t_i$ and this expands as $$W =  \sum_i \frac{t_i}{t} \sqrt{\frac{ (1- \hat{p_i})} {r_i \tau }}.$$
+Define $W$ the \ac{CV} weighted by transmitted packets over the prefix as $W= \sum_i t_i/t \hat{c_v(i)}$ where $t= \sum_i t_i$ and this expands as $$W =  \sum_i \frac{t_i}{t} \sqrt{\frac{ (1- \hat{p_i})} {r_i \tau }}.$$
 
-The ``accuracy" of the measurement of $p_i$ is determined by the accuracy of $l_i$ and hence, for the prefix as a whole by the CV $W$.
+The ``accuracy" of the measurement of $p_i$ is determined by the accuracy of $l_i$ and hence, for the prefix as a whole by the \ac{CV} $W$.
 The aim now is to pick the time period for the next measurement $\tau'$ such that $W \leq \delta$ for some $\delta$.  
 Assuming that the loss rates and traffic rates will be the same in the next time period will give a good indication of how to set $\tau'$.  
 Therefore for the next time period $$\delta \geq W = \frac{1}{\sqrt{\tau'}}\sum_i \frac{t_i}{t} \sqrt{\frac{(1- \hat{p_i})} {r_i }}$$.
-This gives an estimated minimum time period to set for the next time period.  In order to get weighted CV of packet loss (and hence loss rate) equal to or below $\delta$ the time period $\tau'$ is bounded by
+This gives an estimated minimum time period to set for the next time period.  In order to get weighted \ac{CV} of packet loss (and hence loss rate) equal to or below $\delta$ the time period $\tau'$ is bounded by
 $$
 \tau' \geq \tau \left( \frac{1}{\delta t}\sum_i
 \sqrt{t_i- l_i} \right)^2.
@@ -202,4 +201,4 @@ This equation gives the smallest value to set the time period of measurement to 
     
 While a number of simplifying assumptions have been made, such as modelling loss as Bernoulli, the time scale choice is not a critical system parameter so long as it provides ``good enough" estimates of loss. 
 The evolution of $\tau'$ for the example in figure \ref{fig:twopreflex} is plotted in figure \ref{fig:tune}. 
-As throughput decreases, the time inbetween updates is inflated to adjust to the lower occurrence of loss events. 
+As throughput decreases, the time between updates is inflated to adjust to the lower occurrence of loss events. 

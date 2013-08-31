@@ -66,7 +66,7 @@ In contrast, most \emph{elephants} (flows that carry significant traffic individ
 %For tracking delay changes for unidirectional traffic for other purposes, MALAWI includes RTT estimates extracted from the SYN exchange.
 
 Loss is inferred by accounting for \emph{retransmissions} in the upstream data and \emph{out-of-order packets} in downstream data; for the remainder of the paper the term \emph{end-to-end loss} will refer to the sum of out-of-order and retransmitted data bytes over the total data bytes in a given direction.
-This was found to be an adequate indicator of loss --- with the exception of \emph{hanging} \ac{TCP} connections. 
+Anecdotally, this was found to be an adequate indicator of loss --- with the exception of \emph{hanging} \ac{TCP} connections. 
 In such cases where connectivity is lost, a host will proceed to retransmit packets while performing an exponential backoff. 
 Although this results in negligible overall traffic, it can significantly skew the inferred loss ratio for uncommon destinations for which little traffic exists. 
 To account for these cases, a 3-second timeout on retransmissions was imposed, after which the congestion feedback loop to deemed to be broken. 
