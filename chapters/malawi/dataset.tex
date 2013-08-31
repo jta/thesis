@@ -3,7 +3,7 @@
 
 This section provides an overview of the datasets used in this work and some of the data processing required before approaching the longitudinal study of Internet traffic rate limiting. 
 The dataset used is composed from the original, unanonymised traffic \ac{MAWI} \cite{mawi} traces, a set of daily packet captures from the \ac{WIDE} backbone network which provides connectivity to universities and research institutes in Japan. 
-Traffic is collected daily for 15 minutes starting at 14:00\ac{JST}. 
+Traffic is collected daily for 15 minutes starting at 14:00 \acl{JST}. 
 Although this dataset extends back largely uninterrupted from late 2001, the present work focuses on just over five years of data following a network upgrade to the monitored link on October 2006.
 The monitored link carries mostly trans-Pacific commodity traffic between \ac{WIDE} customers and non-Japanese commercial networks. 
 Traffic towards \ac{WIDE} is referred to as \emph{inbound} traffic, whereas traffic originating from within \ac{WIDE} is referred to as \emph{outbound} traffic.
@@ -24,7 +24,7 @@ Traffic towards \ac{WIDE} is referred to as \emph{inbound} traffic, whereas traf
         \hline
         Total & 1886 & 5777.55 & 13.50 & 16.14 & 34.12 & 341.22\\
     \end{tabular}
-    \caption{\label{table:overview}Overview of traced MAWI dataset 
+    \caption{\label{table:overview}Overview of traced \acs{MAWI} dataset 
 }
 \vspace{-3mm}
 \end{table}
@@ -34,7 +34,7 @@ In total, 5.7 billion flows containing data are traced over five largely uninter
 Given the sender side plays a critical role in shaping traffic, analysing traffic for which the source is restricted to a small set of networks within Japan is of limited use in accurately depicting traffic trends at large.
 Hosts within Japan are instead fixed as traffic sinks, thus sharing a similar perspective on inbound traffic as many other similarly sized networks. 
 
-\subsection{Tracing TCP Metrics}
+\subsection{Tracing \acs{TCP} Metrics}
 
 All \ac{TCP} flows are reassembled and analysed for each daily trace.
 In addition to the five tuple used to define each connection, two additional restrictions are imposed: a contiguous sequence number space and a three minute timeout. 
