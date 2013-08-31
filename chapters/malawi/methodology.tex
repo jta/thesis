@@ -19,7 +19,7 @@ Flows in none of these classes are either limited only by the network (delay or 
 Building on prior work presented in section \ref{section:malawi:related}, this section proposes an algorithm that scalably recovers the RTT from one-directional traffic traces. 
 % XXX: below implies microflights were used, but these aren't described (remove as appropriate)
 Although \ac{RTT} estimation is a difficult problem, simplifying assumptions can be made.
-For the \ac{MAWI} dataset most \acp{RTT} are relatively large, with the closest neighbouring country, South Korea, roughly 40ms away.
+For the \acs{MAWI} dataset most \acp{RTT} are relatively large, with the closest neighbouring country, South Korea, roughly 40ms away.
 By only processing bidirectional traffic from Japan, the expected \ac{RTT} range can be reduced for all other traffic.
 The recovery mechanism then enhances the natural periodicity of traces and scalably constructs flights associated with specific application and protocol behaviour.
 In the following the mechanisms required by these two goals are described. 

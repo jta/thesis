@@ -2,7 +2,7 @@
 \label{section:malawi:dataset}
 
 This section provides an overview of the datasets used in this work and some of the data processing required before approaching the longitudinal study of Internet traffic rate limiting. 
-The dataset used is composed from the original, unanonymised traffic \ac{MAWI} \cite{mawi} traces, a set of daily packet captures from the \ac{WIDE} backbone network which provides connectivity to universities and research institutes in Japan. 
+The dataset used is composed from the original, unanonymised traffic \acs{MAWI} \cite{mawi} traces, a set of daily packet captures from the \ac{WIDE} backbone network which provides connectivity to universities and research institutes in Japan. 
 Traffic is collected daily for 15 minutes starting at 14:00 \acl{JST}. 
 Although this dataset extends back largely uninterrupted from late 2001, the present work focuses on just over five years of data following a network upgrade to the monitored link on October 2006.
 The monitored link carries mostly trans-Pacific commodity traffic between \ac{WIDE} customers and non-Japanese commercial networks. 
@@ -42,7 +42,7 @@ These restrictions are helpful to deal with port reuse and unterminated flows re
 Although the total number of \ac{TCP} flows increased dramatically in 2011, the number of flows \emph{for which data payload was observed} has remained stable, averaging over 100 million data flows traced per year.  
 
 There is much prior work with regards to reconstructing \ac{TCP} flow from passive measurements and using this information to understand the end-to-end properties of traffic \cite{firstRTT,Jaiswal:2007p233,Rewaskar:2007p195,Shakkottai:2004p408}. 
-However, the \ac{MAWI} traces impose two constraints which require careful consideration, and ultimately led to the use of a custom \ac{TCP} tracer. 
+However, the \acs{MAWI} traces impose two constraints which require careful consideration, and ultimately led to the use of a custom \ac{TCP} tracer. 
 The first one is the proportion of bidirectional flows, that is flows, where both forward and reverse path are seen. 
 In the dataset used this fluctuates between 40\% and 60\% over five years.
 Most available \ac{TCP} tracers either ignore or are inadequate at processing unidirectional flows. 

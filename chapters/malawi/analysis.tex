@@ -29,7 +29,7 @@ For one, there is an implicit assumption that the network is the bottleneck. Und
      Percentage of traffic bytes affected by each constraint by year.\label{table:limits}}
 \end{table}
 
-Table \ref{table:limits} displays the extent to which each of these limitations affects inbound traffic in the MAWI dataset over time. 
+Table \ref{table:limits} displays the extent to which each of these limitations affects inbound traffic in the \acs{MAWI} dataset over time. 
 The bulk of the volume in bytes is either conditioned by host limits or application pacing. 
 The use of receiver shaping on the other hand is both small in scale and temporally confined to 2009 and 2010.
 Over five years, the overall effect of the three selected constraints has dropped by close to 10\%.
@@ -42,7 +42,7 @@ In 2007 and 2008, a considerable proportion of the traffic exchanged over the in
 From 2009 onwards, most of these local sources established peering connections, bypassing the observed link entirely.
 This accounts not only for the significant drop of traffic from \acs{NTT}, but also its altered nature: after 2009 traffic from \acs{NTT} travelled from further away and was less likely to be application paced.
 
-As the weight of traditional carriers such as Cogent and \ac{NTT} has waned, \acp{AS} known to harbour one-click hosting services such as Choopa, Webazilla, WZ Communications, Carpathia and LeaseWeb have gained significance.
+As the weight of traditional carriers such as Cogent and \acs{NTT} has waned, \acp{AS} known to harbour one-click hosting services such as Choopa, Webazilla, WZ Communications, Carpathia and LeaseWeb have gained significance.
 Since many websites hosted in these \acp{AS} facilitate the distribution of copyrighted content, they have an incentive to continue using hosted infrastructure rather than deploying their own and risking prosecution. 
 Furthermore, these domains are more likely to host applications which resort to capping the maximum window size as a means of throttling traffic.
 The increased weight of \acp{AS} which resort to these methods, such as Red Hat and Carpathia, significantly contributes to the unexpected increase of host limitations for 2010 displayed in table \ref{table:limits}.
@@ -129,8 +129,8 @@ A critical component in determining the upperbound for the congestion window siz
 In its absence, a sender cannot have more than 64KB in flight.
 Furthermore, the \emph{default buffer size} on either end of the connection can also limit the size to which the congestion window can increase.
 Both settings are primarily subject to operating system configuration.
-Given that throughput conditions on the receiver side improve as \ac{OS} upgrades are rolled out, and that the user base within Japan covered by \ac{MAWI} has remained relatively stable over time, all things being equal we would expect the whole region to exhibit improvements as time progresses. 
-Hence, if we find significant degradation in host limitations, we reason that it most probably does not stem from \ac{OS} rollbacks or large sets of users with outdated \acp{OS} joining the Japanese networks. 
+Given that throughput conditions on the receiver side improve as \acs{OS} upgrades are rolled out, and that the user base within Japan covered by \acs{MAWI} has remained relatively stable over time, all things being equal we would expect the whole region to exhibit improvements as time progresses. 
+Hence, if we find significant degradation in host limitations, we reason that it most probably does not stem from \acs{OS} rollbacks or large sets of users with outdated \acp{OS} joining the Japanese networks. 
 Instead, we hypothesise that it will be a product of macroscopic shifts in routing or application popularity which lead to a change in \emph{where} traffic originates from.
 
 We test this hypothesis by first verifying windowscale deployment over time.
@@ -174,12 +174,12 @@ In addition to presenting the ratio of flows and bytes affected by host limitati
 In either direction a very small fraction of flows are affected.
 Small flows are both numerous and unlikely to last long enough for window limits to be reached or reliably detected.
 The affected flows therefore tend to be large, and as such can translate into a significant amount of traffic.
-The proportion of flows and bytes for which the receiver side imposed the maximum window size dropped by 20\% and 15\% respectively over five years for inbound traffic, reflecting the successive \ac{OS} upgrades performed for hosts within \ac{WIDE}.
+The proportion of flows and bytes for which the receiver side imposed the maximum window size dropped by 20\% and 15\% respectively over five years for inbound traffic, reflecting the successive \acs{OS} upgrades performed for hosts within \ac{WIDE}.
 Interestingly, these trends do not surface for outbound traffic: hosts outside Japan were consistently more likely to dictate the maximum window size.
 In part, this reflects the different nature of the traffic under observation: outbound traffic for this dataset is more geographically and topologically diverse, with content in many cases being retrieved from Japan by residential hosts from within Asia.
 
 % summarize the answer
-\textbf{The endpoint which ends up dictating the maximum achievable throughput through flow control is typically a function of the \ac{OS} adoption cycle.}
+\textbf{The endpoint which ends up dictating the maximum achievable throughput through flow control is typically a function of the \acs{OS} adoption cycle.}
 With the windowscale option covering 80\% of all inbound traffic, the main source of host level constraints are now conservative buffer sizes.
 For this dataset, hosts internal to \ac{WIDE} have seemingly been upgraded at a faster rate, or less conservatively, than their remote counterpoints.
 As such, throughput has become increasingly sender driven over time for inbound traffic.
