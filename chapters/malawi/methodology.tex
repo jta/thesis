@@ -1,4 +1,5 @@
 \section{Methodology}
+\label{section:malawi:methodology}
 
 Providing a macroscopic view on where traffic originates from, and in what quantity, can be achieved by simply binning packets into flows and accumulating byte counts over geographical or topological locations. 
 Uncovering application layer characteristics (i.e. \textit{how} traffic is sent) is a more complex problem that requires additional methods to reverse engineer transport behaviour.
@@ -6,12 +7,12 @@ The aim of this section is to describe a process which distinguishes those flows
 Each flow can be characterized as being either application paced, in which the sending application is limiting the data provided, host limited, whereby local constraints at either end host cap throughput, or receiver shaped, in which an artificial constraint is imposed by either a middlebox or receiver.
 
 The classification proceeds in stages. 
-Before classification, it is necessary to reconstruct the RTT of the flow if the flow is not bidirectional.  
+Before classification, if a flow is not bidirectional its RTT must be recovered.
 This is achieved in section \ref{subsection:malawi:PeriodicEnhancement}. 
-Because the sender's TCP state machine cannot be directly observed it is necessary then to estimate the size of the congestion window by observing the number of unacknowledged bytes in flight (\textit{flight size}).
+Because the sender's TCP state machine cannot be directly observed, the congestion window must be instead estimated by observing the number of unacknowledged bytes in flight (\textit{flight size}).
 This reconstruction is described in section \ref{subsection:malawi:flightAggregation} and provides the basis for flow classification. 
 Flows are then checked in turn to see if they are application paced, host limited or receiver shaped and classified as belonging to the first of these classes for which they fulfill the necessary conditions.
-Flows in none of these classes are either limited only by the network (delay or loss conditions) or are insufficiently large to trigger any further constraints.
+Flows in none of these classes are either limited only by the network (delay or loss conditions) or are insufficiently large for constraints to be reliably detected.
 
 \subsection{\acs{RTT} Estimation}
 \label{subsection:malawi:PeriodicEnhancement}

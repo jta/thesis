@@ -1,6 +1,6 @@
 By readjusting traffic according to end-to-end metrics, \ac{PREFLEX} is unique in proposing congestion, rather than just load, as an essential metric for traffic engineering.
 In the previous chapter necessarily artificial end-to-end behaviour was used in order to gain insight into how \ac{PREFLEX} works.
-Modelling how congestion can be balanced more accurately however requires understanding the inherent characteristics of Internet traffic at large.
+Modelling the feasibility of congestion balancing however requires a deeper understanding of the inherent characteristics of Internet traffic at large.
 
 This chapter provides a longitudinal analysis of the characteristics of end-to-end Internet traffic, describing the shifting trends in interdomain traffic as viewed from \acs{WIDE}, a Japanese academic provider.
 Over time, this vantage point is subject to upgrades, changes in routing policy and congestion events, all of which can hinder the interpretation of data.
@@ -27,8 +27,8 @@ One-click hosting services such Rapidshare and Megaupload \cite{oneclick1, Sanju
 Conversely, file sharing applications such as Bittorrent and other peer-to-peer clients allow users to rate limit transfers in order to reduce impact on competing traffic, or to provide incentives for participation \cite{bittorrentIMC}.
 
 Even beyond such application behaviour, flows may still be constrained by factors not pertaining directly to \ac{TCP} congestion control.
-The transport layer is subject to strict bounds within which it can operate, potentially impeded by socket buffer sizes set by \ac{OS} vendors or tuned by network administrators. 
-There is an upper bound on the window size a receiver can advertise back to the sender; in the absence of windowscale negotiation \cite{braden1989rfc}, no \ac{TCP} connection can exceed a 64\ac{KB} window. 
+The transport layer is subject to strict bounds within which it can operate, potentially impeded by socket buffer sizes set by \acf{OS} vendors or tuned by network administrators. 
+There is an upper bound on the window size a receiver can advertise back to the sender; in the absence of windowscale negotiation \cite{braden1989rfc}, no \ac{TCP} connection can exceed a 64KB window. 
 In addition, resource sharing is often subject to local policy.
 In the absence of adequate methods for readjusting how \ac{TCP} distributes bandwidth, network operators and system administrators often trade efficiency for predictability, shaping traffic to conform to local notions of fairness or in anticipation for expected demand \cite{ispTrafficShaping}.
 
