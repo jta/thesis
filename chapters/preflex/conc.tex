@@ -1,6 +1,6 @@
 \section{Closing the loop}
 
-This chapter broadly describes an architecture which shares the responsibility for resource pooling between endhosts and edge networks, but does not explicitly dictate an outcome. \ac{PREFLEX} has been designed to take into account the inevitable tussle which will occur between both, and envisages use cases where control over resource pooling could feasibly shift entirely in one direction or the other. 
+This chapter broadly describes an architecture which shares the responsibility for resource pooling between end-hosts and edge networks, but does not explicitly dictate an outcome. \ac{PREFLEX} has been designed to take into account the inevitable tussle which will occur between both, and envisages use cases where control over resource pooling could feasibly shift entirely in one direction or the other. 
 
 At its most liberal, \ac{PREFLEX} enables resource pooling to be entirely performed by end-hosts. At its most conservative, \ac{PREFLEX} affords edge network providers more fine-grained control over traffic than before. Between either extreme, the resulting mutualistic architecture offers greater transparency, control and robustness by realigning the interface between network and transport in order to accommodate the needs of both.
 
@@ -11,7 +11,7 @@ While this necessarily reduces the amount of path diversity which can be explore
 \item{
     \textbf{Most benefit derives from a limited set of paths}.
     Work on source routing \cite{Gummadi:2004p131,Yang:2006p405} suggests most improvement in resilience can be extracted from a small set of deflections.
-    Stub domains such as \acp{ISP} and entreprise networks are naturally multi-homed, and can provide reasonable path diversity given an adequate selection of providers.
+    Stub domains such as \acp{ISP} and enterprise networks are naturally multi-homed, and can provide reasonable path diversity given an adequate selection of providers.
     Expecting the establishment of cross-domain paths has been a pitfall for previous research in \ac{QoS} in particular and is marred by difficulties in providing incentives for all parties involved.
 }
 \item{
