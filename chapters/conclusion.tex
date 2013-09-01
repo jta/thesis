@@ -3,7 +3,14 @@
 
 The presented body of work identifies opportunities and explores strategies for resource pooling which reconcile a potentially conflicting set of stakeholders.
 \LOREM
-This chapter synthesizes these findings in light of the original problem statement:
+This chapter summarises these findings in light of the original problem statement:
+
+\begin{quote}
+\textit{
+Given the nature of Internet traffic, how can the current architecture be realigned to facilitate resource pooling at both network and transport layers?
+}
+\end{quote}
+
 
 %tip
 Resource pooling has evolved to being performed by different stakeholders unilaterally.
@@ -13,12 +20,6 @@ Path diversity is in the network, and operators attempt to exploit it through a 
 Collectively, these traffic engineering methods assist networks in minimizing the costs incurred by shifting traffic.
 Conversely, hosts are increasingly capable of pooling traffic across paths either through the use of overlay networks or multipath congestion control, neither of which necessarily share the objectives of the underlying network.
 The problem statement arises from the confluence of these two trends: given the nature of Internet traffic, how can the current architecture be realigned to facilitate resource pooling at both network and transport layers?
-
-\begin{quote}
-\textit{
-Given the nature of Internet traffic, how can the current architecture be realigned to facilitate resource pooling at both network and transport layers?
-}
-\end{quote}
 
 \section{Summary of contributions}
 
@@ -32,6 +33,9 @@ The many contributions presented however carry much wider appeal, and can be cla
 % lit review
 This thesis began by providing a broader context within which to frame the evolution of resource pooling.
 Chapter \ref{chapter:resourcepooling} traces how successive waves of new stakeholders and novel applications have influenced and shaped the protocols and tools which form the Internet.
+Importantly, this chapter highlights the haphazard nature of traffic management as an architectural afterthought and identifies a pertinent problem:
+, with end-hosts, network operators and content providers alike pooling traffic unilaterally through differing means.
+
 
 % malawi intro
 As with any distributed system however, the Internet remains in a constant state of flux.
