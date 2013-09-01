@@ -1,22 +1,11 @@
-\chapter{Conclusions and future work}
+\chapter{Conclusions}
 \label{sec:conclusions}
 
-{\COMMENT
-    %copy pasted from INFOCOM intro
+The presented body of work identifies opportunities and explores strategies for resource pooling which reconcile a potentially conflicting set of stakeholders.
+\LOREM
+This chapter synthesizes these findings in light of the original problem statement:
 
-The main contribution is a re-evaluation of common assumptions regarding Internet flow rates. This is achieved by systematically identifying artificial constraints to TCP traffic throughput across three categories: \emph{application pacing}, \emph{host limiting} and \emph{receiver shaping}. 
-Having reconstructed individual flows, the results are aggregated using an external routing information dataset and relate how each aritificial constraint arises in different contexts and affects different stakeholders over time. This allows us to show not only that flow rates are not typically dictated by TCP congestion control alone, but also that TCP throughput is mostly determined by the actions of the sender. In particular, we show that host limitations have largely been lifted for small flows, with the windowscale option increasing threefold to cover over 80\% of all inbound traffic by the end of 2011. 
-Similarly, continuing operating system updates have progressively lifted many of the limitations inherent to socket buffer sizes. These changes have allowed smaller flows to increase throughput at a far higher rate than larger flows, which are more often than not affected by other mechanisms of traffic shaping.
-This means that, although there is a correlation between flow volume in bytes and throughput, the relationship between the two is nonlinear and has changed with time.
-Finally, we document the use of receiver shaping on inbound traffic within customer networks as a response to periods of congestion, and show that this technique has been applied mostly on the basis of content charactersitcs, rather than to high-volume traffic sources. 
-
-
-}
-
-
-This upgrade report collects the following contributions.
-
-\textbf{Identifying the problem}.
+%tip
 Resource pooling has evolved to being performed by different stakeholders unilaterally.
 End-hosts, network operators and content providers all attempt to pool traffic by differing means, and in a potentially conflicting manner.
 While recent work has lent credence to pushing resource pooling towards the edge, this ignores the tussle over how traffic is managed between these stakeholders.
@@ -26,7 +15,50 @@ Conversely, hosts are increasingly capable of pooling traffic across paths eithe
 The problem statement arises from the confluence of these two trends: given the nature of Internet traffic, how can the current architecture be realigned to facilitate resource pooling at both network and transport layers?
 
 
-\textbf{Proposing the architectural realignment of traffic engineering}.
+
+\begin{quote}
+\textit{
+Given the nature of Internet traffic, how can the current architecture be realigned to facilitate resource pooling at both network and transport layers?
+}
+\end{quote}
+
+\section{Summary of contributions}
+
+\subsection{Characterizing Internet traffic}
+
+% lit review
+
+
+% malawi
+
+% tip
+The main contribution is a re-evaluation of common assumptions regarding Internet flow rates. 
+This is achieved by systematically identifying artificial constraints to TCP traffic throughput across three categories: \emph{application pacing}, \emph{host limiting} and \emph{receiver shaping}. 
+Having reconstructed individual flows, the results are aggregated using an external routing information dataset and relate how each aritificial constraint arises in different contexts and affects different stakeholders over time. 
+This allows us to show not only that flow rates are not typically dictated by TCP congestion control alone, but also that TCP throughput is mostly determined by the actions of the sender. 
+In particular, we show that host limitations have largely been lifted for small flows, with the windowscale option increasing threefold to cover over 80\% of all inbound traffic by the end of 2011. 
+Similarly, continuing operating system updates have progressively lifted many of the limitations inherent to socket buffer sizes. These changes have allowed smaller flows to increase throughput at a far higher rate than larger flows, which are more often than not affected by other mechanisms of traffic shaping.
+This means that, although there is a correlation between flow volume in bytes and throughput, the relationship between the two is nonlinear and has changed with time.
+Finally, we document the use of receiver shaping on inbound traffic within customer networks as a response to periods of congestion, and show that this technique has been applied mostly on the basis of content charactersitcs, rather than to high-volume traffic sources. 
+
+Understanding the characteristics of Internet traffic is intrinsic to designing any form of resource pooling.
+For long-lived flows, the transport layer has sufficient time to collect information on network state to efficiently pool traffic across multiple paths.
+If traffic is dispersed across many prefixes, scaling dynamic traffic engineering may be problematic.
+By relating five years of packet traces from an interdomain transit link with topological and geographic information, preliminary results suggest neither is strictly true.
+The continuing consolidation of traffic for both inbound and outbound directions allows most traffic to be balanced by manipulating a small number of traffic prefixes.
+This work has corroborated previous findings \cite{Labovitz:2010p175} showing a shift in content distribution, with \acf{P2P} applications being slowly replaced by \acfp{CDN} and \acf{OCH} infrastructure.
+The novelty has come from being able to relate traffic trends at a finer granularity, both by reconstructing \ac{TCP} behaviour and relating these changes to network prefixes, which can in turn be used to assess the practicality of dynamic traffic engineering methods.
+
+
+
+\subsection{Architectural contributions}
+
+% preflex
+Chapter \ref{chapter:preflex} presented \ac{PREFLEX}, an architecture for mutualistic resource pooling.
+
+% inflex
+
+% tip
 Given the Internet architecture should not dictate the outcome of the tussle between end-host and network solutions for resource pooling, the \ac{PREFLEX} architecture attempts to make both aware of each other.
 \acf{LEX} transmits information on loss as viewed by the transport layer to network resources, allowing traffic engineering to be performed taking into account end-to-end path quality.
 \acf{PREF} offers the ability for the network to select and offer paths to hosts, thereby unlocking the path diversity which already exists at stub domains such as \acp{ISP}, \acp{CDN} and enterprise networks.
@@ -37,16 +69,34 @@ A congestion balancer is derived in which \ac{PREFLEX} can reap much of the bene
 Unlike most existing \ac{TE} methods, \ac{PREFLEX} is designed to minimize the impact of route changes on the transport layer and as such is assessed by its impact on transport metrics rather than traffic aggregates.
 The use of congestion balancing in the network not only leads to a more efficient use of network capacity, but also a reduction of flow completion times for flows.
 
-\textbf{Investigating the evolution of Internet transit traffic}.
-Understanding the characteristics of Internet traffic is intrinsic to designing any form of resource pooling.
-For long-lived flows, the transport layer has sufficient time to collect information on network state to efficiently pool traffic across multiple paths.
-If traffic is dispersed across many prefixes, scaling dynamic traffic engineering may be problematic.
-By relating five years of packet traces from an interdomain transit link with topological and geographic information, preliminary results suggest neither is strictly true.
-The continuing consolidation of traffic for both inbound and outbound directions allows most traffic to be balanced by manipulating a small number of traffic prefixes.
-This work has corroborated previous findings \cite{Labovitz:2010p175} showing a shift in content distribution, with \acf{P2P} applications being slowly replaced by \acfp{CDN} and \acf{OCH} infrastructure.
-The novelty has come from being able to relate traffic trends at a finer granularity, both by reconstructing \ac{TCP} behaviour and relating these changes to network prefixes, which can in turn be used to assess the practicality of dynamic traffic engineering methods.
+{\COMMENT
+    %copy pasted from INFOCOM intro
+% INFLEX
+This paper presents INFLEX, an \ac{SDN}-based architecture for cross-layer network resilience which provides on-demand path fail-over for \ac{IP} traffic. 
+The architecture is both unilaterally deployable, providing benefits even when adopted by individual domains, and inherently end-to-end, potentially covering third party failures.
+INFLEX operates by allowing an \ac{SDN}-enabled routing layer to expose multiple \emph{routing planes} to the transport layer. 
+Hence, traffic can be shifted by one routing plane to another as a response to end-to-end failure detection.
+Since INFLEX operates as an extension to the network abstraction provided by \ac{IP}, it can be used by all transport protocols.
+At the host, the proposed architecture allows transport protocols to switch network paths at a timescale which avoids flow disruption and which can be transparently integrated into existing congestion control mechanisms.
+Within the network, INFLEX provides both greater insight into end-to-end path quality, assisting fault detection, and more control over flow path assignment, enabling more effective fault recovery. 
+In addition to describing our architecture design and justifying our design choices with extensive network measurements, we also implement INFLEX and verify its operation experimentally. 
+We make our modifications to both the \ac{TCP}/\ac{IP} network stack and a popular Openflow controller \cite{pox} publicly available.
+}
 
-\textbf{Future work}. The task of processing multiple data sources to produce \ac{MALAWI} was a significant undertaking which has only recently started to bear results.
+
+
+\subsection{Extending resource pooling}
+
+% congestion balancing
+% inflex resilience
+
+
+%tip
+The current architecture imposes constraints on how resource pooling can be performed.
+
+\section{Future work}
+
+The task of processing multiple data sources to produce \ac{MALAWI} was a significant undertaking which has only recently started to bear results.
 Chapter \ref{sec:malawi} presents the preliminary results of relating the spatial, behavioural and longitudinal properties of Internet transit traffic.
 Moving forward, future work on \ac{MALAWI} will focus on investigating properties of traffic which are relevant to \ac{PREFLEX}:
 

@@ -19,12 +19,12 @@ The deployment of such protocols however is likely to be hindered by an operatio
 The network alone on the other hand appears incapable of managing traffic efficiently.
 For one, operators are constrained to balancing traffic transparently due to end host expectations.
 On the other hand, routers do not have enough knowledge of end-to-end traffic to make informed decisions on which path each packet should take.
-In many cases operators have enhanced their ability to manage traffic by extracting additional information per-packet, by looking beyond the network header, and per-flow, by reconstructing data streams over time, both of which engrain protocol specific behaviour into the network.
+In many cases operators have enhanced their ability to manage traffic by extracting additional information per-packet, by looking beyond the network header, and per-flow, by reconstructing data streams over time, both of which ingrain protocol specific behaviour into the network.
 This increase of network awareness however comes at the expense of innovation at the edges, as developers become increasingly constrained in what type of protocols can be deployed.
 
 % join both?
 Whether applied to providers wishing to reduce costs or hosts attempting to maximize throughput, the proliferation of unilateral solutions for resource pooling are manifestations of an underlying need. 
-Rather than confine resource pooling to a single point of the Internet architecture and risk alienating a subset of stakeholders, this thesis explores how the existing Internet architecture can be extended to accomodate both host and network requirements for resource pooling.
+Rather than confine resource pooling to a single point of the Internet architecture and risk alienating a subset of stakeholders, this thesis explores how the existing Internet architecture can be extended to accommodate both host and network requirements for resource pooling.
 
 \section{Problem statement}
 \label{sec:introduction:objectives}
@@ -103,9 +103,16 @@ The final contribution is in using the resulting dataset to attempt to shed ligh
 \section{Thesis Outline}
 \label{sec:introduction:outline}
 
-This thesis is organized as follows.
-Chapter \ref{sec:resourcepooling} provides an overview of how resource pooling is performed across different layers of the Internet architecture.
-Chapter \ref{sec:preflex} introduces a mutualistic resource pooling architecture, while chapter \ref{sec:cate} explores how such an architecture can be exploited by providers wishing to balance congestion rather than traffic.
-Chapter \ref{sec:malawi} details a measurement study to characterize the evolution of Internet traffic.
-Finally, chapter \ref{sec:conclusions} presents the roadmap for future work and preliminary conclusions.
+This thesis is organized as follows:
+
+\renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{Chapter #1}}
+\begin{description}
+\item[\ref{sec:resourcepooling}] provides an overview of how resource pooling has evolved across different layers of the Internet architecture, detailing how network resources are pooled end-to-end, through congestion management, and how traffic is balanced across multiple paths.
+\item[\ref{sec:preflex}] proposes \acs{PREFLEX}, a resource pooling architecture which accommodates both congestion control and traffic engineering through the application of re-feedback. 
+%Hosts inform the network of end-to-end path properties through \ac{LEX}, while the network can convey local preferences back to hosts through \ac{PREF}.
+\item[\ref{sec:cate}] builds upon the foundation of the previous chapter and models and evaluates a functional congestion balancer, allowing the network to perform dynamic, adaptive traffic engineering by crowd sourcing performance metrics from end hosts.
+\item[\ref{sec:malawi}] contains a comprehensive longitudinal study on the properties of Internet interdomain traffic and characterizes the impact of structural changes in content distribution on underlying traffic patterns.
+\item[\ref{sec:inflex}] revisits the architectural concepts introduced in chapters \ref{sec:preflex} and \ref{sec:cate} in light of the findings presented in chapter \ref{sec:malawi} and ensuing developments in networking research. This decanting results in INFLEX, a unilaterally deployable solution providing scalable, resilient traffic management.
+\item[\ref{sec:conclusions}] draws conclusions on the present work and posits potential directions for future work.
+\end{description}
 
