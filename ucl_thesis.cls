@@ -233,13 +233,11 @@
     \end{center}%
     \vfill%
     \begin{center}%
-    \textbf{Transfer thesis}
-    \@date
-    %A dissertation submitted in partial fulfilment \\
-        %of the requirements for the degree of \\
-    %\textbf{\@degree@string} \\
-    %of the \\
-    %\textbf{University of London}.
+    A dissertation submitted in partial fulfilment \\
+    of the requirements for the degree of \\
+    \textbf{\@degree@string} \\
+    of the \\
+    \textbf{University of London}.
     \end{center}%
     \vspace{2em}%
     \begin{center}%

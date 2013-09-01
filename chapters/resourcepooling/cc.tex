@@ -76,7 +76,7 @@ Within four years of Flag Day the number of hosts would increase tenfold and con
 By 1986, congestion collapse was recurrent as hosts persisted in retransmitting packets into an overloaded core.
 Baran's vision of a packet-switched network had come full circle.
 
-\subsection{TCP congestion control}
+\subsection{\acs{TCP} congestion control}
 \label{sec:resourcepooling:tcp}
 
 %Nagle, etc
@@ -113,11 +113,11 @@ The resulting changes were quickly deployed as \ac{TCP} Tahoe and proved instrum
 \begin{figure}
     \centering
     \includegraphics[width=5.0in]{figures/resourcepooling/tcpnewreno}
-    \caption{TCP congestion control}
+    \caption{\acs{TCP} congestion control}
     \label{fig:tcpcc}
 \end{figure}
 
-Congestion control would go on to become a staple of networking research. Successive refinements, including the addition of \textit{fast recovery} resulted in \ac{TCP} Reno \cite{Stevens:1997p466} and then \ac{TCP} NewReno \cite{Paxson:1999p467}, which would become the most commonly accepted and widely deployed congestion control algorithm for over a decade. Variants such as Vegas \cite{Brakmo:1994p468} and \ac{FAST} \cite{Wei:2006p469} would complement the use of loss with the estimation of queuing delay, and adjust rates accordingly. \ac{BIC} and CUBIC \cite{Xu:2004p470,Ha:2008p471} addressed rate adjustment as a binary search problem and would be adopted by Linux distributions. Finally, \ac{CTCP} \cite{Zhang:2012p472}, deployed from Windows Vista onwards, would use loss and delay as a combined congestion signal, tracking both as separate components before calculating an overall congestion window.
+Congestion control would go on to become a staple of networking research. Successive refinements, including the addition of \textit{fast recovery} resulted in \ac{TCP} Reno \cite{Stevens:1997p466} and then \ac{TCP} NewReno \cite{Paxson:1999p467}, which would become the most commonly accepted and widely deployed congestion control algorithm for over a decade. Variants such as Vegas \cite{Brakmo:1994p468} and \ac{FAST} \cite{Wei:2006p469} would complement the use of loss with the estimation of queuing delay, and adjust rates accordingly. \ac{BIC} and \acs{CUBIC} \cite{Xu:2004p470,Ha:2008p471} addressed rate adjustment as a binary search problem and would be adopted by Linux distributions. Finally, \ac{CTCP} \cite{Zhang:2012p472}, deployed from Windows Vista onwards, would use loss and delay as a combined congestion signal, tracking both as separate components before calculating an overall congestion window.
 
 In spite of these changes, the core of \ac{TCP} congestion control algorithms can still be directly traced to Van Jacobson's initial proposal. 
 That a stop-gap solution has managed to sustain the growth of the Internet for over two decades is an outcome even Van Jacobson could not have anticipated. 
@@ -218,11 +218,11 @@ This section reviews proposals where both endpoints and network share responsibi
 
 % source quench
 There have been enough failed attempts at deploying explicit congestion control on the Internet that it has become common to overlook the fact it was once the dominant model for congestion management.
-Prior to TCP congestion control, hosts performed end-to-end flow control alone. 
+Prior to \ac{TCP} congestion control, hosts performed end-to-end flow control alone. 
 While most underlying data layer protocols provided some degree of flow control, gateways could signal overload by sending \ac{ICMP} source quench messages to sources.
 Hosts were then expected to reduce sending rates upon receiving this explicit feedback from the network.
 Unfortunately, the source quench mechanism was marred with oversights.
-The specification of ICMP \cite{Postel:1981p463} stated that source quench messages ``may'' be sent by gateways for every packet it discards.
+The specification of \acs{ICMP}\cite{Postel:1981p463} stated that source quench messages ``may'' be sent by gateways for every packet it discards.
 However it also allowed source quench messages to be emitted by gateways approaching, rather than exceeding, their capacity limit.
 As a result, upon being cautioned by a gateway a sender had no indication of whether the packet at fault had been discarded.
 Under such circumstances, the source host ``should cut back the rate (...) until it no longer receives source quench messages from the gateway'',
@@ -231,7 +231,7 @@ Confusingly, destination hosts could also emit source quench messages if overcom
 
 Source quench was inevitably deprecated \cite{Baker:1995p479}, crippled by overloaded semantics and a lack of obligation or guidance for sender compliance.
 In retrospect, source quench messages represented an attempt at doing \emph{too little, too early} \cite{Crowcroft:2003p450}.
-Endpoint congestion control would only come of age with TCP Tahoe.
+Endpoint congestion control would only come of age with \ac{TCP} Tahoe.
 Prior to the continuous control theory mechanisms introduced by Van Jacobson, Jain, and others, there was no framework within which explicit feedback could be modelled.
 Only with the onset of congestion collapse events did many of the frailties of source quench messages become apparent.
 There was no understanding of the problem at hand until it was too late.

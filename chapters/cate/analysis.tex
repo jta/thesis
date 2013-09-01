@@ -54,7 +54,7 @@ Firstly, $\sum{g_i}=G$, so independently of the number of concurrent paths, the 
 However, as the number of paths increases, the fluctuation in load for each path becomes smaller, stressing the sensitivity with which \ac{PREFLEX} must balance traffic. 
 Secondly, the number of requests for each $D_i$ over time is the same. 
 Over timescale $T$, equalisation appears to be an acceptable strategy but will however be shown to fail to make efficient use of available capacity. 
-This is a fundamental limitation of offline traffic engineering, which is calculated over very long timescales and is unable to adapt as traffic routinely shifts.
+This is a fundamental limitation of offline traffic engineering, which is calculated over very long time scales and is unable to adapt as traffic routinely shifts.
 
 \begin{figure}
     \begin{subfigure}[b]{.5\linewidth}
@@ -83,7 +83,7 @@ While artificial, these values attempt to represent traffic to a single prefix w
 
 For the remainder of this section, congestion balancing using \ac{PREFLEX} will be directly compared to equalisation, which mimics existing traffic engineering techniques based on hashing flow tuples for path assignment.
 A useful reference point in interpreting results is to examine the case where all bottlenecks share the same bandwidth, $L_i=B/N$.
-Under such conditions, figure \ref{fig:goodputeq} shows the goodput, calculated as the total data transfered to client $C$ by flows completed within $T$, as a proportion of total link bandwidth.
+Under such conditions, figure \ref{fig:goodputeq} shows the goodput, calculated as the total data transferred to client $C$ by flows completed within $T$, as a proportion of total link bandwidth.
 The bulk of goodput originates from server $S$, which is the only multi-homed domain.
 If traffic is correctly balanced, servers $D_{1-N}$ should generate the same amount of goodput.
 While both equalisation and congestion balancing saturate most available bandwidth, the former leads to disproportionate distribution of goodput amongst competing traffic. 

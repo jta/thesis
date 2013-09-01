@@ -10,7 +10,7 @@
 \label{section:malawi:analysis}
 
 %\renewcommand{\thesubsectiondis}{Assumption \Alph{subsection}.}
-Having processed each daily trace individually, we proceed by aggregating results longitudinally in order to trace the evolution of constraints affecting TCP across both time and spatial/topological dimensions. We frame our analysis as a re-visiting of four commonly held assumptions regarding Internet throughput. Our aim in so doing is to provide much a needed factual verification of these assumptions, which itself can lead to a re-appraisal of Internet throughput modelling efforts. Although all models require simplifying assumptions in the name of analytic tractability, our aim is to inform on which are the best assumptions to make if one is setting out to use or develop an Internet traffic throughput model. 
+Having processed each daily trace individually, we proceed by aggregating results longitudinally in order to trace the evolution of constraints affecting \ac{TCP} across both time and spatial/topological dimensions. We frame our analysis as a re-visiting of four commonly held assumptions regarding Internet throughput. Our aim in so doing is to provide much a needed factual verification of these assumptions, which itself can lead to a re-appraisal of Internet throughput modelling efforts. Although all models require simplifying assumptions in the name of analytic tractability, our aim is to inform on which are the best assumptions to make if one is setting out to use or develop an Internet traffic throughput model. 
 
 
 \subsection{Throughput is primarily shaped by \acs{TCP}}
@@ -125,12 +125,12 @@ From answering the previous assumption, it is clear that throughput \textit{is} 
 Despite this it is worth understanding the nature of these host limitations in particular, and towards which direction flow control is swinging.
 
 % explore the results
-A critical component in determining the upperbound for the congestion window size is the negotiation of the \ac{TCP} \emph{windowscale} option during the initial handshake. 
+A critical component in determining the upper bound for the congestion window size is the negotiation of the \ac{TCP} \emph{windowscale} option during the initial handshake. 
 In its absence, a sender cannot have more than 64KB in flight.
 Furthermore, the \emph{default buffer size} on either end of the connection can also limit the size to which the congestion window can increase.
 Both settings are primarily subject to operating system configuration.
 Given that throughput conditions on the receiver side improve as \acs{OS} upgrades are rolled out, and that the user base within Japan covered by \acs{MAWI} has remained relatively stable over time, all things being equal we would expect the whole region to exhibit improvements as time progresses. 
-Hence, if we find significant degradation in host limitations, we reason that it most probably does not stem from \acs{OS} rollbacks or large sets of users with outdated \acp{OS} joining the Japanese networks. 
+Hence, if we find significant degradation in host limitations, we reason that it most probably does not stem from \acs{OS} rollback or large sets of users with outdated \acp{OS} joining the Japanese networks. 
 Instead, we hypothesise that it will be a product of macroscopic shifts in routing or application popularity which lead to a change in \emph{where} traffic originates from.
 
 We test this hypothesis by first verifying windowscale deployment over time.
@@ -144,7 +144,7 @@ Conversely, the temporary drop in windowscale adoption for inbound flows in 2009
 
 Given the prevalence of windowscaling, the primary source of host limitation should therefore be due to the configuration of socket buffer sizes.
 Figure \ref{fig:hostwindow} shows the distribution of the average window size for flows which are flagged as being host limited.
-While the 64KB limit intrinsic to \ac{TCP} is a common upperbound on window size, other defaults are apparent and have shifted over time.
+While the 64KB limit intrinsic to \ac{TCP} is a common upper bound on window size, other defaults are apparent and have shifted over time.
 The use of 16KB and 32KB buffer sizes (default buffer sizes for Windows XP and Vista respectively) was progressively phased out over the five year period.
 In addition to traditional power-of-two increments of the window size, different limits are apparent amongst hosting providers: 50KB, 100KB (The Planet), 160KB (Limelight) and 200KB (SoftLayer), reflecting the overall weight such \acp{AS} can have in shaping transit traffic.
 The influx of Asian traffic in 2009 led to an increase in observed host windows beneath 16KB.
@@ -203,7 +203,7 @@ For both plots, a clear disparity is visible across flows sizes: for flows in th
 Our results confirm the notion that the highest throughputs are attained by the largest flows, but they also show that improvements in throughput do not apply equally to all flow sizes. 
 Whereas throughput has consistently improved for low-volume traffic, it has not done so for high-volume traffic. 
 Hence, these findings suggest an increased differentiation between high-value, low-volume traffic whose throughput has markedly increased, and low-value, high-volume traffic whose throughput has stagnated.
-Although the reported flow sizes are not a reliable predictor of the overall traffic volume amassed over flow's lifetime given the short time span of each daily trace, this seemingly subverts the notion that flow rates are strongly correlated with flow size in a simple, proportional fashion.  
+Although the reported flow sizes are not a reliable predictor of the overall traffic volume amassed over a flow's lifetime given the short time span of each daily trace, this seemingly subverts the notion that flow rates are strongly correlated with flow size in a simple, proportional fashion.  
 This is expounded by further analysing the average window sizes across flow sizes, displayed in Figure \ref{fig:windowsize}.
 In 2007, there is a visible correlation, with larger flows attaining higher window sizes.
 Furthermore, the distributions cluster prominently around 64KB due to a low rate of windowscale negotiation.
@@ -242,7 +242,7 @@ Additionally, the discrepancy in loss rates is further exacerbated by geographic
 
 \textbf{These results suggest that network upgrades are unlikely to improve performance for significant proportions of traffic.} 
 This is most visible in figure \ref{fig:flowrate}, where improvements in capacity for coping with higher bursts of activity (figure \ref{fig:flowrateactive}) has outpaced the actual delivery rate set by applications (figure \ref{fig:flowrateaggr}).
-Given the popularity of emulating a constant bit rate service over \ac{TCP}, that no such abstraction is provided at the socket level API is unfortunate.
+Given the popularity of emulating a constant bit rate service over \ac{TCP}, that no such abstraction is provided at the socket level \ac{API} is unfortunate.
 
 
 \subsection{Throttling primarily affects heavy hitters}
@@ -275,7 +275,7 @@ A breakdown of receiver shaping by traffic source is provided in table \ref{tabl
 \end{table}
 
 Prior to 2009, receiver shaping mostly targeted flows which attained the highest throughput, and may have in part been performed by hosts. 
-In addition to affecting Microsoft, which distributes Windows updates using the same flow control mechanisms exploited by middleboxes, some CDN traffic was also reined in.
+In addition to affecting Microsoft, which distributes Windows updates using the same flow control mechanisms exploited by middleboxes, some \ac{CDN} traffic was also reined in.
 By 2009, and likely as a reaction to increased contention within their networks, the network-level footprint of receiver side throttling shifts from shaping by rate, to shaping by volume.
 Specific targets start to emerge within OVH, Cogent and Level 3 and TeliaNet, all of which hosted significant file-sharing websites at the time which would continue to be affected throughout 2010.
 By 2011, receiver shaping mostly subsided, affecting primarily Lemuria (HotFile) and Mediafire.

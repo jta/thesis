@@ -2,7 +2,7 @@
 \label{section:malawi:dataset}
 
 This section provides an overview of the datasets used in this work and some of the data processing required before approaching the longitudinal study of Internet traffic rate limiting. 
-The dataset used is composed from the original, unanonymised traffic \acs{MAWI} \cite{mawi} traces, a set of daily packet captures from the \acs{WIDE} backbone network which provides connectivity to universities and research institutes in Japan. 
+The dataset used is composed from the original, un-anonymised traffic \acs{MAWI} \cite{mawi} traces, a set of daily packet captures from the \acs{WIDE} backbone network which provides connectivity to universities and research institutes in Japan. 
 Traffic is collected daily for 15 minutes starting at 14:00 \acs{JST}. 
 Although this dataset extends back largely uninterrupted from late 2001, the present work focuses on just over five years of data following a network upgrade to the monitored link on October 2006.
 The monitored link carries mostly trans-Pacific commodity traffic between \acs{WIDE} customers and non-Japanese commercial networks. 
@@ -67,7 +67,7 @@ In contrast, most \emph{elephants} (flows that carry significant traffic individ
 
 Loss is inferred by accounting for \emph{retransmissions} in the upstream data and \emph{out-of-order packets} in downstream data; for the remainder of the paper the term \emph{end-to-end loss} will refer to the sum of out-of-order and retransmitted data bytes over the total data bytes in a given direction.
 Anecdotally, this was found to be an adequate indicator of loss --- with the exception of \emph{hanging} \ac{TCP} connections. 
-In such cases where connectivity is lost, a host will proceed to retransmit packets while performing an exponential backoff. 
+In such cases where connectivity is lost, a host will proceed to retransmit packets while performing an exponential back-off. 
 Although this results in negligible overall traffic, it can significantly skew the inferred loss ratio for uncommon destinations for which little traffic exists. 
 To account for these cases, a 3-second timeout on retransmissions was imposed, after which the congestion feedback loop to deemed to be broken. 
 
@@ -77,8 +77,8 @@ However, since a core objective of this work is to augment this time-based infor
 \subsection{Aggregating by Location}
 
 Location information is added by mapping the original source and destination \ac{IP} addresses to its geographical and topological counterpoints. 
-The \emph{routeviews} \cite{routeviews} archives are used to reconstruct the mapping between each \ac{IP} and both \ac{AS} and network prefix; bi-hourly dumps of \ac{BGP} \acp{RIB} are available in the \acs{WIDE} archives since mid 2003. 
-A daily \ac{RIB} is reconstructed based on the views provided by contributing ASes, in particular \ac{IIJ} and \ac{APNIC}.
+The routeviews archives \cite{routeviews} are used to reconstruct the mapping between each \ac{IP} and both \ac{AS} and network prefix; bi-hourly dumps of \ac{BGP} \acp{RIB} are available in the \acs{WIDE} archives since mid 2003. 
+A daily \ac{RIB} is reconstructed based on the views provided by contributing \acp{AS}, in particular \ac{IIJ} and \ac{APNIC}.
 Since exact routes are not disclosed (there is no record of local policy), there is no prior knowledge of the route taken by packets; this however does not hinder the ability to consistently map \acp{IP} to \acp{AS}.
 While discrepancies in \ac{AS} destinations exist between different routeviews contributors, this happens almost exclusively on prefixes for which no actual traffic is seen. 
 

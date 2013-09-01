@@ -1,3 +1,4 @@
+\section{Introduction}
 
 % generic "failures are bad"
 Despite being broadly designed for robustness, the current Internet architecture remains remarkably vulnerable to failures.
@@ -17,7 +18,7 @@ Traditionally, this has been achieved by designing improved routing algorithms.
 The deployment of real time applications with harder constraints on reliability coupled with better failure detection methods embedded in linecards have provided both the motivation and the means for achieving sub-second recovery within \ac{IGP} networks \cite{Francois:2005p514}.
 Even with reduced recovery times however, the transient effects of routing changes can still disrupt the forwarding path. 
 Other frameworks \cite{Bryant:2007p522,Torvi:2008p518,Lor:2010:PRE:1868447.1868449} have been proposed to provide repair paths for use between the detection of a failure and the convergence of the routing process.
-% Ntwork methods are bad (same paragraph)
+% Network methods are bad (same paragraph)
 Unfortunately, such methods are rarely sufficient.
 Firstly, their application is circumscribed to individual domains, and as such cannot provide end-to-end coverage in a federated, best-effort Internet. 
 In order to detect failures in remote domains, an operator may employ active monitoring techniques \cite{DBLP:conf/im/FokLMLLCC13}, but such approaches can neither scale to cover most destinations nor operate at a small enough timescale to ensure timely recovery.

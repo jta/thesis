@@ -38,8 +38,8 @@ T'_i = \frac{T T_i^2}{R_i \sum_j (T_j^2/R_j)}.
 \end{equation}
 
 There is, of course, a problem when $R_i = 0$.  
-Because of the assumption that the traffic is assigned in inverse proportion to loss rate then a branch with no loss would naturally have all the traffic assigned to it. 
-To correct this, $R_i$ is incremented for each path by one maximum segment size (MSS). 
+Given the assumption that the traffic is assigned in inverse proportion to loss rate, a branch with no loss would naturally have all traffic assigned to it. 
+To correct this, $R_i$ is incremented for each path by one \ac{MSS}. 
 This problem is further explored in subsequent sections.
 
 \subsection{Understanding the design space}
@@ -69,16 +69,17 @@ This problem is further explored in subsequent sections.
         \caption{Balanced}\label{fig:twopreflex}
     \end{subfigure}%
 
-    \caption[Simulation using PREFLEX to balance traffic over two paths.]
-    {Simulation using PREFLEX to balance traffic over two paths. \label{fig:two}
+    \caption[Simulation using \acs{PREFLEX} to balance traffic over two paths.]
+    {Simulation using \acs{PREFLEX} to balance traffic over two paths. \label{fig:two}
         Each simulation demonstrates the dynamics of a single mode, except for
         (\subref{fig:twopreflex}) which balances between conservative and loss-driven components.  }
 \end{figure}
 
 
-Because only local linearity is assumed then large adjustments of the traffic split are likely to cause problems.  
-It is also useful to send a small amount of probe traffic down each route even if the loss rate is high \cite{Kelly:2005p140}. 
-In the absence of other information (for example when there is no loss) it is useful to assign traffic according to the current traffic throughput split.  Therefore there are three tendencies to be accounted for, the loss-equalisation tendency from \eqref{eqn:routesplitloss}, the conservative tendency to keep the traffic split the same as the throughput split in the previous period and the equalisation tendency to keep the traffic equally split on all interfaces.  
+Given local linearity is assumed, large adjustments to the traffic split are a potential cause for concern.
+A small amount of traffic must also be assigned to each route independently of the loss rate, in order to probe whether the path is available.
+Finally, in the absence of loss, it is practical to assign traffic according to the current traffic throughput split.  
+Therefore there are three tendencies to be accounted for: the loss-equalisation tendency from \eqref{eqn:routesplitloss}, the conservative tendency to keep the traffic split the same as the throughput split in the previous period and the equalisation tendency to keep the traffic equally split on all interfaces.  
 Call the traffic split assigned to path $i$  by each of these schemes $T(E)_i$, $T(C)_i$ and $T(L)_i$ where $E$, $C$ and $L$ stand for ``equal", ``conservative" and ``loss-driven".
 
 The final distribution of traffic across all links is then:

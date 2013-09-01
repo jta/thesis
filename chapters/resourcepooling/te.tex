@@ -39,7 +39,7 @@ The resulting label is then used to forward the packet along a \ac{LSP} towards 
 While there are practical limits in how many paths can be maintained and non-negligible overheads in setting up an \ac{LSP}, the ability to forward packets explicitly along arbitrary routes was instrumental in initial attempts at effective traffic engineering \cite{Xiao:2000p502,YufeiWang:1999p222}.
 
 In contrast, IP-based \ac{TE} solutions are more scalable but less flexible.
-Traffic engineering was first applied to \acp{IGP} such as \ac{OSPF} by Fortz \emph{et al.} \cite{Fortz:2000p350,Fortz:2002p179}, who proposed setting link weights according to traffic demand in order to attain \ac{TE} objectives.
+Traffic engineering was first applied to \acp{IGP} such as \ac{OSPF} by Fortz et al.\ \cite{Fortz:2000p350,Fortz:2002p179}, who proposed setting link weights according to traffic demand in order to attain \ac{TE} objectives.
 Theoretical work would further prove that any arbitrary set of loop-free paths could be transformed into shortest paths through a given set of weights \cite{Wang:2001p506}.
 Unlike \ac{MPLS} methods however, traffic cannot be unevenly split natively in IP traffic engineering.
 To do so requires the use of \ac{ECMP}, which balances traffic equally across next hop routers for paths with the same cost.
@@ -166,7 +166,7 @@ Traditionally source routing has been viewed as a host-centric solution, allowin
 More recent research however has attempted to recast source routing as a potential asset to an \ac{ISP}.
 
 Perhaps the greatest benefit source routing offers operators is in reducing the impact of resilience on the routing architecture.
-In \ac{SOSR} \cite{Gummadi:2004p131}, Gummadi et al. investigate the usefulness of one-hop source routing in order to improve reliability.
+In \ac{SOSR} \cite{Gummadi:2004p131}, Gummadi et al.\ investigate the usefulness of one-hop source routing in order to improve reliability.
 Through the use of active measurements over a week to measure path availability, Gummadi estimated an average path availability for servers at 99.6\%, and for broadband hosts at 94.4\%.
 Gummadi then implemented a simple ``random-4'' hop selection which attempts to detour around failures by selecting four random intermediate nodes from a pool of available choices, managing to recover flows in 56\% of possible cases.
 This study provided two important results.
@@ -183,7 +183,7 @@ The resulting scheme can offer much of the potential hinted in \ac{SOSR}, but wi
 Hosts merely manipulate their tag until they achieve a desired outcome.
 
 The fundamental tussle between end user intentions and \ac{ISP} control would further be investigated in \cite{Laskowski:2008p244}.
-In analysing ``user-directed'' routing Laskowski et al. claim that such a tussle can be resolved given a flexible enough payment system.
+In analysing ``user-directed'' routing Laskowski et al.\ claim that such a tussle can be resolved given a flexible enough payment system.
 While no suggestion is made on what form such a payment system would take, a market-based approach is shown to allow \acp{ISP} to induce any feasible traffic pattern.
 % overlay, flow fairness, etc
 In the absence of a suitable solution for source routing, applications have improved path performance and availability implicitly through the use of overlay architectures.

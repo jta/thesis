@@ -7,17 +7,17 @@ The aim of this section is to describe a process which distinguishes those flows
 Each flow can be characterized as being either application paced, in which the sending application is limiting the data provided, host limited, whereby local constraints at either end host cap throughput, or receiver shaped, in which an artificial constraint is imposed by either a middlebox or receiver.
 
 The classification proceeds in stages. 
-Before classification, if a flow is not bidirectional its RTT must be recovered.
+Before classification, if a flow is not bidirectional its \ac{RTT} must be recovered.
 This is achieved in section \ref{subsection:malawi:PeriodicEnhancement}. 
-Because the sender's TCP state machine cannot be directly observed, the congestion window must be instead estimated by observing the number of unacknowledged bytes in flight (\textit{flight size}).
+Because the sender's \ac{TCP} state machine cannot be directly observed, the congestion window must be instead estimated by observing the number of unacknowledged bytes in flight (\textit{flight size}).
 This reconstruction is described in section \ref{subsection:malawi:flightAggregation} and provides the basis for flow classification. 
-Flows are then checked in turn to see if they are application paced, host limited or receiver shaped and classified as belonging to the first of these classes for which they fulfill the necessary conditions.
+Flows are then checked in turn to see if they are application paced, host limited or receiver shaped and classified as belonging to the first of these classes for which they fulfil the necessary conditions.
 Flows in none of these classes are either limited only by the network (delay or loss conditions) or are insufficiently large for constraints to be reliably detected.
 
 \subsection{\acs{RTT} Estimation}
 \label{subsection:malawi:PeriodicEnhancement}
 
-Building on prior work presented in section \ref{section:malawi:related}, this section proposes an algorithm that scalably recovers the RTT from one-directional traffic traces. 
+Building on prior work presented in section \ref{section:malawi:related}, this section proposes an algorithm that scalably recovers the \ac{RTT} from one-directional traffic traces. 
 % XXX: below implies microflights were used, but these aren't described (remove as appropriate)
 Although \ac{RTT} estimation is a difficult problem, simplifying assumptions can be made.
 For the \acs{MAWI} dataset most \acp{RTT} are relatively large, with the closest neighbouring country, South Korea, roughly 40ms away.
@@ -42,13 +42,13 @@ In the presence of losses, however, bytes can be re-sent if a packet is timed ou
 %
 % What is our main contribution, algorithmically speaking?
 %
-The main difficulty associated with one-sided TCP flow reconstruction is as follows.
+The main difficulty associated with one-sided \ac{TCP} flow reconstruction is as follows.
 Let $t_1, t_2, \ldots$ be a set of times at which packets $p_1, p_2, \ldots$ were observed at $S$ en route to $R$.
 Suppose that a packet $p_j$ of size $b$ is observed at time $t_j$.
-In addition, suppose that approximately one RTT $T$ later, the sender $S$ receives an ACK $a_j$ from $R$ for the $b$ bytes of $p_j$.
-At this point, the TCP stack in $S$ will decrease the number of unacknowledged bytes by $b$, thus opening the possibility for sending additional traffic to $R$.
+In addition, suppose that approximately one \ac{RTT} $T$ later, the sender $S$ receives an \ac{ACK} $a_j$ from $R$ for the $b$ bytes of $p_j$.
+At this point, the \ac{TCP} stack in $S$ will decrease the number of unacknowledged bytes by $b$, thus opening the possibility for sending additional traffic to $R$.
 This can lead to another packet $p_k$ to be transmitted; let this packet be observed at time $t_k$ as it is sent towards $R$.
-Assuming that processing delay is insignificant, the RTT experienced by $p_j$ can be approximated as $T \approx t_k - t_j$.
+Assuming that processing delay is insignificant, the \ac{RTT} experienced by $p_j$ can be approximated as $T \approx t_k - t_j$.
 Now consider what happens if packets are only observed in the $S \rightarrow R$ direction.
 Under such conditions, it is not possible to ascertain whether $p_k$ was sent explicitly as a result of $S$ receiving the unobserved \ac{ACK} $a_j$, or whether it was sent as a result of an \ac{ACK} $a_i$ associated with a previous packet $p_i$ rather than with $p_j$.
 If, however, a packet $p_l$ is eventually observed that did result from the reception of $a_j$, the \ac{RTT} can be estimated as $T \approx t_l - t_j$ with $t_l > t_k$.
@@ -67,7 +67,7 @@ Hence, the probability density function $H(t)$ of the values in $\mathcal{T}$ sh
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{figures/malawi/rttbin.pdf}
-  \caption{$H(t)$ for flow displayed in Figure \ref{fig:hostlimited}. The horizontal line delimits $\overline{H}$ while the highlighted bin denotes the bidirectional RTT estimate.\label{fig:histogram}}
+  \caption[$H(t)$ for flow displayed in figure \ref{fig:hostlimited}.]{$H(t)$ for flow displayed in figure \ref{fig:hostlimited}. The horizontal line delimits $\overline{H}$ while the highlighted bin denotes the bidirectional \acp{RTT} estimate.\label{fig:histogram}}
 \end{figure}
 
 %
@@ -81,7 +81,7 @@ As such, taking \ac{RTT} candidates directly from $H(t)$ may result in a large s
 
 Three recovery algorithms for $T$ are attempted.
 First, as a baseline, the highest peak in $H(t)$ is selected as a candidate for $T$. 
-In addition, expanding upon the work of Qian et. al. \cite{Qian:2009p429} a frequency-domain representation of $H(t)$ is used to identify $T$. 
+In addition, expanding upon the work of Qian et al.\ \cite{Qian:2009p429} a frequency-domain representation of $H(t)$ is used to identify $T$. 
 This is done by selecting the highest peak of $|\hat{H}(\omega)|^2$, the \emph{energy spectral density} of $H(t)$ (i.e. the norm squared of the Fourier transform of $H(t)$). 
 Finally, a custom utility-based technique that operates directly on $H(t)$ is proposed which achieves superior performance to both of the aforementioned methods.
 
@@ -99,7 +99,7 @@ Finally, a custom utility-based technique that operates directly on $H(t)$ is pr
 \label{sect:utilityBasedRecovery}
 
 This method relies not on the identification of periodicities, but on explicitly matching experimentally found signatures. 
-To this end, we consider the peaks of $H(t)$, which are then considered RTT candidates.  
+To this end, we consider the peaks of $H(t)$, which are then considered \ac{RTT} candidates.  
 However, trivial discriminators (such as simply selecting the highest peak) are not reliable. 
 In this case, it was found experimentally that repeatable peaks and troughs also occur at multiples and sub-multiples of $T$, with the most important ones being $\frac{T}{3}$, $\frac{T}{2}$, $T$ and $2T$. 
 We design this detection algorithm around the idea that a given pattern of peaks and troughs can identify $T$.
@@ -108,36 +108,31 @@ If we define $\overline{H}$ as the mean height of $H(t)$, we can define a per-pe
 \begin{equation*}
 p(t) = 1.0 - \exp\left(-2.0 \left(\frac{H(t)}{\overline{H}}\right)\right) \mbox{.}
 \end{equation*}
-This function has several advantageous properties: it is 0 if $H(t)$ is zero, 1
-if $H(t)$ is infinite, and $0.5$ if $H(t) = \overline{H}$.  In other
-words it is a measure of the \emph{peakiness} of the data, with $p=1$ identifying
-an infinitely high peak, $p=0$ identifying an empty histogram bin (trough), and $p=\frac{1}{2}$ 
-implying that $H(t)$ is of exactly average height at that point. We can then score each candidate using the following utility function:
+This function has several advantageous properties: it is 0 if $H(t)$ is zero, 1 if $H(t)$ is infinite, and $0.5$ if $H(t) = \overline{H}$.  
+In other words it is a measure of the \emph{peakiness} of the data, with $p=1$ identifying an infinitely high peak, $p=0$ identifying an empty histogram bin (trough), and $p=\frac{1}{2}$ implying that $H(t)$ is of exactly average height at that point. 
+We can then score each candidate using the following utility function:
 $$
 P(t) = 1.5 p(t) + p(2t) - p\left(\frac{t}{2}\right) - p\left(\frac{t}{3}\right).
 $$
-That is, the candidate RTT $t$ scores highly if it is itself a peak, if it has a peak
-at a multiple $2t$, and if it also manifests troughs at submultiples $\frac{T}{2}$ and $\frac{T}{3}$.
-The factor of 1.5 was added after observations
-showed that the peak at $T$ was the most important factor in determining
-whether a candidate was the true RTT. Similarly, additional multiples and submultiples 
-were excluded as they showed very limited discriminating power experimentally.
+That is, the candidate \ac{RTT} $t$ scores highly if it is itself a peak, if it has a peak at a multiple $2t$, and if it also manifests troughs at sub multiples $\frac{T}{2}$ and $\frac{T}{3}$.
+The factor of 1.5 was added after observations showed that the peak at $T$ was the most important factor in determining whether a candidate was the true \ac{RTT}. 
+Similarly, additional multiples and sub multiples were excluded as they showed very limited discriminating power experimentally.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{figures/malawi/rttcomp.pdf}
-  \caption{Accuracy of RTT estimator when compared to the median value of bidirectional estimate.}
+  \caption{Accuracy of \ac{RTT} estimator when compared to the median value of bidirectional estimate.}
 \end{figure}
 
-\subsubsection{Comparing RTT Recovery Algorithms}
+\subsubsection{Comparing \ac{RTT} Recovery Algorithms}
 \label{sect:comparingRecoveryAlgos}
-As described in Section \ref{subsection:malawi:PeriodicEnhancement}, $H(t)$ is calculated in such a way that RTT periodicity is amplified. 
-This means that FFT-based techniques could potentially perform better on $H(t)$ than on the packet stream with no pre-processing. 
-However, this is complicated not only because $H(t)$ contains periodicities at multiples of $T$, but also discontinuities that generate harmonics at frequency multiples of the RTT fundamental. 
-Hence, although the FFT $|\hat{H}(\omega)|$ of $H(t)$ is much cleaner than that of the packet interarrival time series on its own, its maximum peak rarely coincides exactly with the RTT clock (this corroborates reports by Qian et al \cite{Qian:2009p429}). 
-Thus, applying the FFT leads to another \emph{peak detection problem} in which the RTT fundamental needs to be extricated from its harmonics and sub-harmonics. 
-The trivial solution to this problem, the application of a bandpass filter around the RTT frequency, is of course unfeasible because the bandwidth and 
-centring of such a filter depend on the RTT which is itself unknown.
+As described in Section \ref{subsection:malawi:PeriodicEnhancement}, $H(t)$ is calculated in such a way that \ac{RTT} periodicity is amplified. 
+This means that \acs{FFT}-based techniques could potentially perform better on $H(t)$ than on the packet stream with no pre-processing. 
+However, this is complicated not only because $H(t)$ contains periodicities at multiples of $T$, but also discontinuities that generate harmonics at frequency multiples of the \ac{RTT} fundamental. 
+Hence, although the \acs{FFT} $|\hat{H}(\omega)|$ of $H(t)$ is much cleaner than that of the packet inter arrival time series on its own, its maximum peak rarely coincides exactly with the \ac{RTT} clock (this corroborates reports by Qian et al.\ \cite{Qian:2009p429}). 
+Thus, applying the \acs{FFT} leads to another \emph{peak detection problem} in which the \ac{RTT} fundamental needs to be extricated from its harmonics and sub-harmonics. 
+The trivial solution to this problem, the application of a bandpass filter around the \ac{RTT} frequency, is of course infeasible because the bandwidth and 
+centring of such a filter depend on the \ac{RTT} which is itself unknown.
 The utility-based algorithm described in Section \ref{sect:utilityBasedRecovery} can hence be applied in either the time domain or the frequency domain; we chose to do it on the former on the interest of expediency and lower computational cost.
 
 \newcommand{\RTTHeader}{Below & Above}
@@ -156,12 +151,13 @@ The utility-based algorithm described in Section \ref{sect:utilityBasedRecovery}
 \multirow{2}{*}{Sender side}    & \SmallFlowName && \input{data/malawi/rttoutboundsmall.tex}\\
                                 & \LargeFlowName && \input{data/malawi/rttoutboundlarge.tex}\\
 \end{tabular}
-\caption{\label{table:rttRecovery}Performance of RTT recovery algorithms}
+\caption{\label{table:rttRecovery}Performance of \acs{RTT} recovery algorithms}
 \vspace{-3mm}
 \end{table}
 
-The performance of the analysed RTT recovery mechanisms is presented in Table \ref{table:rttRecovery}, that shows the percentage of total flows below and above the RTT range given by the bidirectional estimates.
-We separate things for \emph{inbound} traffic (where we are positioned at the receiver side) and \emph{outbound} traffic (where we are positioned at the sender side). The utility-based algorithm is particularly useful to address RTT underestimation for flows over 10MB in size, which is our main objective since precisely that kind of estimation error would interfere with our ability to correctly decouple application behaviour from RTT-scale dynamics.
+The performance of the analysed \ac{RTT} recovery mechanisms is presented in Table \ref{table:rttRecovery}, that shows the percentage of total flows below and above the \ac{RTT} range given by the bidirectional estimates.
+We separate things for \emph{inbound} traffic (where we are positioned at the receiver side) and \emph{outbound} traffic (where we are positioned at the sender side). 
+The utility-based algorithm is particularly useful to address \ac{RTT} underestimation for flows over 10MB in size, which is our main objective since precisely that kind of estimation error would interfere with our ability to correctly decouple application behaviour from \ac{RTT}-scale dynamics.
 
 
 %For the most part, the utility based method improves on underestimation, which is our main objective since that would interfere with our flight reconstruction (i.e. generate lots of gaps).
@@ -172,24 +168,24 @@ We separate things for \emph{inbound} traffic (where we are positioned at the re
 \subsection{Flow Classification}
 \label{subsection:malawi:flightAggregation}
 
-One fundamental precondition to decouple the influence that network loss, host configuration and TCP behaviour has on the throughput experienced by a flow is the reconstruction of the congestion window behaviour of TCP flows on the basis of observed data. 
-Unfortunately, the congestion window value is internal to the sender's TCP state machine and may not manifest itself in the absence of sufficient data from the application layer. 
+One fundamental precondition to decouple the influence that network loss, host configuration and \ac{TCP} behaviour has on the throughput experienced by a flow is the reconstruction of the congestion window behaviour of \ac{TCP} flows on the basis of observed data. 
+Unfortunately, the congestion window value is internal to the sender's \ac{TCP} state machine and may not manifest itself in the absence of sufficient data from the application layer. 
 A more easily observed quantity which serves as a reasonable proxy for the congestion window is the number of unacknowledged bytes in flight, henceforth referred to as the \textit{flight size}, which can be derived given an accurate estimate of the end-to-end delay.
-The evolution of both flight size and RTT can in turn be used to ascertain to what extent throughput is regulated by limitations imposed at different layers of the networking stack.
+The evolution of both flight size and \ac{RTT} can in turn be used to ascertain to what extent throughput is regulated by limitations imposed at different layers of the networking stack.
 
 % definitions
-Given a candidate RTT, we can aggregate a stream of packets with arrival times $t_1, t_2, \ldots$ into a stream of \emph{flights}. 
-Intuitively, a flight is a clustered subset of a TCP flow which exhibits its own temporal coherence; alternatively, it can be though of as a series of consecutive packets that were (roughly) generated by the sender as a response to the same protocol operation. 
+Given a candidate \ac{RTT}, we can aggregate a stream of packets with arrival times $t_1, t_2, \ldots$ into a stream of \emph{flights}. 
+Intuitively, a flight is a clustered subset of a \ac{TCP} flow which exhibits its own temporal coherence; alternatively, it can be though of as a series of consecutive packets that were (roughly) generated by the sender as a response to the same protocol operation. 
 A flight $f_i$ that begins
 with the $j$th packet and ends with the $k$th is defined to have a \emph{total flight time} $\tau_i = t_{k+1} - t_j$. 
-The algorithmic selection of initial and final packets in such a way that the resulting flights are indicative of TCP behaviour remains an open problem. 
-Since we assume that the RTT provides a natural time frame for the operations of TCP, in the algorithm presented in this work, given an initial packet $\pi_j$ and an RTT estimate $T$, the $k$th (and final) packet is selected to minimise \emph{the flight time error} $e_i = |T - \tau_i|$. 
+The algorithmic selection of initial and final packets in such a way that the resulting flights are indicative of \ac{TCP} behaviour remains an open problem. 
+Since we assume that the \ac{RTT} provides a natural time frame for the operations of \ac{TCP}, in the algorithm presented in this work, given an initial packet $\pi_j$ and an \ac{RTT} estimate $T$, the $k$th (and final) packet is selected to minimise \emph{the flight time error} $e_i = |T - \tau_i|$. 
 This mechanism follows closely the methodology described in \cite{Zhang:2002p85}, with the exception that we do not attempt to define flights as being both adjacent and disjoint; rather, we decompose flows into a stream of potentially overlapping flights. 
-This helps the algorithm mitigate the deleterious effects of small deviations in the estimated RTT, which alters the properties of each flight. 
+This helps the algorithm mitigate the deleterious effects of small deviations in the estimated \ac{RTT}, which alters the properties of each flight. 
 Furthermore, since the flight size is continuous in time, it makes little sense to restrict ourselves to a single sample per round trip time.
 
 Having obtained flight information from each flow, we next consider what is the predominant factor that affects its throughput. 
-Within the context of TCP, we classify flows as being artificially constrained by three distinct processes: \emph{application pacing}, \emph{host limited} and \emph{receiver shaping}.
+Within the context of \ac{TCP}, we classify flows as being artificially constrained by three distinct processes: \emph{application pacing}, \emph{host limited} and \emph{receiver shaping}.
 
 \begin{figure}
 \centering
@@ -214,17 +210,17 @@ Within the context of TCP, we classify flows as being artificially constrained b
 \label{sssec:app}
 
 A flow whose throughput decreases because it has no outstanding data to send is temporarily limited by the application. 
-Flights can be identified as being \emph{application limited} if terminated with a packet smaller than the maximum segment size (MSS) and followed by an inter-arrival time greater than the RTT, as consistent with \cite{Zhang:2002p85}. 
-The underlying reason for this defintion is that most TCP implementations will wait some time for subsequent bytes to be written to the socket if the next packet to be sent is smaller than the MSS, unless the TCP\_NODELAY option is set \cite{nagle1984rfc}.
+Flights can be identified as being \emph{application limited} if terminated with a packet smaller than the \ac{MSS} and followed by an inter-arrival time greater than the \ac{RTT}, as consistent with \cite{Zhang:2002p85}. 
+The underlying reason for this defintion is that most \ac{TCP} implementations will wait some time for subsequent bytes to be written to the socket if the next packet to be sent is smaller than the \ac{MSS}, unless the \ac{TCP}\_NODELAY option is set \cite{nagle1984rfc}.
 
 A flow with \emph{application limited} flights however is not necessarily \emph{application paced}. In practice, all flows for which the final packet is observed contain at least one such flight.
 For the purposes of our work, we are focused on identifying cases in which throughput is predominantly determined by application behaviour.
 One such example is illustrated in figure \ref{fig:youtube}, in which a stream is delivered by periodically writing blocks to the sending socket.
 The resulting network-level behaviour is distinct from traditional congestion control: short bursts are interspersed with protracted silence.
-Application limited flights, which terminate on non-MSS packets, are highlighted at the end of each burst.
+Application limited flights, which terminate on non-\ac{MSS} packets, are highlighted at the end of each burst.
 
 This behaviour is in stark contrast to that exhibited in figure \ref{fig:hostlimited}, where distinct transfers are multiplexed on top of a single transport association over time.
-From the perspective of the network, there is little to distinguish the behaviour of such traffic from independent TCP flows.
+From the perspective of the network, there is little to distinguish the behaviour of such traffic from independent \ac{TCP} flows.
 Application paced connections such as Youtube traffic however exhibit a degree of regularity which can potentially be exploited by the network in predicting demand or smoothing bursts.
 
 In order to identify such recurring behaviour, we identify flows as being \emph{application paced} if the period between bursts terminated by \emph{application limited flights} is consistently under 10 seconds and the standard deviation of the intermediate pauses is under one second.
@@ -235,29 +231,29 @@ This definition in particular purposely ignores flows which exhibit long silence
 
 Given sufficient bandwidth and traffic to send, a flow may encounter local constraints at either end-host which cap its throughput. 
 For instance, the buffer space allocated on both the sender and receiver side is often pre-configured, and it is common practice to tune these values down on popular servers and managed infrastructure in a bid to conserve memory or bandwidth.
-A receiver is also limited in the window size it can announce to the remote sender; if the windowscale option \cite{jacobson1992tcp} is not negotiated during the TCP handshake, the advertised window cannot exceed 64KB.
+A receiver is also limited in the window size it can announce to the remote sender; if the windowscale option \cite{jacobson1992tcp} is not negotiated during the \ac{TCP} handshake, the advertised window cannot exceed 64KB.
 
 In both cases, a local decision by either host can determine the upper bound of the flow rate.
 These \emph{host limited} cases are characterised by a constant window size over time.
-The methodology described for flight aggregation at the beginning of this section typically generates a large number of flights, representing many likely combinations given a base RTT estimate.
-In order to identify the flat-lined behaviour of a host limited flow, we first filter the flight stream to remove some of the uncertainty derived from small fluctuations in the RTT.
-We then select the maximum flight size observed for each RTT interval, and declare a sequence of flights to be host limited if the same maximum was observed over six consecutive RTTs (this is twice the period suggested in \cite{Zhang:2002p85}).
-In practice, increasing the period over which the maximum window size is tracked allows us to more accurately discern between host limited behaviour and more conservative bandwidth probing, such as that performed during the convex phase of TCP CUBIC \cite{Ha:2008p471}.
+The methodology described for flight aggregation at the beginning of this section typically generates a large number of flights, representing many likely combinations given a base \ac{RTT} estimate.
+In order to identify the flat-lined behaviour of a host limited flow, we first filter the flight stream to remove some of the uncertainty derived from small fluctuations in the \ac{RTT}.
+We then select the maximum flight size observed for each \ac{RTT} interval, and declare a sequence of flights to be host limited if the same maximum was observed over six consecutive \acp{RTT} (this is twice the period suggested in \cite{Zhang:2002p85}).
+In practice, increasing the period over which the maximum window size is tracked allows us to more accurately discern between host limited behaviour and more conservative bandwidth probing, such as that performed during the convex phase of \ac{TCP} \ac{CUBIC} \cite{Ha:2008p471}.
 
 A flow may be host limited for only brief periods of its lifetime, as illustrated in figure \ref{fig:hostlimited}.
 To filter out such cases where host limitations are not the predominant factor in defining flow throughput, we further enforce that in addition to host-limited flights, the average window size must over a flow lifetime should be within 10\% of the inferred host limit, which is not the case in figure \ref{fig:hostlimited}.
 
 In practice, flows can exhibit both application pacing and host limitations, with bursts being sent at a capped window size followed by application pauses.
 In such cases, a flow will still be classified as being \emph{application paced} if it meets the requirements set out in the previous section, as doing so provides evidence that it controls throughput in spite of the degraded performance provided further down the stack. 
-This line of reasoning applies equally to the occurrence of sporadic loss; so long as block delivery is ensured within the timeframe dictated by the application, it remains in control.
+This line of reasoning applies equally to the occurrence of sporadic loss; so long as block delivery is ensured within the time frame dictated by the application, it remains in control.
 
 \subsubsection{Receiver Shaped Flows}
 \label{sssec:rec}
 
 A flow which is neither \emph{application paced} or \emph{host limited} can still be artificially constrained by flow control (rather than by congestion control).
-Traditionally, in TCP the sender is responsible for regulating throughput. 
+Traditionally, in \ac{TCP} the sender is responsible for regulating throughput. 
 However, the receiver can also shape throughput by manipulating the \emph{advertised window} announced on every acknowledgement.
-Such receiver-window auto-tuning has been available on Windows operating systems since Vista \cite{vistaReceiveWindow}, and can also be leveraged by middleboxes in order to throttle inbound traffic \cite{appEx}.
+Such receiver window auto-tuning has been available on Windows operating systems since Vista \cite{vistaReceiveWindow}, and can also be leveraged by middleboxes in order to throttle inbound traffic \cite{appEx}.
 
 In order to evaluate the potential impact of such behaviour, we further propose a heuristic to identify receiver-shaped traffic.
 For flows in which both directions of traffic are observed it is possible to correlate the evolution of the advertised window with the size of reconstructed flights.
@@ -266,13 +262,13 @@ Since the advertised window may be fluctuating, it is not always obvious which o
 An example of a reconstructed flow which is subjected to receiver shaping is displayed in Figure \ref{fig:awnd}.
 
 For flows in which both directions are observed, it is possible to classify flights as being receiver-shaped if there is a statistically significant correlation between the advertised window size and the maximum flight size observed.
-Harnessing the stream filtering used in detecting host limited behaviour, we perform such analysis over a sliding window of 10 RTT intervals.
+Harnessing the stream filtering used in detecting host limited behaviour, we perform such analysis over a sliding window of 10 \ac{RTT} intervals.
 A flight is flagged as being receiver shaped if the correlation between receiver window and flight size is statistically significant; a flow is considered to be predominantly receiver shaped if over half of its flights are flagged as such.
 We do not perform this covariance analysis on flights which contain out-of-order or retransmitted packets. 
 In these cases, both the receiver and sender window sizes are correlated \emph{by definition}. 
-In the former case, the receiver buffer will temporarily fill expecting the next packet in sequence, in the latter case, TCP will reduce its window.
+In the former case, the receiver buffer will temporarily fill expecting the next packet in sequence, in the latter case, \ac{TCP} will reduce its window.
 
-Given that receiver shaping classification requires correlating information in both directions of a TCP connection, it will come as no surprise that the absence of the reverse path can introduce false positives into our measurements. 
+Given that receiver shaping classification requires correlating information in both directions of a \ac{TCP} connection, it will come as no surprise that the absence of the reverse path can introduce false positives into our measurements. 
 This happens because any given flow might be receiver shaped in such a manner that the heuristic erroneously attributes its behaviour to host limitations. 
 In the absence of additional evidence, this misclassification is difficult to detect explicitly. 
 Instead, we calculate the ratio of receiver shaped flows which would have been incorrectly identified if the reverse path were not observed. 
