@@ -19,7 +19,7 @@ Control was in the network. In part, this reflected military chain of command, b
 % users can't be trusted
 \begin{quote}
 \textit{
-Messages once labeled ``Deferred" will be stamped ``Operational Immediate,'' and jammed back into the input hopper. It is analogous to the inflationary competition of competing buyers for scarce goods. We temporarily delude ourselves into thinking that we are buying more capability by inflating the precedence indicator.
+Messages once labelled ``Deferred" will be stamped ``Operational Immediate,'' and jammed back into the input hopper. It is analogous to the inflationary competition of competing buyers for scarce goods. We temporarily delude ourselves into thinking that we are buying more capability by inflating the precedence indicator.
 }
 \end{quote}
 
@@ -68,7 +68,7 @@ That more attention was not paid to managing congestion in the eight years betwe
 However, there was little indication as to the potential gravity of the problem.
 By 1982, there were still only 235 hosts on the Internet \cite{Lottor:1992p459}. 
 Most of these would have been attached to packet switches over protocols providing flow control such as X.25. 
-Furthermore, there were more pressing concerns elsewhere. Work was underway in refining applications which would drive initial demand. Addressing and routing posed scalability concerns as it became clear that the number of potential networks would rapidly exceed the limit of 256 seen as sufficient only a few years earlier \cite{Cerf:2005p452}. The host table was becoming too large to distribute as a single file and so distributed alternatives were needed \cite{Mockapetris:1987p527,Birrell:1981p457}. With no progress on any of these it is unlikely the Internet would have become large enough to become a victim of its own success.
+Furthermore, there were more pressing concerns elsewhere. Work was under way in refining applications which would drive initial demand. Addressing and routing posed scalability concerns as it became clear that the number of potential networks would rapidly exceed the limit of 256 seen as sufficient only a few years earlier \cite{Cerf:2005p452}. The host table was becoming too large to distribute as a single file and so distributed alternatives were needed \cite{Mockapetris:1987p527,Birrell:1981p457}. With no progress on any of these it is unlikely the Internet would have become large enough to become a victim of its own success.
 
 Finally, extensively testing how the network would operate under load was never an option. 
 Unlike contemporary packet switched networks such as CYCLADES, the \ac{ARPANET} had always been too \textit{useful} to be anything but a production network \cite{Day:2010p187}. 
@@ -138,8 +138,8 @@ Over the coming years, congestion management would slowly seep into the network.
 % why it matters
 The introduction of congestion control in \ac{TCP} addressed the growing pains as the Internet scaled to become a network of networks.
 Congestion however plays an equally important role within networks.
-On a short timescale, there is a variable cost which an operator must pay its own providers for transit traffic. 
-On a longer timescale, there is a fixed cost in upgrading capacity at each provisioning cycle.
+On a short time scale, there is a variable cost which an operator must pay its own providers for transit traffic. 
+On a longer time scale, there is a fixed cost in upgrading capacity at each provisioning cycle.
 By minimizing congestion, operators hope to reduce both. 
 
 % provider definition of congestion, pricing.
@@ -153,7 +153,7 @@ Inbound and outbound traffic are usually tracked separately, of which only the m
 
 Both hosts and network remain intent in reducing their own view of congestion, but in doing so pursue potentially disparate objective functions.
 Over time, the changing nature of Internet traffic, technology and stakeholders has exacerbated this tussle \cite{Clark:2005p67}.
-In \cite{Bauer:2009p200}, Bauer et al characterize the evolution of Internet traffic into three phases:
+In \cite{Bauer:2009p200}, Bauer et al.\ characterize the evolution of Internet traffic into three phases:
 
 \begin{itemize}
     \item{Prior to the 1990s, the Internet was largely confined to academic and research purposes. 
@@ -161,13 +161,13 @@ In \cite{Bauer:2009p200}, Bauer et al characterize the evolution of Internet tra
         Traffic was dominated by a small number of applications - mail, bulk file transfer and low bandwidth interactive sessions - all of which were tolerant of congestion.
         Furthermore, the Internet was still small enough that congestion was viewed as a shared concern to be jointly addressed by the community.
     }
-    \item{By the 1990s the commercialization of the Internet was in full swing, attaining mass market status as residential users signed up for dialup access.
-    The dramatic increase in userbase was somewhat attenuated by the existence of a bottleneck at the edge.
-    Dialup offered low data rates of up to 56.6kb/s and intermittent connectivity, both of which were instrumental in curbing demand.
+    \item{By the 1990s the commercialization of the Internet was in full swing, attaining mass market status as residential users signed up for dial-up access.
+    The dramatic increase in user base was somewhat attenuated by the existence of a bottleneck at the edge.
+    Dial-up offered low data rates of up to 56.6kb/s and intermittent connectivity, both of which were instrumental in curbing demand.
     The most significant new application protocol, \ac{HTTP}, put more demands on end systems than on the network, as web servers scaled to cope with thousands of simultaneous requests.
     Congestion within the network was rare and most likely to occur at data modem banks which would in effect perform admission control - excess subscribers attempting to connect would receive a busy signal.
     }
-    \item{Since 2000, the advent of broadband access lifted bandwidth constraints at the edge and pushed congestion deeper into \ac{ISP}s.
+    \item{Since 2000, the advent of broadband access lifted bandwidth constraints at the edge and pushed congestion deeper into \acp{ISP}.
             Higher data rates coupled with ``always on'' connectivity led to a much larger set of applications placing different demands on the network, from bandwidth hungry file sharing to congestion sensitive \ac{VoIP} or video streaming.
     Network provisioning, previously driven by the needs of commercial clients, would become increasingly driven by the usage patterns of residential customers. 
     }
@@ -184,7 +184,7 @@ Unsurprisingly, operators quickly resorted to piecewise solutions to artificiall
 
 One method of reducing congestion is by limiting the total volume of traffic a subscriber can send or receive over a given period and applying penalties should this cap be exceeded.
 This method imposes the least technical requirements as volume accounting is already widely performed.
-While volume capping introduces an expected upperbound for the volume of traffic traversing a network over each billing cycle, it fails to address demand patterns over shorter timescales.
+While volume capping introduces an expected upper bound for the volume of traffic traversing a network over each billing cycle, it fails to address demand patterns over shorter time scales.
 Subscribers within their volume allowance can still cause considerable congestion by acting synchronously, for example by being active during peak hours only. 
 Conversely, volume capping unnecessarily penalizes applications which shift their traffic towards less congested periods. 
 
@@ -248,10 +248,10 @@ DECbit proved promising enough to be ported to \ac{IP} with minor changes as the
 \ac{ECN} would reuse two bits from the \ac{ToS} field to retrieve binary network feedback.
 If neither bit was set, a packet is deemed to be non-\ac{ECT} and therefore legacy traffic.
 If either bit was set, both hosts had established the usage of \ac{ECN} during the initial handshake and the packet belongs to an \ac{ECT} flow.
-Having detected the onset of congestion according to a given \ac{AQM} discipline, an \ac{ECN} aware queue would then set both bits to encode the \ac{CE} codepoint.
+Having detected the onset of congestion according to a given \ac{AQM} discipline, an \ac{ECN} aware queue would then set both bits to encode the \ac{CE} code point.
 Unlike DECbit, a single \ac{CE} marking would be sufficient motive for a sender to decrease its congestion window, making \ac{ECN} compatible with probabilistic \ac{AQM} mechanisms such as \ac{RED} \cite{Floyd:1993p492}.
 Furthermore, the multiplicative decrease was more conservative than in DECbit, and followed the existing \ac{TCP} standard of halving the congestion window.
-This conscious decision to make \ac{ECN} enabled traffic perform similarly to legacy \ac{TCP} over large timescales would strip it of a potentially important competitive advantage in deployment whilst retaining one of the less scalable components of \ac{TCP}.
+This conscious decision to make \ac{ECN} enabled traffic perform similarly to legacy \ac{TCP} over large time scales would strip it of a potentially important competitive advantage in deployment whilst retaining one of the less scalable components of \ac{TCP}.
 
 Both DECbit and \ac{ECN} proved to be \emph{too little, too late}. 
 Proposed at the same time as \ac{TCP} congestion control, DECbit was initially shunned in favour of a practical solution which could be rapidly deployed and rectified.
@@ -259,14 +259,14 @@ By the time sufficient experience with binary explicit feedback had been gained 
 The standardization of \ac{ECN} \cite{Ramakrishnan:2001p45} arrived in an Internet overrun by commercial interests which neither understood the problem nor valued the solution. 
 As the Internet scaled in size, so too did its inertia to change, ossifying architecturally around a core set of protocols.
 Each new addition would be required to address an otherwise unassailable problem.
-In an era of dialup access and rapid rollout of improvements in \ac{TCP} congestion control, \ac{ECN} seemed like a costly anachronism.
+In an era of dial-up access and rapid roll-out of improvements in \ac{TCP} congestion control, \ac{ECN} seemed like a costly anachronism.
 Deployment was further hampered by broken \ac{TCP} implementations and routers which could adversely affect connection establishment for \ac{ECN} enabled traffic.
 Despite improvements \cite{Kuzmanovic:2005p118} \ac{ECN} remains poorly used and turned off by default on hosts and routers alike \cite{Bauer:2011p482}.
 
 Ironically for a protocol which has been plagued by deployment issues, the widespread availability of \ac{ECN} in commodity network equipment may yet reassert its relevance. 
 Proposals such as re-ECN \cite{Briscoe:2005p346} leverage \ac{ECN} in order to achieve cost fairness.
 \ac{VCP} \cite{YongXia:2008p121} overrides \ac{ECN} semantics to provide an additional bit of congestion information per packet.
-\ac{DCTCP} \cite{Alizadeh:2010p356} repurposes \ac{ECN} to achieve high throughput with low buffer usage within a data center environment.
+\ac{DCTCP} \cite{Alizadeh:2010p356} repurposes \ac{ECN} to achieve high throughput with low buffer usage within a data centre environment.
 Rather than reacting to each marking as a potential loss event, \ac{DCTCP} sources reduce their window proportionally to the \emph{fraction} of marked packets.
 From a sequence of single bits, \ac{DCTCP} derives and acts upon a multi-bit signal.
 Both \ac{DCTCP} and \ac{VCP} retrofit multi-bit network feedback, itself the subject of much research.
@@ -278,7 +278,7 @@ In addition to addressing precise throughput and delay requirements through the 
 Applications using \ac{ABR} would specify ranges of acceptable rates which the network would then satisfy through the dynamic allocation of available bandwidth amongst virtual circuits.
 
 ATM was primarily driven by telecom operators who embraced the concept of explicit network control of rates. 
-Capitalizing on similar work on DECbit, an \ac{EFCI} codepoint was integrated into the ATM data header to provide binary feedback on congestion along a path.
+Capitalizing on similar work on DECbit, an \ac{EFCI} code point was integrated into the ATM data header to provide binary feedback on congestion along a path.
 In parallel however, research progressed on rate-based feedback, where the network would explicitly provide sources with the allowed sending rate.
 Since \ac{ATM} used small, fixed size packets, called \emph{cells}, control information was preferentially provided through different payload types.
 As a result, \ac{ABR} sources in addition to sending standard data cells would periodically emit a \ac{RM} cell to communicate requirements and retrieve information from intermediate network nodes.
@@ -293,7 +293,7 @@ With little consensus and no unifying vision however, the \ac{ABR} rate-based fr
 
 %XCP, RCP
 Multi-bit network feedback would resurface applied to Internet traffic with the \ac{XCP} \cite{Katabi:2002p256}.
-Taking a clean slate approach, Katabi et al. revisited congestion control without the constraints imposed by existing network equipment.
+Taking a clean slate approach, Katabi et al.\ revisited congestion control without the constraints imposed by existing network equipment.
 The resulting proposal introduces a shim \emph{congestion header} between the \ac{IP} and \ac{TCP} headers carrying estimates of the flow \ac{RTT} and inter-packet time \cite{Katabi:2007p485}.
 Additionally, a \emph{delta\_throughput} field contains the allowed increase in throughput, and is set to the maximum value at the source.
 As a packet traverses routers, the value of \emph{delta\_throughput} is updated by routers according to local conditions.
@@ -329,7 +329,7 @@ If the resulting $delta\_throughput$ is smaller than the existing value in the c
 Using multi-bit feedback \ac{XCP} achieves high efficiency and stability with negligible queuing delay.
 In prioritizing queue drainage and system stability however \ac{XCP} presented a natural performance bias towards long flows.
 Under high utilization, only a small proportion of bandwidth would be reshuffled resulting in a potentially slow convergence to flow fair rates for short-lived flows.
-Recognizing the importance such flows had in overall user experience, Dukkipati et al proposed the \ac{RCP}.
+Recognizing the importance such flows had in overall user experience, Dukkipati et al.\ proposed the \ac{RCP}.
 Building on the explicit congestion control framework proposed by \ac{XCP}, \ac{RCP} emulates processor sharing by emphasizing the \ac{AFCT} rather than delay stability \cite{Dukkipati:2005p78}.
 Rather than calculating a change to the source \ac{cwnd}, the equivalent \ac{FC} in an \ac{RCP} system calculates the explicit maximum rate $R$ to be set for flows traversing a router at interval $n$:
 \begin{equation}
@@ -366,7 +366,7 @@ That social welfare was shown to be maximized only when users were forced to wei
 As ever the notion of charging a user variable costs proved unpopular \cite{Odlyzko:2004p290}, while charging the receiver instead of the sender proved impractical.
 Building on Kelly's work, Briscoe would resolve both shortcomings.
 
-In \cite{Briscoe:2005p346}, Briscoe et al. introduce the concept of \emph{re-feedback}.
+In \cite{Briscoe:2005p346}, Briscoe et al.\ introduce the concept of \emph{re-feedback}.
 Re-feedback attempts to correct an information asymmetry in forwarding traffic: a provider often knows less about the quality of service it provides than the sender.
 Due to this asymmetry, Kelly correctly identified the receiver-end as the only point where the entirety of path congestion could be accounted for by the network.
 Information on congestion provided by \ac{ECN} is fed back from the receiver to the sender in the transport header, and is therefore not visible to routers.
@@ -383,7 +383,7 @@ In addition to information on congestion upstream, provided by \ac{ECN}, re-\ac{
 \end{figure}
 
 A simplified illustration of how re-\ac{ECN} functions is displayed in figure \ref{fig:reecn}.
-A source emits packets with the \ac{RECT} codepoint set.
+A source emits packets with the \ac{RECT} code-point set.
 Upon detecting the onset of congestion, a congested resource which is \ac{ECN} enabled may flag the packet as \ac{CE}.
 A destination then feeds the explicit congestive feedback back to the sender.
 So far the system described merely follows the behaviour of a standard \ac{ECN} system.
@@ -404,5 +404,5 @@ Many providers did not identify congestion as a problem and those that did, such
 Others may have felt uncomfortable in exposing such a sensitive metric to potential competitors.
 Within the transport community there was a natural reluctance to move away from flow-fairness \cite{Floyd:2008p496}.
 Arguably the greatest impediment to deploying congestion exposure is the fact it relies on many small changes which together threaten to radically alter the Internet.
-Proving the overall framework is robust and reliable enough to work on a large scale is non trivial, and even minor issues such as the timescale over which a congestion allowance should be replenished have the potential to trigger significant operational ramifications.
+Proving the overall framework is robust and reliable enough to work on a large scale is non trivial, and even minor issues such as the time scale over which a congestion allowance should be replenished have the potential to trigger significant operational ramifications.
 

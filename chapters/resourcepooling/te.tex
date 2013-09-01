@@ -76,7 +76,7 @@ As an afterthought in the Internet architecture, traditional traffic engineering
 With no indication as to how \ac{TE} operates, hosts and other networks will continually attempt to balance traffic according to their own needs potentially subverting existing routing optimizations.
 With no understanding of how or why hosts balance traffic, \ac{TE} may be futile in outpacing dynamic traffic patterns \cite{He:2006p504}.
 As a result of this architectural opaqueness, \ac{TE} can neither adapt too quickly or quickly enough.
-This double bind has left traditional \ac{TE} confined to operating over extended timescales largely out of fear of causing disruption \cite{Labovitz:1998p505}.
+This double bind has left traditional \ac{TE} confined to operating over extended time scales largely out of fear of causing disruption \cite{Labovitz:1998p505}.
 That traffic engineering is widely used in spite of being poorly understood only reinforces that it arises from a valid concern, but whether routing optimizations are the most appropriate way of addressing such concerns remains open.
 
 %XXX: load balancing Prabhavat:2012p444
@@ -154,7 +154,7 @@ By explicitly selecting a content source, \ac{DNS} load balancing permits hosts 
 The ability for hosts to explicitly change the network path had originally been provisioned in the \ac{IP} specification through source routing, but was quickly obsoleted.
 Source routing was initially intended to both facilitate network debugging and overcome inherent shortcomings in contemporary routing protocols \cite{Sunshine:1977p152}.
 Neither would justify maintaining source routing in the long term as the Internet expanded and became increasingly commercial.
-In its \emph{strict} form, source routing required prior knowledge of every router along a path which was unfeasible given the sheer scale of the topology.
+In its \emph{strict} form, source routing required prior knowledge of every router along a path which was infeasible given the sheer scale of the topology.
 In its \emph{loose} form, a host could define intermediate routers a packet would traverse. 
 While more practical than strict source routing, loose source routing as defined in \ac{IP} was inherently insecure as the ability to spoof \ac{IP} addresses and establish routing loops could lead to amplification attacks from malicious hosts.
 Critically, operators disliked both forms of source routing, neither willing to share operational details of their network nor keen in supporting a mechanism which allowed users to subvert local routing policies.
@@ -183,7 +183,7 @@ The resulting scheme can offer much of the potential hinted in \ac{SOSR}, but wi
 Hosts merely manipulate their tag until they achieve a desired outcome.
 
 The fundamental tussle between end user intentions and \ac{ISP} control would further be investigated in \cite{Laskowski:2008p244}.
-In analyzing ``user-directed'' routing Laskowski et al. claim that such a tussle can be resolved given a flexible enough payment system.
+In analysing ``user-directed'' routing Laskowski et al. claim that such a tussle can be resolved given a flexible enough payment system.
 While no suggestion is made on what form such a payment system would take, a market-based approach is shown to allow \acp{ISP} to induce any feasible traffic pattern.
 % overlay, flow fairness, etc
 In the absence of a suitable solution for source routing, applications have improved path performance and availability implicitly through the use of overlay architectures.
