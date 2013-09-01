@@ -50,7 +50,7 @@ Neither of these approaches are strictly necessary in a mutualistic architecture
 
 For this purpose, \ac{FNE} packets, as defined in \ac{LEX}, are used to act as network triggers for path selection. 
 An \ac{ISP} or stub domain, upon detecting an incoming \ac{FNE} packet, selects a preferred outgoing path based on the reverse lookup of the source address, and marks the packet with a path identifier. 
-For \ac{IP}v4, a possible location for such marking to occur could be within the \ac{DS} field, where a set of code points are reserved for local use. 
+For \ac{IPv4}, a possible location for such marking to occur could be within the \ac{DS} field, where a set of code points are reserved for local use. 
 On receiving an \ac{FNE} packet containing a path identifier, a sender should tag all subsequent packets in the flowlet using the same identifier in order to ensure it will traverse the selected egress at the edge domain.
 
 \begin{figure}
