@@ -3,9 +3,15 @@
 
 \begin{figure}
   \centering
-  \includegraphics[width=1.0\textwidth]{figures/malawi/tput}\\
-  \includegraphics[width=1.0\textwidth]{figures/malawi/losses}\\
-  \caption{Mean inbound throughput and loss ratio.}\label{fig:MAWI}
+  \begin{subfigure}[b]{1.0\linewidth}
+  \includegraphics[width=0.9\textwidth]{figures/malawi/tput}
+  \caption{Mean throughput}
+  \end{subfigure}
+  \begin{subfigure}[b]{1.0\linewidth}
+  \includegraphics[width=0.9\textwidth]{figures/malawi/losses}
+  \caption{Mean loss rate}
+  \end{subfigure}
+  \caption{Longitudinal evolution of inbound traffic.}\label{fig:MAWI}
 \end{figure}
 
 Over a five year period, changes in routing and application popularity have continually redefined the nature of traffic under observation.
@@ -27,10 +33,7 @@ Finally, the impact of the Tohuku earthquake resulted in a noticeable break in d
         \input{data/malawi/state.tex}\\
         \input{data/malawi/country.tex}\\
     \end{tabular}
-
-
   \caption{Percentage of inbound and outbound traffic by country\label{table:dest}. U.S. state values are relative to total national traffic.}
-  \vspace{-3mm}
 \end{table}
 
 
@@ -43,14 +46,20 @@ Further geographic shifts are apparent when breaking down US traffic by state.
 The proportion of traffic originating from California has decreased over time, dropping from 55\% of total US traffic in 2007 to only 35\% in 2011.
 In its place, a larger set of states have emerged as content providers, with New Jersey, Florida and Virginia contributing over a quarter of all traffic originating within the US by 2011.
 
-\subsection{Topological distribution}
+\subsection{\acs{AS}-level distribution}
 
-%\begin{figure}
-%  \includegraphics[width=0.5\textwidth]{figures/asn_ecdf.pdf}
-%  \caption{CDF of inbound data by AS.}
-%  \label{fig:ecdf_asn_from}
-%  \vspace{-3mm}
-%\end{figure}
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.5\linewidth}
+        \includegraphics{figures/malawi/asn_cdf_in}
+        \caption{Inbound}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.5\linewidth}
+        \includegraphics{figures/malawi/asn_cdf_out}
+        \caption{Outbound}
+    \end{subfigure}%
+    \caption{CDF of inbound data by AS. \label{fig:ecdf_asn_from}}
+\end{figure}
 
 
 %\begin{table*}\scriptsize
@@ -87,3 +96,44 @@ Overall, the observed traffic patterns match the insights provided by Labovitz e
 The implications for transit traffic from an Asian perspective is less intuitive: with the increased adoption of content delivery networks and internet exchanges points, more transit traffic is being retrieved from further away as content in the US shifts east.
 
 \subsection{Delay}
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.5\linewidth}
+        \includegraphics{figures/malawi/rtt_cdf_in}
+        \caption{Inbound}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.5\linewidth}
+        \includegraphics{figures/malawi/rtt_cdf_out}
+        \caption{Outbound}
+    \end{subfigure}%
+    \caption{CDF of RTT by AS. \label{fig:rtt_cdf}}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.5\linewidth}
+        \includegraphics{figures/malawi/rtt_wcdf_in}
+        \caption{Inbound}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.5\linewidth}
+        \includegraphics{figures/malawi/rtt_wcdf_out}
+        \caption{Outbound}
+    \end{subfigure}%
+    \caption{CDF of weighted RTT by AS. \label{fig:rtt_wcdf}}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.5\linewidth}
+        \includegraphics{figures/malawi/rtt_comp_07_09}
+        \caption{Inbound}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.5\linewidth}
+        \includegraphics{figures/malawi/rtt_comp_09_11}
+        \caption{Outbound}
+    \end{subfigure}%
+    \caption{CDF of weighted RTT by AS. \label{fig:rtt_comp}}
+\end{figure}
+
