@@ -1,5 +1,5 @@
 \chapter{Conclusions}
-\label{sec:conclusions}
+\label{chapter:conclusions}
 
 The presented body of work identifies opportunities and explores strategies for resource pooling which reconcile a potentially conflicting set of stakeholders.
 \LOREM
@@ -33,7 +33,7 @@ The many contributions presented however carry much wider appeal, and can be cla
 % lit review
 This thesis began by providing a broader context within which to frame the evolution of resource pooling.
 Chapter \ref{chapter:resourcepooling} traces how successive waves of new stakeholders and novel applications have influenced and shaped the protocols and tools which form the Internet.
-Importantly, this chapter highlights the haphazard nature of traffic management as an architectural afterthought and identifies a pertinent problem:
+Importantly, this chapter highlights traffic management as an architectural afterthought and identifies a pertinent problem:
 , with end-hosts, network operators and content providers alike pooling traffic unilaterally through differing means.
 
 
@@ -78,16 +78,25 @@ The novelty has come from being able to relate traffic trends at a finer granula
 \subsection{Architectural realignment}
 
 % relation to state of art
+This thesis set off by exploring the use of re-feedback, originally proposed by Briscoe et al. \cite{}, for purposes other than accountability.
+%While the expectation that networks could be held accountable for congestion conferred interesting properties
+Removing the expectation that networks would be held accountable for congestion lead to a fundamentally poorer architecture, but one in which enforcement
+
+%is purpose resulted in a significantly
+
+To this end, \ac{LEX} was proposed in \ref{chapter:preflex} as a simplified mechanism for echoing loss back into the network.
+
+The point of departure of this thesis was provided by 
+starting point of this 
+Loss exposure was since pursued independently by the \ac{CONEX} working group.
 
 % pref
 Arguably the single most valuable legacy of this work was in proposing \acf{PREF} as a cross-layer signalling mechanism between the transport and network layer, first presented in chapter \ref{chapter:preflex}.
 Within the self-imposed constraints of \ac{IPv4} deployability, the resulting mechanism is necessarily simple, but also shown to be surprisingly versatile, enabling novel end-to-end traffic management techniques such as congestion balancing, presented in chapter \ref{chapter:cate}, and resilient path fail-over, presented in chapter \ref{chapter:inflex}.
 Historically, the \ac{PREF} field can be interpreted as a synthesis of the previously sanctioned uses for the same header space: neither strictly abiding by the thesis that end-hosts should independently determine their own \acf{ToS}, nor aligning itself with the antithetical view that the network alone should establish \acf{DS}.
-In many respects, it is a stronger ideological heir to the original design philosophy of the \ac{DARPA} internet protocols. In describing the latter in \cite{Clark:1988p478}, Clark notes:
+In many respects, it is a stronger ideological heir to the original design philosophy of the \ac{DARPA} internet protocols. 
+In deliberating on the success of the latter in \cite{Clark:1988p478}, Clark concludes by identifying shortcomings of the datagram model given requirements which had not originally been contemplated:
 
-\begin{quote}
-\textit{It proved more difficult than first hoped to provide multiple types of service without explicit support from the underlying networks. The most serious problem was that networks designed with one particular type of service in mind were not flexible enough to support other services.}
-\end{quote}
 While
 
 % lex
@@ -149,6 +158,7 @@ The current architecture imposes constraints on how resource pooling can be perf
 
 \section{Future work}
 
+
 The task of processing multiple data sources to produce \ac{MALAWI} was a significant undertaking which has only recently started to bear results.
 Chapter \ref{chapter:malawi} presents the preliminary results of relating the spatial, behavioural and longitudinal properties of Internet transit traffic.
 Moving forward, future work on \ac{MALAWI} will focus on investigating properties of traffic which are relevant to \ac{PREFLEX}:
@@ -184,7 +194,6 @@ In moving forward the following issues must be addressed:
 }
 \end{itemize}
 
-A promising application scenario for \ac{PREFLEX} is in balancing data center traffic.
 Results from \ac{MALAWI} corroborate the increase in proportion of traffic originating in co-location sites already described in \cite{Labovitz:2010p175}.
 Data centers provide an ideal setting for \ac{PREFLEX} as a single entity is responsible for managing infrastructure, alleviating the possibility of hosts overriding network preferences.
 The simplicity of the sender-side changes mean \ac{PREFLEX} can be implemented in the hypervisor and run transparently to hosted virtual machines, an approach already used in \cite{Wu:2010p556}.
@@ -194,5 +203,22 @@ In comparison to the use of \ac{MPTCP} in data center traffic \cite{Raiciu:2011p
 Measurement also likely an inflection point in time, where need for new transport requirements collapse on TCP / UDP. The pluralism which first manifested itself as multiple congestion control algorithms moves onto multiple transport paradigms.}
 
 
+\section{Closing remarks}
+
+
+\begin{quote}
+%\textit{It proved more difficult than first hoped to provide multiple types of service without explicit support from the underlying networks. The most serious problem was that networks designed with one particular type of service in mind were not flexible enough to support other services.}
+
+%\textit{While the datagram has served very well in solving the most important goals of the Internet, it has not served so well when we attempt to address some of the goals which were further down the priority list.  For example, the goals of resource management and accountability have proved difficult to achieve in the context of datagrams.  As the previous section discussed, most datagrams are a part of some sequence of packets from source to destination, rather than isolated units at the application level.  However, the gateway cannot directly see the existence of this sequence, because it is forced to deal with each packet in isolation.  Therefore, resource management decisions or accounting must be done on each packet separately.  Imposing the datagram model on the internet layer has deprived that layer of an important source of information which it could use in achieving these goals.}
+
+\textit{
+While the datagram has served very well in solving the most important goals of the Internet, it has not served so well when we attempt to address some of the goals which were further down the priority list.  
+For example, the goals of resource management and accountability have proved difficult to achieve in the context of datagrams.  
+(...)
+It would be necessary for the gateways to have flow state in order to remember the nature of the flows which are passing through them, but the state information would not be critical in maintaining the desired type of service associated with the flow. Instead, that type of service would be enforced by the end points, which would periodically send messages to ensure that the proper type of service was being associated with the flow.
+(...)
+I call this concept ``soft state,'' and it may very well permit us to achieve our primary goals of survivability and flexibility, while at the same time doing a better job of dealing with the issue of resource management and accountability.
+}
+\end{quote}
 
 

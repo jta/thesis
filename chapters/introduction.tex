@@ -38,8 +38,8 @@ Given the nature of Internet traffic, how can the current architecture be realig
 \end{quote}
 
 In proposing to \emph{realign the current architecture}, the emphasis of any proposed solution must be applicable to the existing Internet architecture.
-The motivation for avoiding clean-slate solutions was largely due to the nature of the problem at hand.
-The different forms of resource pooling which we are attempting to reconcile are a product of both the Internet architecture and its stakeholders.
+The motivation for avoiding clean-slate solutions is largely due to the nature of the problem at hand.
+The different forms of resource pooling which are to be reconciled are as much a product of the Internet architecture as of its stakeholders.
 While it is clear that a clean-slate approach to resource pooling would have resulted in a different architecture, it may also have given rise to different stakeholders or different traffic patterns.
 By adhering to existing protocols, any potential solution can be directly applied and, by extension, validated. 
 
@@ -47,7 +47,7 @@ While resource pooling is prevalent across all layers, the focus of this work is
 Most forms of resource pooling above the network layer will attempt to benefit the end user, while below the transport layer most resources within a single administrative domain will conspire towards the same ends.
 It is at the intersection of network and transport layers where the juxtaposition of interests is greatest within the Internet architecture.
 
-By \emph{facilitating resource pooling} however, we do not expect to dictate an outcome to the tussle between network and hosts, but rather provide an architecture within which such a tussle can evolve.
+\emph{Facilitating resource pooling} however should not dictate an outcome in the tussle between network and hosts, but rather provide an architecture within which such a tussle can evolve.
 In some cases balancing traffic solely from the hosts may be desirable, while in other cases providers may wish to retain full control.
 Both represent extremes of a range of outcomes which should be possible within a unifying architecture.
 
@@ -57,17 +57,25 @@ Any solution presented must not only address future traffic needs but also explo
 
 \section{Contributions}
 
-The first contribution of this thesis is to propose a \ac{PREFLEX} architecture for \emph{mutualistic} resource pooling.
-\ac{PREFLEX} bridges different forms of resource pooling by exposing path diversity to hosts and making the network aware of traffic characteristics which are crucial to effective traffic engineering.
+This thesis contains the following contributions:
 
-Secondly, a traffic balancer is derived which enables providers to balance congestion rather than load.
-Congestion balancing mimics the way in which multipath transport protocols spread their traffic across links and represents one possible instantiation of \ac{PREFLEX}.
-Balancing congestion from within the network not only benefits flows which are not multipath enabled, but also improves resilience by keeping minimal network state on tracking performance across different paths.
-
-The third contribution is a publicly available dataset, \ac{MALAWI} providing information on the end-to-end characteristics of approximately 5.7 billion \ac{TCP} data flows collected over five years, and how they relate to their topological and geographical endpoints. The collection and aggregation of flow-level metrics by location over time can provide valuable insight in two key areas. Transport-level information can assist in understanding how \ac{TCP} behaves: both by tracking how endpoints perceive network performance, and how the protocol is evolving. This can potentially not only assist in protocol design improvements, such as evaluating the adequacy of \ac{TCP} parameters \cite{Dukkipati:2010p160}, but also in evaluating how widely deployed particular elements of \ac{TCP} are. Additionally, observed traffic is mapped to the underlying routing system, which can be of value in topics as varied as fragmentation of address space \cite{Cittadini:2010p431}, \ac{FIB} aggregation \cite{Ballani:2008p199} or informing caching strategies \cite{Psaras:2011p487}.
-
-The final contribution is in using the resulting dataset to attempt to shed light on three fundamental questions: where is traffic flowing, with what characteristics and how has this changed over time? This information is critical in understanding how the characteristics of traffic can be harnessed to manage traffic through simpler and more flexible means.
-
+\begin{description}
+\item[A mutualistic architecture] which identifies re-feedback as a potential solution for bridging different forms of resource pooling.
+\ac{PREFLEX} is unique in exposing network path diversity to hosts, while making the network aware of performance metrics which are instrumental to effective traffic engineering.
+%The first contribution of this thesis is to propose an architecture for \emph{mutualistic} resource pooling using \acf{PREFLEX}. 
+%\ac{PREFLEX} bridges different forms of resource pooling by exposing path diversity to hosts and making the network aware of traffic characteristics which are crucial to effective traffic engineering.
+\item[A model for balancing congestion] is derived which enables providers to make more efficient use of available end-to-end capacity.
+Compared to existing multipath transport protocols, balancing congestion from within the network can support legacy applications as well as flows which are too short to effectively explore path diversity.
+The proposed model is evaluated and shown to outperform traditional traffic engineering methods without the need for per-flow state within the network.
+\item[A novel methodology for flow reconstruction] is detailed which recovers transport behaviour from passive traffic traces.
+This includes a mechanism for \ac{RTT} recovery based on cumulative histogram construction and peak detection and a scalable process for systematically classifying flow throughput dynamics.
+\item[A longitudinal analysis of Internet traffic] spanning approximately 5.7 billion flows collected over five years.
+Compared to previous studies, this work documents macroscopic shifts in the nature of Internet traffic -- \emph{where} traffic originates from -- as well as performing a significant reappraisal of commonly held assumptions on \emph{how} the \acf{TCP} behaves in practice.
+%Such transport-level information is invaluable in understanding how the \acf{TCP} behaves: both by tracking how endpoints perceive network performance, and how the protocol is evolving. 
+\item[A resilient traffic management framework] which can be unilaterally deployed by edge domains.
+The proposed solution, INFLEX, is modelled upon software-defined networking principles while drawing on the insights afforded by all aforementioned contributions above.
+The resulting system is shown to provide fast, scalable, end-to-end fault detection with low overhead at either the end-host or the network.
+\end{description}
 
 
 \section{Publications}
@@ -80,12 +88,12 @@ The final contribution is in using the resulting dataset to attempt to shed ligh
     \item J. Taveira Ara\'{u}jo, R. Landa, K. Fukuda and G. Pavlou \\
             \emph{A longitudinal analysis of Internet rate limitations} \\
             Under submission.
-    \item R. G. Clegg, R. Landa, J. Taveira Ara\'{u}jo, E. Mykoniati, D. Griffin and M. Rio \\
-            \emph{TARDIS: Stably shifting traffic in space and time} \\
-            Under submission.
-    \item R. G. Clegg, J. Taveira Ara\'{u}jo, R. Landa, E. Mykoniati, D. Griffin and M. Rio \\
-            \emph{On the relationship between fundamental measurements in \ac{TCP} flows} \\
-            {IEEE Internation Conference on Communications (ICC) 2013}
+%    \item R. G. Clegg, R. Landa, J. Taveira Ara\'{u}jo, E. Mykoniati, D. Griffin and M. Rio \\
+%            \emph{TARDIS: Stably shifting traffic in space and time} \\
+%            Under submission.
+%    \item R. G. Clegg, J. Taveira Ara\'{u}jo, R. Landa, E. Mykoniati, D. Griffin and M. Rio \\
+%            \emph{On the relationship between fundamental measurements in \ac{TCP} flows} \\
+%            {IEEE Internation Conference on Communications (ICC) 2013}
     \item J. Taveira Ara\'{u}jo, K. Fukuda \\
             \emph{MALAWI: Aggregated longitudinal analysis of the MAWI dataset} \\
             {ACM CoNEXT Student Workshop 2011}
