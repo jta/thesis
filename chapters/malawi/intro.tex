@@ -5,8 +5,24 @@ Modelling the feasibility of congestion balancing however requires a deeper unde
 This chapter provides a longitudinal analysis of the characteristics of end-to-end Internet traffic, describing the shifting trends in interdomain traffic as viewed from \acs{WIDE}, a Japanese academic provider.
 Over time, this vantage point is subject to upgrades, changes in routing policy and congestion events, all of which can hinder the interpretation of data.
 These limitations are overcome by looking further afield, searching for clues within shifts in the geographical and topological make-up of inbound and outbound traffic and how these trends relate to end-to-end performance.
+The remainder of this chapter is organized as follows:
+
+\renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{Section #1}}
+\begin{description}
+\item[\ref{section:malawi:motivation}] contextualizes the importance of understanding \ac{TCP} behaviour.
+\item[\ref{section:malawi:related}] presents previous relevant contributions in the field.
+\item[\ref{section:malawi:dataset}] introduces the dataset used for this study.
+\item[\ref{section:malawi:methodology}] describes the methodology developed to process passive traffic traces.
+\item[\ref{section:malawi:macro}] presents a high level description of macroscopic shifts in traffic trends.
+\item[\ref{section:malawi:analysis}] verifies existing assumptions on the nature of \ac{TCP} traffic.
+\item[\ref{section:malawi:conclusion}] draws conclusions on the measurement study.
+\end{description}
+
+
+
 
 \section{Motivation}
+\label{section:malawi:motivation}
 
 \ac{TCP} plays a central role in mediating between application needs and network capacity.
 In the absence of congestion, \ac{TCP} is responsible for increasing sending rates in a bid to make efficient use of available bandwidth.
