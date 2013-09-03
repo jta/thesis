@@ -81,7 +81,7 @@ Finally, a custom utility-based technique that operates directly on $H(t)$ is pr
 %To streamline our algorithm for streaming use, we use the following heuristics and approximations. Firstly, we define a range $[T_{\min}, T_{\max}]$ representing the range over which we find the RTT values of interest. Then, for each packet $p_j$, we build a subset $\mathcal{T}_j'$ of $\mathcal{T}_j$ by including all values of $t_j - t_k < T_{\max}$. We then generate $\mathcal{T}' = \cup_j \mathcal{T}_j'$ and approximate $H(t)$ by considering a histogram of the values in $\mathcal{T}'$. As usual, we do this by counting the frequency with which its values are observed in the ranges $[0,\tau)$, $[\tau, 2\tau)$, $[2\tau, 3\tau), \ldots$ where $\tau$ is the time resolution required. 
 
 
-\subsection{Utility-Based RTT Recovery}
+\subsection{Utility-Based \acs{RTT} Recovery}
 \label{sect:utilityBasedRecovery}
 
 This method relies not on the identification of periodicities, but on explicitly matching experimentally found signatures. 
@@ -110,7 +110,7 @@ Similarly, additional multiples and sub multiples were excluded as they showed v
   \caption{Accuracy of \ac{RTT} estimator when compared to the median value of bidirectional estimate.}
 \end{figure}
 
-\subsection{Comparing \ac{RTT} Recovery Algorithms}
+\subsection{Comparing recovery algorithms}
 \label{sect:comparingRecoveryAlgos}
 As described in Section \ref{subsection:malawi:PeriodicEnhancement}, $H(t)$ is calculated in such a way that \ac{RTT} periodicity is amplified. 
 This means that \acs{FFT}-based techniques could potentially perform better on $H(t)$ than on the packet stream with no pre-processing. 

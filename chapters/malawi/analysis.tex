@@ -7,19 +7,19 @@
 %
 % %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~% %~%
 \section{Revisiting assumptions}
-\label{section:malawi:analysis}
+\label{section:rate:analysis}
 
 %\renewcommand{\thesubsectiondis}{Assumption \Alph{subsection}.}
-Having processed each daily trace individually, flow  proceed by aggregating results longitudinally in order to trace the evolution of constraints affecting \ac{TCP} across both time and spatial/topological dimensions. 
+Having processed each daily trace individually, flow characteristics are aggregated longitudinally in order to trace the evolution of constraints affecting \ac{TCP} across time and both spatial and topological dimensions, following the process described in section \ref{section:malawi:dataset}.
 The ensuing analysis revisits four commonly held assumptions regarding Internet throughput. 
-The aim in so doing is to provide a much needed factual verification of these assumptions, which itself can lead to a re-appraisal of Internet throughput modelling efforts, particularly those enunciated in Zhang et al.\ \cite{Zhang:2002p85}.
+The aim in doing so is to provide a much needed factual verification of these assumptions, which itself can lead to a re-appraisal of Internet throughput modelling efforts, particularly those enunciated in Zhang et al.\ \cite{Zhang:2002p85}.
 Although all models require simplifying assumptions in the name of analytic tractability, the primary goal of this section is to inform on which are the best assumptions to make if one is setting out to use or develop an Internet traffic throughput model. 
 
 \subsection{Throughput is primarily shaped by \acs{TCP}}
 
 % define the assumption
 Internet flow rates are commonly viewed as the output of congestion control embedded at the transport layer. While it is often convenient to model flow throughput according to the steady state behaviour of such algorithms, there are many potential caveats.
-For one, there is an implicit assumption that the network is the bottleneck. Under such conditions, \ac{TCP} acts as a distributed optimisation algorithm in allocating capacity to flows. Section \ref{section:malawi:methodology} however presents several cases where such an assumption does not hold. The prevalence of application pacing, host limitations or receiver shaping can all condition the accuracy of models which assume only elastic traffic adjusting to network conditions alone.
+For one, there is an implicit assumption that the network is the bottleneck. Under such conditions, \ac{TCP} acts as a distributed optimisation algorithm in allocating capacity to flows. Section \ref{section:rate:flow} however presented several cases where such an assumption does not hold. The prevalence of application pacing, host limitations or receiver shaping can all condition the accuracy of models which assume only elastic traffic adjusting to network conditions alone.
 
 % explore the results
 \begin{table}\footnotesize
@@ -89,34 +89,7 @@ By 2011, successive capacity upgrades have lead to a less congested network, but
     \caption{Longitudinal evolution of \acs{TCP} window parameters. \label{fig:tcpWindowParams}}
 \end{figure}
 
-\begin{figure}
-    \begin{subfigure}[b]{.5\linewidth}
-        \centering
-        \includegraphics[width=2.5in]{figures/malawi/med_active_throughput}
-        \caption{Mean congestion window over mean \ac{RTT}. \label{fig:flowrateactive}}
-    \end{subfigure}%
-    \begin{subfigure}[b]{.5\linewidth}
-        \centering
-        \includegraphics[width=2.5in]{figures/malawi/med_aggr_throughput}
-        \caption{Flow size over flow duration.\label{fig:flowrateaggr}}
-    \end{subfigure}%
-    \caption{Median throughput for inbound traffic by flow size. \label{fig:flowrate}}
-\end{figure}
- 
-\begin{figure}
-    \begin{subfigure}[b]{.5\linewidth}
-        \centering
-        \includegraphics[width=2.5in]{figures/malawi/windowsize2007}
-        \caption{2007}
-    \end{subfigure}%
-    \begin{subfigure}[b]{.5\linewidth}
-        \centering
-        \includegraphics[width=2.5in]{figures/malawi/windowsize2011}
-        \caption{2011}
-    \end{subfigure}%
-    \caption{CDF of the average window size by flow size by year. \label{fig:windowsize}}
-\end{figure}
- 
+
 
 \subsection{Throughput is primarily sender driven}
 
@@ -132,9 +105,9 @@ A critical component in determining the upper bound for the congestion window si
 In its absence, a sender cannot have more than 64KB in flight.
 Furthermore, the \emph{default buffer size} on either end of the connection can also limit the size to which the congestion window can increase.
 Both settings are primarily subject to operating system configuration.
-Given that throughput conditions on the receiver side improve as \acs{OS} upgrades are rolled out, and that the user base within Japan covered by \acs{MAWI} has remained relatively stable over time, all things being equal the whole region is expected to exhibit improvements as time progresses. 
-Hence it stands to reason that any significant degradation in host limitations most probably does not stem from \acs{OS} rollback or large sets of users with outdated \acp{OS} joining the Japanese networks. 
-Instead, a more likely explanation lies in macroscopic shifts in routing or application popularity which lead to a change in \emph{where} traffic originates from.
+Throughput conditions on the receiver side improve as \acs{OS} upgrades are rolled out.
+The installed user base within \acs{WIDE} is comparatively stable over time, and as such is expected to exhibit continual improvements unless a significant \acs{OS} rollback were to occur or a large set of users with outdated \acp{OS} were to be added to the network.
+This however is unlikely, and a more plausible explanation for any significant degradation in host limitations lies in macroscopic shifts in routing or application popularity which lead to a change in \emph{where} traffic originates from.
 
 This hypothesis is tested by first verifying windowscale deployment over time.
 Figure \ref{fig:windowscale} shows the ratio of traffic and flows for which windowscale was successfully negotiated.
@@ -177,7 +150,7 @@ In addition to presenting the ratio of flows and bytes affected by host limitati
 In either direction a very small fraction of flows are affected.
 Small flows are both numerous and unlikely to last long enough for window limits to be reached or reliably detected.
 The affected flows therefore tend to be large, and as such can translate into a significant amount of traffic.
-The proportion of flows and bytes for which the receiver side imposed the maximum window size dropped by 20\% and 15\% respectively over five years for inbound traffic, reflecting the successive \acs{OS} upgrades performed for hosts within \ac{WIDE}.
+The proportion of flows and bytes for which the receiver side imposed the maximum window size dropped by 20\% and 15\% respectively over five years for inbound traffic, reflecting the successive \acs{OS} upgrades performed for hosts within \acs{WIDE}.
 Interestingly, these trends do not surface for outbound traffic: hosts outside Japan were consistently more likely to dictate the maximum window size.
 In part, this reflects the different nature of the traffic under observation: outbound traffic for this dataset is more geographically and topologically diverse, with content in many cases being retrieved from Japan by residential hosts from within Asia.
 
@@ -194,6 +167,20 @@ Given host limitations are most likely to affect large flows, it's worth conside
 A commonly held assumption is that throughput is correlated with flow size, which has been verified empirically in previous studies \cite{oursTCP, Zhang:2002p85}.
 Much of the data used in these studies however precedes the widespread adoption of high bandwidth connections and use of streaming media, both of which can impact the extent to which contention occurs in the network.
 
+\begin{figure}
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/med_active_throughput}
+        \caption{Mean congestion window over mean \ac{RTT}. \label{fig:flowrateactive}}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/med_aggr_throughput}
+        \caption{Flow size over flow duration.\label{fig:flowrateaggr}}
+    \end{subfigure}%
+    \caption{Median throughput for inbound traffic by flow size. \label{fig:flowrate}}
+\end{figure}
+ 
 % explore the results
 Figure \ref{fig:flowrate} shows the median throughput as a function of flow size, by year.
 In figure \ref{fig:flowrateactive}, flow throughput is calculated as the ratio between the mean \ac{TCP} window size (in bytes) and the mean flight length (in seconds).
@@ -203,7 +190,21 @@ Due to routing changes and increased congestion, overall throughput in 2009 is l
 For reference the throughput for traffic from the US alone is plotted for 2009,in which case a more natural yearly progression becomes apparent.
 For both plots, a clear disparity is visible across flows sizes: for flows in the 10MB to 100MB range, although throughput has consistently increased with time, it has done so at a lower pace than for flows under 10MB. 
 
-Our results confirm the notion that the highest throughputs are attained by the largest flows, but they also show that improvements in throughput do not apply equally to all flow sizes. 
+\begin{figure}
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/windowsize2007}
+        \caption{2007}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=2.5in]{figures/malawi/windowsize2011}
+        \caption{2011}
+    \end{subfigure}%
+    \caption{CDF of the average window size by flow size by year. \label{fig:windowsize}}
+\end{figure}
+ 
+These results confirm the notion that the highest throughputs are attained by the largest flows, but they also show that improvements in throughput do not apply equally to all flow sizes. 
 Whereas throughput has consistently improved for low-volume traffic, it has not done so for high-volume traffic. 
 Hence, these findings suggest an increased differentiation between high-value, low-volume traffic whose throughput has markedly increased, and low-value, high-volume traffic whose throughput has stagnated.
 Although the reported flow sizes are not a reliable predictor of the overall traffic volume amassed over a flow's lifetime given the short time span of each daily trace, this seemingly subverts the notion that flow rates are strongly correlated with flow size in a simple, proportional fashion.  
@@ -240,18 +241,18 @@ Clearly, the extent to which rates are constrained is closely tied to flow size.
 Table \ref{table:full} breaks down the results from table \ref{table:limits} by flow size. 
 Most limitations will invariably affect larger flows, as applications which shift more traffic, such as streaming media or bulk file transfers, are more likely to either attain or self-impose constraints on flow throughput. 
 Many small flows on the other hand never exit slow start, in which case none of the studied constraints will be reached or readily identified. 
-This dichotomy is reflected on loss rates, which will be higher for flows be regulated by \ac{TCP} congestion control.
+This dichotomy is reflected on loss rates, which will be higher for flows regulated by \ac{TCP} congestion control.
 Additionally, the discrepancy in loss rates is further exacerbated by geographic properties: traffic exchanged over poor infrastructure tends to be smaller, with flows from China exhibiting particularly high end-to-end loss rates. 
 
 \textbf{These results suggest that network upgrades are unlikely to improve performance for significant proportions of traffic.} 
 This is most visible in figure \ref{fig:flowrate}, where improvements in capacity for coping with higher bursts of activity (figure \ref{fig:flowrateactive}) has outpaced the actual delivery rate set by applications (figure \ref{fig:flowrateaggr}).
-Given the popularity of emulating a constant bit rate service over \ac{TCP}, that no such abstraction is provided at the socket level \ac{API} is unfortunate.
+Given the popularity of emulating a constant bit rate service over \ac{TCP}, that no such abstraction is provided at the socket level \acs{API} is unfortunate.
 
 
 \subsection{Throttling primarily affects heavy hitters}
 
 % define the assumption
-We have so far observed that flow throughput is subjugated from \ac{TCP} by external stakeholders.
+The observations so far have highlighted that flow throughput is often subjugated from \ac{TCP} by external stakeholders.
 A third important element in the ensuing tussle is in understanding the role operators can play in imposing their own preferences upon traffic.
 As such, this section provides a brief overview of the extent, and under what circumstances, customer networks resorted to receiver shaping over the duration of the dataset.
 From preliminary inspection of table \ref{table:full}, it is apparent that receiver shaping was limited in both scope, affecting at most 4\% of bytes, and time, being primarily concentrated within 2009 and 2010.
@@ -291,6 +292,6 @@ While successive bandwidth upgrades alleviated the need for throttling, it is un
 \textbf{In some cases, multiple stakeholders apply different rate control mechanisms simultaneously, leading to quality degradation and unusual rate behaviours.}
 Conventionally, it is assumed that it is in the best interest of content providers to use network resources as fully as possible, whereas \acp{ISP} have it in their best interest to police resource usage and control flow rates. 
 However, as shown here, current business practices can create an alignment of incentives where both content providers and \acp{ISP} choose to limit the throughput of a particular class of traffic. 
-This may lead to this traffic suffering from artificially slow rates that are much worse than those experienced by other classes. 
+This may lead to traffic suffering from artificially slow rates that are much worse than those experienced by other classes. 
 In these cases, the combination of multiple rate control techniques being applied by different stakeholders may lead to a traffic profile whose rate behaves in a manner quite removed from the commonly assumed \ac{TCP} dynamics.
 
