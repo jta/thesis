@@ -1,4 +1,4 @@
-\section{Flow Classification}
+\section{Flow classification}
 \label{section:rate:flow}
 
 Providing a macroscopic view on where traffic originates from, and in what quantity, can be achieved by simply binning packets into flows and accumulating byte counts over geographical or topological locations. 
@@ -27,7 +27,7 @@ Having obtained flight information from each flow, the predominant factor that a
 Within the context of \ac{TCP}, flows are classified as being artificially constrained by three distinct processes: \emph{application pacing}, \emph{host limited} and \emph{receiver shaping}.
 
 
-\subsection{Application Paced Flows}
+\subsection{Application paced}
 \label{section:rate:app}
 
 \begin{figure}
@@ -54,7 +54,7 @@ Application paced connections such as Youtube traffic however exhibit a degree o
 In order to identify such recurring behaviour, flows are classified as being \emph{application paced} if the period between bursts terminated by \emph{application limited flights} is consistently under 10 seconds and the standard deviation of the intermediate pauses is under one second.
 This definition in particular purposely ignores flows which exhibit long silence periods due to user interaction, and follows closely the behaviour historically associated to Youtube streaming in particular.
 
-\subsection{Host Limited Flows}
+\subsection{Host limited}
 \label{section:rate:host}
 
 Given sufficient bandwidth and traffic to send, a flow may encounter local constraints at either end-host which cap its throughput. 
@@ -80,7 +80,7 @@ In practice, flows can exhibit both application pacing and host limitations, wit
 In such cases, a flow will still be classified as being \emph{application paced} if it meets the requirements set out in the previous section, as doing so provides evidence that it controls throughput in spite of the degraded performance provided further down the stack. 
 This line of reasoning applies equally to the occurrence of sporadic loss; so long as block delivery is ensured within the time frame dictated by the application, it remains in control.
 
-\subsection{Receiver Shaped Flows}
+\subsection{Receiver shaped}
 \label{section:rate:recv}
 
 A flow which is neither \emph{application paced} or \emph{host limited} can still be artificially constrained by flow control (rather than by congestion control).

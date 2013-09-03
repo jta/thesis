@@ -1,14 +1,27 @@
 - tcam sdn
 - intro
     - explain window concept
-- add dataset characterization, RTT?
 - frto, proper cwnd
 - tcp options
 - redo preflex results in ggplot2 or table?
 - fix dedication
+- acknowledgements
+
+- close loop on inflex
 
 - diffserv, intserv, qos??
 
 - first person
     - malawi
     - inflex
+
+
+                Equalisation            Preflex
+S
+D_1
+D_2
+D_3
+D_4
+D_5
+D_6
+TOTAL
