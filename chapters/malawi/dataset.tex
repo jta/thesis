@@ -9,9 +9,9 @@ The monitored link carries mostly trans-Pacific commodity traffic between \acs{W
 Traffic towards \acs{WIDE} is referred to as \emph{inbound} traffic, whereas traffic originating from within \acs{WIDE} is referred to as \emph{outbound} traffic.
 
 \begin{table}[!htp]
-\scriptsize
+\footnotesize
 \centering
-    \begin{tabular}{r|cccccc}
+    \begin{tabular}{r@{\hskip 0.4in}r@{\hskip 0.4in}r@{\hskip 0.4in}rr@{\hskip 0.4in}rr}
         & & \ac{TCP} data & \multicolumn{2}{c}{Traffic (TB)} & \multicolumn{2}{c} {Count ($\times10^3$)} \\
         Year & Days & flows (x$10^6$) & In & Out & AS & Prefixes \\
         \hline
@@ -51,20 +51,6 @@ At only 15 minutes of line-rate data capture per day, it is wasteful to ignore f
 Although the number of flows for which a SYN and FIN in either direction is observed has remained consistently high until late 2011, these flows are normally \emph{mice}, i.e. flows that tend to be brief and which carry little traffic individually. 
 In contrast, most \emph{elephants} (flows that carry significant traffic individually) have durations that exceed that of each trace file. 
 
-%rtts traced
-%While many metrics are extracted for each flow, for the purposes of this paper we will focus only on detailing how we collected delay and loss.
-%Passive RTT estimates, calculated as the offset between a data packet and its respective acknowledgement, require both directions to be observed at the measurement point. 
-%This provides delay estimates between the measurement point and the receiver, as illustrated in figure \ref{fig:synrtts}. 
-%For flows where data is transfered in both directions, we will obtain in effect two separate estimates, $RTT_{m2a}$ and $RTT_{m2b}$, illustrated in figure \ref{fig:synrtts}. 
-%Together they form the total end-to-end delay experienced by end-hosts. 
-%For the remainder of this paper, the term RTT will refer to delay between our measurement and destinations outside WIDE. 
-%We discard the delay between measurement point and hosts within WIDE for two reasons. 
-%It is both negligible for a large proportion of traffic, which is highly concentrated within the Tokyo metropolitan regions and immediate surroundings, and extremely large for a very small subset of hosts located outside Japan, as WIDE has in the past acted as a provider to academic institutions in Indonesia through a satelite uplink. 
-%By decoupling both directions we focus purely on the changes in delay to locations outside Japan. 
-%This incurs a reduction in the range of destinations for which we can obtain estimates - only bidirectional traffic can be traced this way. 
-%For the set of destinations we will study in this paper, we shall show that this reduction is small. 
-%For tracking delay changes for unidirectional traffic for other purposes, MALAWI includes RTT estimates extracted from the SYN exchange.
-
 Loss is inferred by accounting for \emph{retransmissions} in the upstream data and \emph{out-of-order packets} in downstream data; for the remainder of the paper the term \emph{end-to-end loss} will refer to the sum of out-of-order and retransmitted data bytes over the total data bytes in a given direction.
 Anecdotally, this was found to be an adequate indicator of loss --- with the exception of \emph{hanging} \ac{TCP} connections. 
 In such cases where connectivity is lost, a host will proceed to retransmit packets while performing an exponential back-off. 
@@ -85,7 +71,7 @@ While discrepancies in \ac{AS} destinations exist between different routeviews c
 Mapping \ac{IP} to country is done through the use of GeoLite \cite{maxmind}, a commercial geolocation database. 
 While the accuracy of this solution is often disputed, locating traffic at a fine granularity is not a pressing concern.
 Most geographic emphasis will be placed on capturing macroscopic shifts in time at a national level, for which Geolite proves adequate.
-The archive for geolocation data only extends to 2009, before which we must rely on the earliest match. 
+The archive for geolocation data only extends to 2009, before which the earliest match must be used.
 Additionally, the administrative mapping up until mid 2009 for a destination or source \ac{AS} is verified to have remained the same in the relevant \ac{RIR} archives in order for a flow to be assigned a geographical location.
 % bridging paragraphs to save space.
 After associating flows to country, region, \ac{AS} and network prefix for both source and destination \acp{IP}, flow statistics are aggregated over each location identifier. 

@@ -1,7 +1,18 @@
-\section{Related Work}
+\section{Related work}
 \label{section:malawi:related}
 
-% we are basically reappraisal of zhang
+Despite their inherent value, longitudinal studies of Internet phenomena are rare. 
+Over its short lifespan the Internet has been shaped as much by technological change as by political and commercial realities. 
+This dynamic nature does not lend itself to observational studies where data must be collected and curated over long periods of time, and has resulted in a scarcity of relevant datasets. 
+What few exceptions exist often stem from collaborative research efforts, such as CAIDA \cite{CAIDA} or Oregon Routeviews \cite{routeviews}. 
+The usefulness of these datasets however can be severely affected by the need for data privacy. 
+The dissemination of interdomain routing information, where no such requirement exists, has assisted in a wealth of research on wide ranging topics, from quantifying path diversity \cite{Oliveira:2009p203} to locating Internet bottlenecks \cite{Hu:2004p96}. 
+In contrast, longitudinal datasets relating to passive measurements have nurtured a much smaller community of researchers often focusing on characterizing traffic \cite{Fontugne:2010p413}. 
+Stripped of the locality contained within IP addresses however, researchers are left unable to relate these findings to a wider context.
+
+Cross-sectional studies characterizing traffic aggregated by location are frequently conducted under different contexts \cite{Ager:2011:WCC:2068816.2068870}, but lack the temporal perspective only longitudinal studies can afford. 
+Efforts to characterize the spatial properties of traffic over time \cite{Dhamdhere:2011p428,Labovitz:2010:IIT:2043164.1851194,Cho:2008:OSC:1544012.1544024} have defined the changing of Internet topology and traffic alike but fall short of relating such shifts with their impact on relevant metrics such as loss or delay. 
+
 This chapter builds on a wealth of prior work on understanding Internet traffic and serves as a reappraisal of significant past contributions. 
 Much of the underlying motivation is shared with the landmark study by Zhang et al.\ \cite{Zhang:2002p85} on the characteristics of Internet flow rates.
 Using traces spanning both access, peering and regional links, Zhang et al.\ analyse traffic according to potential rate limiting factors.

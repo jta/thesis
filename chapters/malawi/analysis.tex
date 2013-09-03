@@ -10,8 +10,10 @@
 \label{section:malawi:analysis}
 
 %\renewcommand{\thesubsectiondis}{Assumption \Alph{subsection}.}
-Having processed each daily trace individually, we proceed by aggregating results longitudinally in order to trace the evolution of constraints affecting \ac{TCP} across both time and spatial/topological dimensions. We frame our analysis as a re-visiting of four commonly held assumptions regarding Internet throughput. Our aim in so doing is to provide much a needed factual verification of these assumptions, which itself can lead to a re-appraisal of Internet throughput modelling efforts. Although all models require simplifying assumptions in the name of analytic tractability, our aim is to inform on which are the best assumptions to make if one is setting out to use or develop an Internet traffic throughput model. 
-
+Having processed each daily trace individually, flow  proceed by aggregating results longitudinally in order to trace the evolution of constraints affecting \ac{TCP} across both time and spatial/topological dimensions. 
+The ensuing analysis revisits four commonly held assumptions regarding Internet throughput. 
+The aim in so doing is to provide a much needed factual verification of these assumptions, which itself can lead to a re-appraisal of Internet throughput modelling efforts, particularly those enunciated in Zhang et al.\ \cite{Zhang:2002p85}.
+Although all models require simplifying assumptions in the name of analytic tractability, the primary goal of this section is to inform on which are the best assumptions to make if one is setting out to use or develop an Internet traffic throughput model. 
 
 \subsection{Throughput is primarily shaped by \acs{TCP}}
 
@@ -67,9 +69,10 @@ The increased weight of \acp{AS} which resort to these methods, such as Red Hat 
 \end{table}
 
 % summarize the answer
-\textbf{Overall, we find that flow rates are not typically dictated by \ac{TCP} congestion control alone.}
-While the impact of application pacing and host limitations on rate control is decreasing, as of early 2012 we find that 60\% of all inbound traffic was subjected to either. 
-The reduction of application pacing however may reflect the nature of the observed link, as many traditional streaming providers have migrated towards peering or \acp{CDN}, bypassing interdomain links entirely. As such we expect the effect of application pacing to be more pronounced when considering traffic beyond transit.
+\textbf{Overall, these findings demonstrate that flow rates are not typically dictated by \ac{TCP} congestion control alone.}
+While the impact of application pacing and host limitations on rate control is decreasing, as of early 2012 60\% of all inbound traffic was still subjected to either. 
+The reduction of application pacing however may reflect the nature of the observed link, as many traditional streaming providers have migrated towards peering or \acp{CDN}, bypassing interdomain links entirely. 
+As such it is reasonable to expect the effect of application pacing to be more pronounced when considering traffic beyond transit.
 By 2011, successive capacity upgrades have lead to a less congested network, but one where predicting how bandwidth is shared is fundamentally harder due to the influence of stakeholders such as content providers and operating system vendors.
 
 \begin{figure}[t]
@@ -129,11 +132,11 @@ A critical component in determining the upper bound for the congestion window si
 In its absence, a sender cannot have more than 64KB in flight.
 Furthermore, the \emph{default buffer size} on either end of the connection can also limit the size to which the congestion window can increase.
 Both settings are primarily subject to operating system configuration.
-Given that throughput conditions on the receiver side improve as \acs{OS} upgrades are rolled out, and that the user base within Japan covered by \acs{MAWI} has remained relatively stable over time, all things being equal we would expect the whole region to exhibit improvements as time progresses. 
-Hence, if we find significant degradation in host limitations, we reason that it most probably does not stem from \acs{OS} rollback or large sets of users with outdated \acp{OS} joining the Japanese networks. 
-Instead, we hypothesise that it will be a product of macroscopic shifts in routing or application popularity which lead to a change in \emph{where} traffic originates from.
+Given that throughput conditions on the receiver side improve as \acs{OS} upgrades are rolled out, and that the user base within Japan covered by \acs{MAWI} has remained relatively stable over time, all things being equal the whole region is expected to exhibit improvements as time progresses. 
+Hence it stands to reason that any significant degradation in host limitations most probably does not stem from \acs{OS} rollback or large sets of users with outdated \acp{OS} joining the Japanese networks. 
+Instead, a more likely explanation lies in macroscopic shifts in routing or application popularity which lead to a change in \emph{where} traffic originates from.
 
-We test this hypothesis by first verifying windowscale deployment over time.
+This hypothesis is tested by first verifying windowscale deployment over time.
 Figure \ref{fig:windowscale} shows the ratio of traffic and flows for which windowscale was successfully negotiated.
 Results are calculated solely over traffic where the initial handshake was observed.
 For added context, data for the outbound direction is also displayed.
@@ -234,7 +237,7 @@ Percentage of traffic in bytes affected by each constraint by year, along with a
 \end{table}
 
 Clearly, the extent to which rates are constrained is closely tied to flow size. 
-In table \ref{table:full} we break down the results from table \ref{table:limits} by flow size. 
+Table \ref{table:full} breaks down the results from table \ref{table:limits} by flow size. 
 Most limitations will invariably affect larger flows, as applications which shift more traffic, such as streaming media or bulk file transfers, are more likely to either attain or self-impose constraints on flow throughput. 
 Many small flows on the other hand never exit slow start, in which case none of the studied constraints will be reached or readily identified. 
 This dichotomy is reflected on loss rates, which will be higher for flows be regulated by \ac{TCP} congestion control.
@@ -250,7 +253,7 @@ Given the popularity of emulating a constant bit rate service over \ac{TCP}, tha
 % define the assumption
 We have so far observed that flow throughput is subjugated from \ac{TCP} by external stakeholders.
 A third important element in the ensuing tussle is in understanding the role operators can play in imposing their own preferences upon traffic.
-As such, we now provide a brief overview of the extent, and under what circumstances, customer networks resorted to receiver shaping over the duration of the dataset.
+As such, this section provides a brief overview of the extent, and under what circumstances, customer networks resorted to receiver shaping over the duration of the dataset.
 From preliminary inspection of table \ref{table:full}, it is apparent that receiver shaping was limited in both scope, affecting at most 4\% of bytes, and time, being primarily concentrated within 2009 and 2010.
 A breakdown of receiver shaping by traffic source is provided in table \ref{table:toprecvlim}, listing for each year the five most affected stakeholders within the top twenty \acp{AS}, and their respective contribution to the overall traffic and retransmissions observed yearly.
 
