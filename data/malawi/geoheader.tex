@@ -1,13 +1,42 @@
-\centering
 \begin{tabular}{  
-    p{3.0cm}rrrrr@{\hskip 0.5in}rrrrr}
+@{}
+$>{\scshape}p{3.0cm}
+^r
+^r
+^r
+^r
+^r@{\hskip 1.0cm}
+^r
+^r
+^r
+^r
+^r
+@{}
+}
+\toprule
+\rowstyle{\scshape\bfseries}
+\multirow{2}{*}{\parbox[][0.7cm][b]{3.0cm}{Country}} & 
+\multicolumn{5}{c}{\scshape\bfseries{Outbound traffic (\%)\hspace*{0.45cm}}} & 
+\multicolumn{5}{c}{\scshape\bfseries{Inbound traffic (\%)}} \\
+\cmidrule(r{1.0cm}){2-6} \cmidrule{7-11}
+\addlinespace[-0.6em] \rowstyle{\scriptsize\scshape}
+ & 2007 & 2008 & 2009 & 2010 & 2011 & 2007 & 2008 & 2009 & 2010 & 2011 \\
+\midrule
 
-& & \multicolumn{3}{c}{\textbf{Outbound traffic (\%)}} & & \multicolumn{5}{c}{\textbf{Inbound traffic (\%)}} \\
-\cline{3-5} \cline{8-10}
-\textbf{Country} & 2007 & 2008 & 2009 & 2010 & 2011 & 2007 & 2008 & 2009 & 2010 & 2011 \\
-%
-%
-%& \multicolumn{2}{c}{ \textbf{Total (\%)}} & & \multicolumn{2}{c}{\textbf{Receiver (\%)}} \\
-%Year & Flows & Bytes & & Flows & Bytes \\
-%
-\hline
+
+%\begin{tabular}{
+%@{}$>{\raggedleft\arraybackslash}p{2.5cm}@{\hskip 0.8cm}
+%^>{\raggedleft\arraybackslash}p{1.0cm}
+%^>{\raggedleft\arraybackslash}p{1.0cm}@{\hskip 0.8cm}
+%^>{\raggedleft\arraybackslash}p{1.0cm}
+%^>{\raggedleft\arraybackslash}p{1.0cm}@{}
+%}
+%\rowstyle{\bfseries\scshape}
+%\multirow{2}{*}{\parbox[][0.7cm][b]{2.5cm}{\raggedright Sample data}} &
+%\multicolumn{2}{c}{\scshape\bfseries Peak (\%)\hspace*{0.45cm}} &
+%\multicolumn{2}{c}{\scshape\bfseries Utility (\%)} \\
+%\cmidrule(r{0.7cm}){2-3} \cmidrule{4-5}
+%\addlinespace[-0.6em] \rowstyle{\scriptsize\scshape}
+%& Below & Above & Below & Above \\
+%\midrule
+%%
