@@ -9,20 +9,12 @@ The monitored link carries mostly trans-Pacific commodity traffic between \acs{W
 Traffic towards \acs{WIDE} is referred to as \emph{inbound} traffic, whereas traffic originating from within \acs{WIDE} is referred to as \emph{outbound} traffic.
 
 \begin{table}[!htp]
-\footnotesize
+\footnotesize\scshape
 \centering
-    \begin{tabular}{r@{\hskip 0.4in}r@{\hskip 0.4in}r@{\hskip 0.4in}rr@{\hskip 0.4in}rr}
-        & & \ac{TCP} data & \multicolumn{2}{c}{Traffic (TB)} & \multicolumn{2}{c} {Count ($\times10^3$)} \\
-        Year & Days & flows (x$10^6$) & In & Out & AS & Prefixes \\
-        \hline
-        2006 & 91 & 20.52 & 0.43& 0.45 & 10.90 & 56.86\\
-        2007 & 350 & 102.56 & 2.11 & 2.49& 17.21 & 113.79\\
-        2008 & 358 & 112.26& 2.43 & 2.10& 24.74 & 156.54\\
-        2009 & 364 & 113.97& 2.48 & 2.53& 19.71 & 143.87\\
-        2010 & 365 & 113.70& 2.58 & 3.43& 20.38 & 148.03\\
-        2011 & 358 & 114.74& 3.44 & 5.14& 19.99 & 140.56\\
-        \hline
-        Total & 1886 & 5777.55 & 13.50 & 16.14 & 34.12 & 341.22\\
+    \renewcommand{\arraystretch}{1.2}
+    \input{data/malawi/summaryheader.tex}
+    \input{data/malawi/summarydata.tex}
+    \bottomrule
     \end{tabular}
     \caption{\label{table:overview}Overview of traced \acs{MAWI} dataset 
 }

@@ -1,0 +1,24 @@
+
+\begin{tabular}{
+@{}$ % cut edge, start row
+>{\raggedright\arraybackslash}p{1.0cm} % year
+^>{\raggedleft\arraybackslash}p{1.0cm}@{\hskip 1.0cm} % days
+^>{\raggedleft\arraybackslash}p{2.0cm}@{\hskip 1.0cm} % flows
+^>{\raggedleft\arraybackslash}p{1.0cm}                % traffic in
+^>{\raggedleft\arraybackslash}p{1.0cm}@{\hskip 1.0cm} % traffic out
+^>{\raggedleft\arraybackslash}p{1.0cm}                % AS 
+^>{\raggedleft\arraybackslash}p{1.0cm}                % AS 
+@{} % cut edge
+}
+\toprule
+\rowstyle{\bfseries}
+\multirow{2}{*}{ \parbox[][0.8cm][b]{0.5cm}{Year}} &
+\multirow{2}{*}{ \parbox[][0.8cm][b]{0.5cm}{Days}} &
+\multirow{2}{*}{ \parbox[][0.8cm][b]{2.0cm}{\centering TCP data \\ flows ($\times10^3$)}} &
+\multicolumn{2}{c}{ \bfseries Traffic (TB) \hspace{0.8cm} } & 
+\multicolumn{2}{c}{ \bfseries Unique ($\times10^3$) } \\
+
+\cmidrule(r{1.0cm}){4-5} \cmidrule{6-7}
+\addlinespace[-0.8em] \rowstyle{\scriptsize}
+& & & \centering In & \centering Out & \centering AS & Prefixes \\
+\midrule
