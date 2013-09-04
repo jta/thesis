@@ -121,14 +121,10 @@ The trivial solution to this problem, the application of a bandpass filter aroun
 centring of such a filter depend on the \ac{RTT} which is itself unknown.
 The utility-based algorithm described in Section \ref{sect:utilityBasedRecovery} can hence be applied in either the time domain or the frequency domain; we chose to do it on the former on the interest of expediency and lower computational cost.
 
-\newcommand{\RTTHeader}{Below & Above}
-\newcommand{\SmallFlowName}{\textless 10MB}
-\newcommand{\LargeFlowName}{\textgreater 10MB} 
 \begin{table}\footnotesize\centering
 \input{data/malawi/rttheader.tex}
 
 \raggedright\scshape\arraybackslash Receiver side \\
-%\multicolumn{1}{l}{\scshape Receiver side}\\
 $flow < 10$MB & \input{data/malawi/rttinboundsmall.tex}\\ 
 $flow > 10$MB & \input{data/malawi/rttinboundlarge.tex}\\ 
 \addlinespace[0.6em]

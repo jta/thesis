@@ -1,11 +1,22 @@
 \begin{tabular}{
-rr 
->{\raggedright}p{2.5cm}
->{\bfseries\raggedleft}p{1.2cm}
->{\raggedleft}p{1.0cm}
->{\raggedleft\arraybackslash}p{1.0cm}}
+@{}
+$>{\scshape\bfseries}l
+^r
+^>{\scshape}l@{\hskip 1.2cm}
+^>{\raggedleft\arraybackslash}p{1.2cm}@{\hskip 1.5cm}
+^>{\raggedleft\arraybackslash}p{1.0cm} 
+^>{\raggedleft\arraybackslash}p{1.0cm} 
+@{}
+}
+\toprule
+\rowstyle{\scshape\bfseries}
+\multirow{2}{*}{\parbox[][0.7cm][b]{1.0cm}{Year}} & 
+\multirow{2}{*}{\parbox[][0.7cm][b]{0.7cm}{ASN}} & 
+\multirow{2}{*}{\parbox[][0.7cm][b]{2.0cm}{AS name}} & 
+\multirow{2}{*}{\parbox[][0.7cm][b]{2.0cm}{Receiver shaped (\%)}} & 
+\multicolumn{2}{c}{\scshape\bfseries Contribution (\%)} \\
+\cmidrule{5-6}
+\addlinespace[-0.6em] \rowstyle{\scriptsize\scshape}
+& & & & Bytes & Rexmt \\
+\midrule
 
-& & & \textmd{Limitation} & \multicolumn{2}{c}{(\%) of total } \\
-\cline{5-6}
-Year & ASN & AS Name & Receiver & Bytes & Rexmt \\
-\hline

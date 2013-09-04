@@ -1,12 +1,19 @@
 \begin{tabular}{  
-    p{0.8cm} 
-    >{\centering\arraybackslash}p{0.5cm} 
-    >{\centering\arraybackslash}p{0.5cm}
-    >{\centering\arraybackslash}p{0.3cm}
-    >{\centering\arraybackslash}p{0.5cm}
-    >{\centering\arraybackslash}p{0.5cm} }
-
-    & \multicolumn{2}{c}{ \textbf{Total (\%)}} & & \multicolumn{2}{c}{\textbf{Receiver (\%)}} \\
-Year & Flows & Bytes & & Flows & Bytes \\
-
-\hline
+@{}
+$l@{\hskip 0.3cm}
+^r
+^r
+^>{\raggedleft\arraybackslash}p{0.3cm}
+^r
+^r
+@{}
+}
+\toprule
+\rowstyle{\scshape\bfseries}
+\multirow{2}{*}{\parbox[][0.7cm][b]{1.0cm}{Year}} & 
+\multicolumn{2}{c}{\scshape\bfseries{Total (\%)}} & &
+\multicolumn{2}{c}{\scshape\bfseries{Receiver (\%)}} \\
+\cmidrule{2-3}\cmidrule{5-6}
+\addlinespace[-0.6em] \rowstyle{\scriptsize\scshape}
+& Flows & Bytes & & Flows & Bytes \\
+\midrule

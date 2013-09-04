@@ -50,12 +50,11 @@ Since many websites hosted in these \acp{AS} facilitate the distribution of copy
 Furthermore, these domains are more likely to host applications which resort to capping the maximum window size as a means of throttling traffic.
 The increased weight of \acp{AS} which resort to these methods, such as Red Hat and Carpathia, significantly contributes to the unexpected increase of host limitations for 2010 displayed in table \ref{table:limits}.
 
-\newcommand{\ASLISTSEP}[1]{\rule{0pt}{5ex}\multirow{5}{*}{\textbf{#1}}}
+\newcommand{\ASLISTSEP}{\addlinespace[0.8em]}
 \begin{table}[t]\footnotesize
 \centering
 \input{data/malawi/appheader.tex}
-\hline
-\ASLISTSEP{2007}
+2007
 \input{data/malawi/app2007.tex}
 \ASLISTSEP{2008}
 \input{data/malawi/app2008.tex}
@@ -65,8 +64,9 @@ The increased weight of \acp{AS} which resort to these methods, such as Red Hat 
 \input{data/malawi/app2010.tex}
 \ASLISTSEP{2011}
 \input{data/malawi/app2011.tex}
+\bottomrule
 \end{tabular}
-\caption{\acs{AS}-Level analysis of throughput limiting.\label{table:topapplim}}
+\caption{\acs{AS}-level analysis of throughput limiting.}
 \end{table}
 
 % summarize the answer
@@ -131,14 +131,16 @@ The influx of Asian traffic in 2009 led to an increase in observed host windows 
   \begin{subtable}[b]{.5\linewidth}
     \centering
     \input{data/malawi/hostheader.tex}
-    \input{data/malawi/hostlimin.tex}
+    \input{data/malawi/hostlimin.tex}\\
+    \bottomrule
     \end{tabular}
     \caption{Inbound traffic.}
   \end{subtable}%
   \begin{subtable}[b]{.5\linewidth}
     \centering
     \input{data/malawi/hostheader.tex}
-    \input{data/malawi/hostlimout.tex}
+    \input{data/malawi/hostlimout.tex}\\
+    \bottomrule
     \end{tabular}
     \caption{Outbound traffic.}
   \end{subtable}
@@ -223,6 +225,7 @@ By 2011, this clustering is less pronounced, with window sizes increasing across
     \centering
     \input{data/malawi/fullheader.tex}
     \input{data/malawi/fullsmall.tex}
+    \bottomrule
     \end{tabular}
   \caption{Flows under 10MB.}
   \end{subtable}
@@ -230,6 +233,7 @@ By 2011, this clustering is less pronounced, with window sizes increasing across
     \centering
     \input{data/malawi/fullheader.tex}
     \input{data/malawi/fulllarge.tex}
+    \bottomrule
     \end{tabular}
   \caption{Flows over 10MB.}
   \end{subtable}
@@ -264,8 +268,7 @@ A breakdown of receiver shaping by traffic source is provided in table \ref{tabl
 \footnotesize
 \centering
 \input{data/malawi/recvheader.tex}
-\hline
-\ASLISTSEP{2007}
+2007
 \input{data/malawi/recv2007.tex}
 \ASLISTSEP{2008}
 \input{data/malawi/recv2008.tex}
@@ -275,8 +278,9 @@ A breakdown of receiver shaping by traffic source is provided in table \ref{tabl
 \input{data/malawi/recv2010.tex}
 \ASLISTSEP{2011}
 \input{data/malawi/recv2011.tex}
+\bottomrule
 \end{tabular}
-\caption{AS-Level analysis of throughput limiting. \label{table:toprecvlim}}
+\caption[AS-level analysis of receiver shaping. \label{table:toprecvlim}]{\acs{AS}-level analysis of receiver shaping. For each year, the five most affected \acp{AS} are listed with the total proportion of traffic which was receiver shaped as well as the overall contribution of the \ac{AS} to the total volume of bytes and retransmissions for that year.\label{table:topapplim}}
 \end{table}
 
 Prior to 2009, receiver shaping mostly targeted flows which attained the highest throughput, and may have in part been performed by hosts. 

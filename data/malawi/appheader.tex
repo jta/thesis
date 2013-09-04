@@ -1,12 +1,23 @@
 \begin{tabular}{
-rr 
->{\raggedright}p{2.5cm}
->{\raggedleft}p{0.8cm}
->{\raggedleft}p{1.0cm} 
->{\raggedleft}p{1.0cm} 
->{\centering\arraybackslash}p{1.0cm}}
+@{}
+$>{\scshape\bfseries}l
+^r
+^>{\scshape}l@{\hskip 1.2cm}
+^>{\raggedleft\arraybackslash}p{1.2cm}@{\hskip 1.5cm}
+^>{\raggedleft\arraybackslash}p{1.2cm} 
+^>{\raggedleft\arraybackslash}p{1.2cm} 
+^>{\centering\arraybackslash}p{1.2cm}
+@{}
+}
+\toprule
+\rowstyle{\scshape\bfseries}
+\multirow{2}{*}{\parbox[][0.7cm][b]{1.0cm}{Year}} & 
+\multirow{2}{*}{\parbox[][0.7cm][b]{0.7cm}{ASN}} & 
+\multirow{2}{*}{\parbox[][0.7cm][b]{2.0cm}{AS name}} & 
+\multirow{2}{*}{\parbox[][0.7cm][b]{2.0cm}{Traffic (\%)}} & 
+\multicolumn{3}{c}{\scshape\bfseries Limitation (\%)} \\
+\cmidrule{5-7}
+\addlinespace[-0.6em] \rowstyle{\scriptsize\scshape}
+& & & & Application & Host & Receiver\\
+\midrule
 
-& & & Traffic & \multicolumn{3}{c}{Limitation (\%)} \\
-\cline{5-7}
-Year & ASN & AS Name & \centering (\%) & Application & Host & Receiver \\
-\hline
