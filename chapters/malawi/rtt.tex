@@ -124,18 +124,18 @@ The utility-based algorithm described in Section \ref{sect:utilityBasedRecovery}
 \newcommand{\RTTHeader}{Below & Above}
 \newcommand{\SmallFlowName}{\textless 10MB}
 \newcommand{\LargeFlowName}{\textgreater 10MB} 
-\begin{table}
-\footnotesize
-\centering
-\begin{tabular}{ p{1.5cm} p{1.2cm} p{0cm} p{.6cm}p{.6cm} p{0cm} p{.6cm}p{.6cm}}
-& & & \multicolumn{2}{c}{Peak} & & \multicolumn{2}{c}{Utility-based} \\
-\cline{4-5} \cline{7-8}
-& Flow size & & \RTTHeader & & \RTTHeader \\
-\cline{4-5} \cline{7-8} 
-\multirow{2}{*}{Receiver side}  & \SmallFlowName && \input{data/malawi/rttinboundsmall.tex}\\ 
-                                & \LargeFlowName && \input{data/malawi/rttinboundlarge.tex}\\
-\multirow{2}{*}{Sender side}    & \SmallFlowName && \input{data/malawi/rttoutboundsmall.tex}\\
-                                & \LargeFlowName && \input{data/malawi/rttoutboundlarge.tex}\\
+\begin{table}\footnotesize\centering
+\input{data/malawi/rttheader.tex}
+
+\raggedright\scshape\arraybackslash Receiver side \\
+%\multicolumn{1}{l}{\scshape Receiver side}\\
+$flow < 10$MB & \input{data/malawi/rttinboundsmall.tex}\\ 
+$flow > 10$MB & \input{data/malawi/rttinboundlarge.tex}\\ 
+\addlinespace[0.6em]
+\raggedright\scshape\arraybackslash Sender side \\
+$flow < 10$MB & \input{data/malawi/rttoutboundsmall.tex}\\ 
+$flow > 10$MB & \input{data/malawi/rttoutboundlarge.tex}\\ 
+\bottomrule
 \end{tabular}
 \caption{\label{table:rttRecovery}Performance of \acs{RTT} recovery algorithms}
 \vspace{-3mm}
