@@ -35,10 +35,10 @@ Although the total number of \ac{TCP} flows increased dramatically in 2011, the 
 
 There is much prior work with regards to reconstructing \ac{TCP} flow from passive measurements and using this information to understand the end-to-end properties of traffic \cite{firstRTT,Jaiswal:2007p233,Rewaskar:2007p195,Shakkottai:2004p408}. 
 However, the \acs{MAWI} traces impose two constraints which require careful consideration, and ultimately led to the use of a custom \ac{TCP} tracer. 
-The first one is the proportion of bidirectional flows, where both forward and reverse path are seen. 
+The first is the proportion of bidirectional flows, where both forward and reverse path are seen. 
 In the dataset used this fluctuates between 40\% and 60\% over five years.
 Most available \ac{TCP} tracers either ignore or are inadequate at processing unidirectional flows. 
-The second one is the short duration of each individual trace file. 
+The second is the short duration of each individual trace file. 
 At only 15 minutes of line-rate data capture per day, it is wasteful to ignore flows which are not complete. 
 Although the number of flows for which a SYN and FIN in either direction is observed has remained consistently high until late 2011, these flows are normally \emph{mice}, i.e. flows that tend to be brief and which carry little traffic individually. 
 In contrast, most \emph{elephants} (flows that carry significant traffic individually) have durations that exceed that of each trace file. 
