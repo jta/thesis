@@ -167,78 +167,72 @@ For end-users it is of less concern where content is being retrieved from or rou
     \centering
     \begin{subfigure}[b]{0.5\linewidth}
         \includegraphics{figures/malawi/rtt_cdf_in}
-        \caption{Inbound}
+        \caption{\label{fig:rtt_cdf_in}}
     \end{subfigure}%
     \begin{subfigure}[b]{0.5\linewidth}
         \includegraphics{figures/malawi/rtt_cdf_out}
-        \caption{Outbound}
+        \caption{\label{fig:rtt_cdf_out}}
     \end{subfigure}%
-    \caption{CDF of RTT by AS. \label{fig:rtt_cdf}}
+    \caption[\acs{CDF} of mean \acs{RTT} by \acs{AS}]{\acs{CDF} of mean \acs{RTT} by \acs{AS} for (\subref{fig:rtt_cdf_in}) inbound and (\subref{fig:rtt_cdf_out}) outbound traffic. \label{fig:rtt_cdf}}
 \end{figure}
+
+Intuitively delay should decrease over time as the Internet becomes more interconnected, resulting in less path stretch, and access technology improves, cutting down queuing delay in particular.
+This is partially confirmed by figure \ref{fig:rtt_cdf}, which displays the mean delay distribution for traffic in either direction.
+Given the long-tailed nature of traffic, many \acp{AS} have a limited number of \ac{RTT} samples.
+As such, only the thousand most significant \acp{AS} in either direction are used to plot the respective \acs{CDF}.
+
+As with traffic distributions, the plots once again illustrate the same overall trend in subtly different patterns. 
+The rate at which delay has improved however seems markedly different. 
+Taking the median of both plots as a reference point, delay has dropped by 20$ms$ between 2009 and 2011 for inbound traffic, nearly half the equivalent decrease for outbound traffic.
+The absolute values in both cases are still disparate: over 90\% of \acp{AS} are reached within a round trip time of approximately 400$ms$ when ranked by inbound traffic, whereas the equivalent value for outbound traffic is almost 200$ms$ higher. 
+For inbound traffic the average \ac{RTT} is low enough that geographical properties are clearly visible. 
+A first plateau close to 100$ms$ is apparent for traffic to the American west coast, while traffic to European destinations is clustered close to 250$ms$. 
+Tellingly, this second plateau seems to be receding.
+When taken in conjunction with the geographic distribution of traffic presented in table \ref{table:dest} this seems to confirm the reduction in the number of sources within Europe. 
+
+A pertinent question at this point is in trying to understand how delay relates to traffic volumes. 
+Given the different nature of stakeholders monopolizing traffic at either end of the spectrum, what can be said about the evolution of delay in either case? 
+Figure \ref{fig:rtt_wcdf} plots the cumulative distribution of the average \ac{RTT} weighted by the respective volume of traffic.
+In interpreting such plots one should keep in mind that they provide a rough indicator of the average delay to be expected if one were to sample a packet belonging to the top $N$ sources or destinations. 
+As $N$ increases, the resulting value approaches the average RTT for all traffic in a given direction.
 
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.5\linewidth}
         \includegraphics{figures/malawi/rtt_wcdf_in}
-        \caption{Inbound}
+        \caption{\label{fig:rtt_wcdf_in}}
     \end{subfigure}%
     \begin{subfigure}[b]{0.5\linewidth}
         \includegraphics{figures/malawi/rtt_wcdf_out}
-        \caption{Outbound}
+        \caption{\label{fig:rtt_wcdf_out}}
     \end{subfigure}%
-    \caption{CDF of weighted RTT by AS. \label{fig:rtt_wcdf}}
+    \caption[\acs{CDF} of weighted \acs{RTT} by \acs{AS}.]{\acs{CDF} of weighted \acs{RTT} by \acs{AS} for (\subref{fig:rtt_wcdf_in}) inbound and (\subref{fig:rtt_wcdf_out}) outbound traffic. \label{fig:rtt_wcdf}}
 \end{figure}
 
-The respective cumulative distribution functions of delay is display in figure \ref{fig:rtt_ecdf}. 
-As with traffic distributions, the plots once again illustrate the same overall trend in subtly different patterns. 
-Overall, delay has been decreasing over time, with the notable exception of a small segment of inbound traffic for network prefixes, mostly based in Japan, which were rerouted at the end of 2008. 
-The rate at which delay has improved however seems markedly different. 
-
-Comparing plots at the AS granularity, for the top 400 ASes delay has dropped by 20ms between 2009 and 2011 for inbound traffic, while the equivalent decrease for outbound traffic has been closer to 50ms. 
-The absolute values in both cases are still disparate: over 90\% of ASes are reached within a round trip time of approximately 400ms when ranked by inbound traffic, whereas the equivalent value for outbound traffic is almost 200ms higher. 
-This same trend is apparent when looking at delay by network prefix.
-
-For inbound traffic the average RTT is low enough that geographical properties are clearly visible. 
-A first plateau close to 100ms is apparent for traffic to the american west coast, while traffic to european destinations is clustured close to 250ms. 
-Tellingly, this second plateau seems to be receeding in both AS and network plots. 
-When taken in conjunction with the geographic distribution of traffic presented in table \ref{table:dest} this seems to confirm our suspicions that there has indeed been a reduction in the number of sources within Europe. 
-
-A pertinent question at this point is in trying to understand how delay relates to traffic volumes. 
-Given the different nature of stakeholders monopolizing traffic at either end of the spectrum, what can we say about the evolution of delay in either case? 
-To assess this we plot the cumulative distribution of the average RTT weighted by the respective volume of traffic, as shown in \ref{fig:wrtt_ecdf}. 
-In interpreting such plots one should keep in mind that they provide a rough indicator of the average delay to be expected if one were to sample a packet belonging to the top $N$ sources or destinations. 
-As $N$ increases, we will approach the average RTT for all traffic in a given direction.
-
-Inbound traffic by AS highlights and expected rise in delay between 2008 and 2009, as both NTT and Limelight are replaced by more distant sources. 
-However, from 2009 onwards the overall delay is remarkably similar. 
-While the cumulative distribution function of RTT shows improvement in delay at the tail, this results in very little improvement overall as traffic is dominated by a handful of entities.
-
-Focusing on inbound traffic by network prefix not only confirms this, but actually shows that average delay has increased consistently over time.
-In this case, the cumulative distribution of delay from \ref{fig:rtt_ecdf}b improved between 2009 and 2011, yet the average weighted RTT increased almost twofold for the top 10 network prefixes over the same period.
+Inbound traffic by \ac{AS} highlights an expected rise in delay between 2008 and 2009, as both \acs{NTT} and Limelight are replaced by more distant sources. 
+However, from 2009 onwards the overall delay remains remarkably stable. 
+While the cumulative distribution function of \ac{RTT} shows improvement in delay at the tail, this results in very little improvement overall as traffic is dominated by a handful of entities.
 
 Two explanations emerge for this behaviour. 
-The first stems from the changing nature of the traffic we are sampling. 
-While functionally NTT represents the same entity over time, the traffic we observe is very different. 
-As local traffic has increasingly been exchanged over peering links our view of traffic has stretched further afield. 
-To illustrate this, one needs only notice that the average delay towards NTT, the top AS for inbound traffic in both 2007 and 2011, increased by approximately 100ms in figure \ref{fig:wrtt_ecdf}a. 
-This does not represent a degradation in quality of service, but rather a change in where traffic is flowing from within the AS.
+The first stems from the changing nature of the traffic being sampled. 
+While functionally \acs{NTT} represents the same entity over time, the traffic under observation is very different. 
+The local view of traffic has been stretched further afield as data has been increasingly exchanged over peering links, particularly at a national level.
+This is particularly noticeable in figure \ref{fig:rtt_wcdf_in}, where the average delay towards \acs{NTT}, the most significant \ac{AS} for inbound traffic in both 2007 and 2011, increased by approximately 100$ms$.
+This does not represent a degradation in quality of service, but rather a change in where traffic is flowing from within the \acs{AS}.
 
 A further reason relates to the placement of content. 
-As we had previously shown in \ref{table:dest}, there appears to be a migration of content away from California. 
-Hosting sites such as Lemuria (Hotfile), based in Florida, Mediafire, based in Texas and District of Columbia and Carpathia, based in Virginia, are all contained within the top 20 ASes and have shifted traffic further from locations which had traditionally benefitted from low latency as viewed from Japan.
+As previously established in table \ref{table:dest}, there appears to be a migration of content away from California. 
+\ac{OCH} providers such as Lemuria, based in Florida, Mediafire, based in Texas and District of Columbia and Carpathia, based in Virginia, are all contained within the top 20 \acp{AS} and have shifted traffic further from locations which had traditionally benefited from low latency as viewed from Japan.
 
-Analyzing the outbound traffic we seemingly get the opposite effect, with the average weighted RTT for the top 1000 ASes dropping by over 100ms. 
+Analyzing the outbound traffic seemingly reveals the opposite effect, with the average weighted \ac{RTT} dropping by over 100ms. 
 Once more, there is no single reason which accounts for the entirety of this effect. 
-In 2007 many of the top destination ASes were in developing Asian countries, where infrastructure has improved greatly since. 
-Improvements in routing to countries such as China and Korea have also had a positive net effect. 
-This is visible in figure \ref{fig:rttyearcomp}, where the average RTT aggregated by country is plotted. 
-For clarity, we filter out countries for which RTT estimates are available for less than 50 days in a year. 
-Between 2007 and 2009 most Asian and European countries experience significant improvements in RTT. 
-Those which don't tend to experience lower delays. Between 2009 and 2011 most countries reduce delay below 500ms. 
-
-Finally, many of the very same companies which have had an effect of increasing RTT for inbound traffic, such as Mediafire or Ustream.tv, are also amongst the top destinations of traffic. 
-It is interesting to note that as of 2011, data travelling from the top 1000 AS traffic sources is expected to experience the same latency as data travelling towards the 1000 most popular AS traffic destinations. 
-In 2007, the value was two times higher for outgoing traffic.
+In 2007 many of the top destination \acp{AS} were in developing Asian countries, where infrastructure has improved greatly since. 
+Improvements in routing to countries such as China and the Republic of Korea have also had a positive net effect. 
+This is visible in figure \ref{fig:rtt_comp}, where the average \ac{RTT} aggregated by country is plotted. 
+For clarity, countries for which RTT estimates are available for less than 50 days in a year are filtered out. 
+Between 2007 and 2009 most Asian and European countries experience significant improvements in \ac{RTT}.
+The minor exceptions are typical countries for which delay was already comparatively low.
+By 2011, latency to most countries had been reduced below 500$ms$.
 
 \begin{figure}
     \centering
@@ -252,4 +246,9 @@ In 2007, the value was two times higher for outgoing traffic.
     \end{subfigure}%
     \caption{CDF of weighted RTT by AS. \label{fig:rtt_comp}}
 \end{figure}
+
+Finally, many of the very same companies which have had an effect of increasing \ac{RTT} for inbound traffic, such as Mediafire or Ustream.tv, are also amongst the top destinations of traffic. 
+It is interesting to note that as of 2011, data travelling from the top 1000 \ac{AS} traffic sources was expected to experience the same latency as data travelling towards the 1000 most popular \ac{AS} traffic destinations. 
+In 2007, the value was two times higher for outgoing traffic.
+Traffic downstream is moving further away as content is not only placed closer to consumers and bypasses the transit link entirely, but also moves deeper within the United States, whereas traffic upstream has been drawn closer. 
 

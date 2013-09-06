@@ -1,3 +1,6 @@
+Providing a macroscopic view on where traffic originates from, and in what quantity, can be achieved by simply binning packets into flows and accumulating byte counts over geographical or topological locations. 
+Uncovering application layer characteristics (i.e. how traffic is sent) is a more complex problem that requires additional methods to reverse engineer transport behaviour.
+This chapter builds on the analysis of the \ac{MAWI} dataset presented in chapter \ref{chapter:malawi}, focusing on the longitudinal evolution of \ac{TCP} behaviour.
 \ac{TCP} plays a central role in mediating between application needs and network capacity.
 In the absence of congestion, \ac{TCP} is responsible for increasing sending rates in a bid to make efficient use of available bandwidth.
 Conversely, should congestion arise, \ac{TCP} is expected to reduce its rate.
@@ -23,7 +26,6 @@ In addition, resource sharing is often subject to local policy.
 In the absence of adequate methods for readjusting how \ac{TCP} distributes bandwidth, network operators and system administrators often trade efficiency for predictability, shaping traffic to conform to local notions of fairness or in anticipation for expected demand \cite{ispTrafficShaping}.
 
 Given these different potential sources of rate control, \emph{what can be said about their relative impact on Internet traffic at large}?
-This chapter investigates this question building on the analysis of the derived \acs{MAWI} dataset presented in chapter \ref{chapter:malawi}.
 Much of the underlying motivation is shared with the landmark study by Zhang et al.\ \cite{Zhang:2002p85} on the characteristics of Internet flow rates.
 Using traces spanning both access, peering and regional links, Zhang et al.\ analyse traffic according to potential rate limiting factors.
 Amongst other findings, host window limitations were found to affect over 30\% of traffic for the access networks studied.
@@ -34,6 +36,6 @@ In addition to such general investigations, this chapter is equally indebted to 
 Significant portions of the observed traffic pertain to well known applications which have been previously studied.
 Rao et al.\ \cite{Rao:2011p547} survey strategies used for video streaming at both Youtube and Netflix and characterise the properties of interleaved \emph{block sending} patterns used to pace streams.
 These patterns are also the subject of \cite{Alcock:2011p575}, in which the burstiness of Youtube traffic in particular is found to result in considerable losses over residential connections.
-A large portion of the traffic observed in the \acs{MAWI} dataset originates from \ac{HTTP} file sharing services, commonly referred to as one-click hosting websites \cite{oneclick1}.
+A large portion of the traffic observed in the \acs{MAWI} dataset originates from \ac{HTTP} file sharing services, commonly referred to as \acf{OCH} websites \cite{oneclick1}.
 In \cite{SanjuasCuxart:2012p588}, the authors study the characteristics of such traffic over a three month period, detailing the different throttling strategies used by different providers.
 
