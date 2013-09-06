@@ -24,3 +24,16 @@ In the absence of adequate methods for readjusting how \ac{TCP} distributes band
 
 Given these different potential sources of rate control, \emph{what can be said about their relative impact on Internet traffic at large}?
 This chapter investigates this question building on the analysis of the derived \acs{MAWI} dataset presented in chapter \ref{chapter:malawi}.
+Much of the underlying motivation is shared with the landmark study by Zhang et al.\ \cite{Zhang:2002p85} on the characteristics of Internet flow rates.
+Using traces spanning both access, peering and regional links, Zhang et al.\ analyse traffic according to potential rate limiting factors.
+Amongst other findings, host window limitations were found to affect over 30\% of traffic for the access networks studied.
+Importantly, the authors found a strong correlation between flow throughput and flow size, postulating that this could derive from user behaviour, with large transfers more likely to be performed over higher bandwidth connections.
+
+% application space.
+In addition to such general investigations, this chapter is equally indebted to comprehensive work of a narrower scope.
+Significant portions of the observed traffic pertain to well known applications which have been previously studied.
+Rao et al.\ \cite{Rao:2011p547} survey strategies used for video streaming at both Youtube and Netflix and characterise the properties of interleaved \emph{block sending} patterns used to pace streams.
+These patterns are also the subject of \cite{Alcock:2011p575}, in which the burstiness of Youtube traffic in particular is found to result in considerable losses over residential connections.
+A large portion of the traffic observed in the \acs{MAWI} dataset originates from \ac{HTTP} file sharing services, commonly referred to as one-click hosting websites \cite{oneclick1}.
+In \cite{SanjuasCuxart:2012p588}, the authors study the characteristics of such traffic over a three month period, detailing the different throttling strategies used by different providers.
+

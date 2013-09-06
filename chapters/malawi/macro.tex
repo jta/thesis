@@ -4,19 +4,23 @@
 \begin{figure}
   \centering
   \begin{subfigure}[b]{1.0\linewidth}
-  \includegraphics[width=0.9\textwidth]{figures/malawi/tput}
-  \caption{Mean throughput}
+  \includegraphics[width=0.9\textwidth]{figures/malawi/tputout}\\
+  \includegraphics[width=0.9\textwidth]{figures/malawi/lossesout}
+  \caption{Inbound traffic\label{fig:MAWIin}}
   \end{subfigure}
   \begin{subfigure}[b]{1.0\linewidth}
-  \includegraphics[width=0.9\textwidth]{figures/malawi/losses}
-  \caption{Mean loss rate}
+  \includegraphics[width=0.9\textwidth]{figures/malawi/tputin}\\
+  \includegraphics[width=0.9\textwidth]{figures/malawi/lossesin}
+  \caption{Outbound traffic\label{fig:MAWIout}}
   \end{subfigure}
-  \caption{Longitudinal evolution of inbound traffic.}\label{fig:MAWI}
+  \caption{Longitudinal evolution of average throughput and loss for the \acs{MAWI} dataset.}\label{fig:MAWI}
 \end{figure}
 
 Over a five year period, changes in routing and application popularity have continually redefined the nature of traffic under observation.
-This section provides a macroscopic view of these shifting trends. Figure \ref{fig:MAWI} displays the average throughput and loss ratio, calculated for TCP traffic only, smoothed on a weekly basis. 
-Two routing changes internal to WIDE had significant impact on overall traffic, and are consequently highlighted.
+This section provides a macroscopic view of these shifting trends. 
+Figure \ref{fig:MAWI} displays the average throughput and loss ratio for traffic in either direction, calculated for TCP traffic only, smoothed on a weekly basis. 
+
+For inbound traffic, shown in figure \ref{fig:MAWIin}, two routing changes internal to WIDE had significant impact on overall traffic, and are consequently highlighted.
 The first, performed towards the end of 2008, diverted most of the inbound traffic from \emph{national} sources away from the monitored transit link, resulting in a reduction of traffic.
 This event was preceded by increased congestion downstream from the monitoring point.
 The second, in early 2009, saw a significant increase in \emph{regional} traffic from Asian neighbours, and was reverted approximately six months later. 
@@ -24,7 +28,26 @@ During this period aggregate end-to-end loss rates increased as a result.
 While this is mostly due to the higher proportion of upstream congestion for traffic from Taiwan and China in particular, most traffic was adversely affected by the increased utilisation, suggesting that the transit link itself may have been a bottleneck during this period.
 Finally, the impact of the Tohuku earthquake resulted in a noticeable break in demand coinciding with the start of the Japanese fiscal year in April, in which traffic traditionally ramps up.
 
+For reference, relevant metrics for outbound traffic are also shown in figure \ref{fig:MAWIout}.
+Compared to inbound traffic, outbound traffic is subject to higher rates of out-of-sequence packets.
+The proportion of out-of-order packets in particular is large for extended periods of time at the end of both 2007 and 2011, ending abruptly.
+This either suggests that the internal network was congested and eventually upgraded, or that load-balancing mechanisms leading to increased network reordering were employed and then decommissioned.
+The higher rate of retransmissions on the other hand is largely related to the geographic differences between traffic sources and traffic sinks in the \acs{MAWI} dataset.
+
 \subsection{Geographic distribution}
+\label{section:malawi:geo}
+
+This skew in the location of end points is apparent in table \ref{table:dest}, which highlights the geographic distribution of both inbound and outbound traffic for the observed time period.
+
+The majority of traffic flows to and from the United States, which has increased its share of bandwidth in either direction over the past five years. 
+The proportion of traffic flowing from the United States is particularly high, accounting for almost 70\% of inbound traffic in 2011. 
+While this may foreshadow an increased concentration of traffic from the United States, it should primarily be viewed as a reflection of routing policy, with regional traffic being diverted to alternate routes as Japan became increasingly interconnected to its neighbours.
+Of particular importance is the routing change at the end of 2008, which resulted in a sharp drop in inbound traffic from within Japan, as highlighted in figure \ref{fig:MAWIin}.
+This event had a profound influence in shaping not only the distribution of traffic, but also delay as shall be observed in section \ref{section:malawi:delay}.
+
+Further geographic shifts in the inbound direction are apparent when breaking down US traffic by state.
+The proportion of traffic originating from California has decreased over time, dropping from 55\% of total US traffic in 2007 to only 35\% in 2011.
+In its place, a larger set of states have emerged as content providers, with New Jersey, Florida and Virginia contributing over a quarter of all traffic originating within the US by 2011.
 
 \begin{table}\footnotesize\centering
     \input{data/malawi/geoheader.tex}
@@ -35,114 +58,107 @@ Finally, the impact of the Tohuku earthquake resulted in a noticeable break in d
     \end{tabular}
   \caption{Percentage of inbound and outbound traffic by country\label{table:dest}. U.S. state values are relative to total national traffic.}
 \end{table}
-
-
-
-These changes are both visible in the geographic distribution of inbound traffic over time, shown in table \ref{table:dest}.
-Prior to 2009, a significant proportion of transit traffic originated from within Japan. Over time, however, the ratio of traffic from Asia has been reduced. While this may foreshadow an increased concentration of traffic from the United States, it should primarily be viewed as a reflection of routing policy, with regional traffic being diverted to alternate routes as Japan became increasingly interconnected to its neighbours.
-
-
-Further geographic shifts are apparent when breaking down US traffic by state.
-The proportion of traffic originating from California has decreased over time, dropping from 55\% of total US traffic in 2007 to only 35\% in 2011.
-In its place, a larger set of states have emerged as content providers, with New Jersey, Florida and Virginia contributing over a quarter of all traffic originating within the US by 2011.
-
 %tip
 
-Table \ref{table:dest} shows the geographic distribution of both inbound and outbound traffic since 2007. The majority of traffic flows to and from the United States, which has increased its share of bandwidth in either direction over the past five years. The proportion of traffic flowing from the United States is particularly high, accounting for almost 70\% of inbound traffic in 2011. While this may foreshadow an increased concentration of traffic within the United States, it should first be viewed as a reflection of routing policy, as regional traffic has been increasingly diverted to alternate routes. Inbound traffic from Japan, China, Korea and Taiwan have all been on the wane over the past five years as Japan has become increasingly interconnected to its neighbours. Of particular importance is the routing change at the end of 2008, which resulted in a sharp drop in inbound traffic from within Japan, with a net effect easily discernable in figure \ref{fig:inout}. This event had a profound influence in shaping not only the distribution of traffic, but also overall loss and delay as we shall observe in sections \ref{sec:delay} and \ref{sec:loss}.
-
-A further point of interest is the breakdown of traffic from the U.S. by state. The overall increase in volume at a national level has broken the hegemony of California, which saw its overall share of inbound traffic fall from 60\% in 2007 to just under 40\% by 2011. In its place a larger set of states have emerged as content providers. Not listed are New Jersey, Florida and Virginia, which all saw sharp rises in 2011 to provide 35\% of all traffic from the U.S towards WIDE.
-    
-In the outbound direction, the geographic distrubtion of traffic is less skewed, with a greater proportion of traffic flowing towards Japan and China in particular. Due to a change in routing towards the end of 2010, traffic to Korea increases dramatically. In 2011, 12.7\% of all outbound traffic was destined to Korea Telecom alone. European destinations overall have a small proportion of outgoing traffic, which appears to be shrinking over time. The most significant factor for the discrepancy between inbound and outbound traffic for Europe as a whole is the timezone difference, as traffic is measured at 05:00GMT. This however does not account for why outbound traffic overall has been falling. Since most outbound traffic towards Europe at the time of measurement is likely to be scheduled transfers with no human intervention, a plausible explanation for this trend is the gradual shift away from file-sharing using peer-to-peer applications. This is further corroborated by the rise of hosting solutions which facilitate filesharing such as MediaFire, as shall become evident when analyzing the breakdown of traffic by AS.
-
-
-\
-
+In the outbound direction, the geographic distribution of traffic is less skewed, with a greater proportion of traffic flowing towards Japan and China in particular. 
+Traffic to the Republic of Korea progressively increases from 2010 onwards due to successive routing changes.
+Combined with the drop in traffic towards China, this accounts for much of the drop in aggregate loss rates since 2010, as observable in figure \ref{fig:MAWIout}.
+European destinations overall have a small proportion of outgoing traffic, which appears to be shrinking over time. 
+The most significant factor for the discrepancy between inbound and outbound traffic for Europe as a whole is the time zone difference, as traffic is measured at 05:00\acs{GMT}. 
+This however does not account for why outbound traffic overall has been falling. 
+Since most outbound traffic towards Europe at the time of measurement is likely to be scheduled transfers with no human intervention, a plausible explanation for this trend is the gradual shift away from file-sharing using peer-to-peer applications. 
+This is further corroborated by the rise of hosting solutions which facilitate file-sharing, as shall become evident when analyzing the breakdown of traffic by \ac{AS}.
 
 \subsection{\acs{AS}-level distribution}
+\label{section:malawi:as}
+
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.5\linewidth}
         \includegraphics{figures/malawi/asn_cdf_in}
-        \caption{Inbound}
+        \caption{\label{fig:asn_cdf_in}}
     \end{subfigure}%
     \begin{subfigure}[b]{0.5\linewidth}
         \includegraphics{figures/malawi/asn_cdf_out}
-        \caption{Outbound}
+        \caption{\label{fig:asn_cdf_out}}
     \end{subfigure}%
-    \caption{CDF of inbound data by AS. \label{fig:ecdf_asn_from}}
+    \caption{\acs{CDF} of (\subref{fig:asn_cdf_in}) inbound and (\subref{fig:asn_cdf_out}) outbound traffic by \acs{AS}.\label{fig:asn_cdf}}
 \end{figure}
 
+\begin{table}\scriptsize\centering
+    \begin{subtable}[b]{.33\linewidth}
+    \input{data/malawi/asnheader.tex}
+    \input{data/malawi/asn2007.in.tex}
+    \bottomrule
+    \end{tabular}
+    \caption{2007}
+    \end{subtable}%
+    \begin{subtable}[b]{.33\linewidth}
+    \input{data/malawi/asnheader.tex}
+    \input{data/malawi/asn2009.in.tex}
+    \bottomrule
+    \end{tabular}
+    \caption{2009}
+    \end{subtable}
+    \begin{subtable}[b]{.33\linewidth}
+    \input{data/malawi/asnheader.tex}
+    \input{data/malawi/asn2011.in.tex}
+    \bottomrule
+    \end{tabular}
+    \caption{2011}
+    \end{subtable}
+  \caption[Top 10 \acp{AS} for inbound traffic by year.]{Top 10 \acp{AS} for inbound traffic by year.\label{table:topASin}}
+\end{table}
 
-%\begin{table*}\scriptsize
-%\centering
-%\subfloat[2007]{
-    %\input{data/malawi/asnheader.tex}
-    %\input{data/malawi/asn2007.tex}
-    %\end{tabular} % closes asnheader.tex tabular environment
-    %}
-%\subfloat[2009]{
-    %\input{data/malawi/asnheader.tex}
-    %\input{data/malawi/asn2009.tex}
-    %\end{tabular} % closes asnheader.tex tabular environment
-%}
-%\subfloat[2011]{
-    %\input{data/malawi/asnheader.tex}
-    %\input{data/malawi/asn2011.tex}
-    %\end{tabular} % closes asnheader.tex tabular environment
-%}
-%\caption{
-    %\label{table:topASin}
-    %Top 10 ASes for inbound traffic by year. Additionally listed is the ratio of aggregate end-to-end loss.}
-%\vspace{-3mm}
-%\end{table*}
-
-
-These large-scale changes are a natural outcome of content consolidation. This is most apparent at the AS level, where a direct mapping to a commercial entity is forthcoming.
-Figure \ref{fig:ecdf_asn_from} shows the cumulative distribution of inbound traffic by AS, while table \ref{table:topASin} lists the top ten AS by traffic volume for 2007, 2009 and 2011.
-While in 2007 traffic was already consolidated across a small set of ASes, a significant portion of transit traffic was Asian: most traffic from NTT and Limelight originated from within Japan. Such traffic has gradually been pushed away from transit by 2011.
-Large carriers such as Cogent, Level3, Hanaro, China Telecom have also seen their importance diluted by ASes known to harbour one-click hosting services such as Choopa, Webazilla, WZ Communications, Carpathia and LeaseWeb.
-Many of the hosted websites facilitate the distribution of copyrighted content, and as such are not capable of growing large enough to expand beyond hosted infrastructure without risking prosecution.
-% overall summary: content consolidation, delay, etc
-Overall, the observed traffic patterns match the insights provided by Labovitz et al. on the changing nature of interdomain traffic in \cite{Labovitz:2010p175}.
-The implications for transit traffic from an Asian perspective is less intuitive: with the increased adoption of content delivery networks and internet exchanges points, more transit traffic is being retrieved from further away as content in the US shifts east.
-
+\begin{table}\scriptsize\centering
+    \begin{subtable}[b]{.33\linewidth}
+    \input{data/malawi/asnheader.tex}
+    \input{data/malawi/asn2007.out.tex}
+    \bottomrule
+    \end{tabular}
+    \caption{2007}
+    \end{subtable}%
+    \begin{subtable}[b]{.33\linewidth}
+    \input{data/malawi/asnheader.tex}
+    \input{data/malawi/asn2009.out.tex}
+    \bottomrule
+    \end{tabular}
+    \caption{2009}
+    \end{subtable}
+    \begin{subtable}[b]{.33\linewidth}
+    \input{data/malawi/asnheader.tex}
+    \input{data/malawi/asn2011.out.tex}
+    \bottomrule
+    \end{tabular}
+    \caption{2011}
+    \end{subtable}
+  \caption[Top 10 \acp{AS} for outbound traffic by year.]{Top 10 \acp{AS} for outbound traffic by year.\label{table:topASout}}
+\end{table}
 
 %tip
-It has been widely noted that inter-domain traffic has significantly changed over the past decade, with an increasing proportion of traffic flowing to and from a dwindling set of both large content providers and consumer networks. 
-This shift carries potentially significant ramifications for network operators. 
-Content consolidation provides opportunities for network optimization as a wider set of traffic is contained within a smaller set of addresses. 
-Improved transport heuristics or dynamic traffic engineering are both feasible solutions under such conditions if designing for the typical case, rather than the worst case \cite{Dukki}.
+It has been widely noted that interdomain traffic has significantly changed over the past decade, with an increasing proportion of traffic flowing to and from a dwindling set of both large content providers and consumer networks. 
+Such traffic consolidation is most apparent at the AS level, where a direct mapping to a commercial entity is forthcoming.
 
-Traffic consolidation is most apparent at the AS level, where a direct mapping exists to a commercial entity. 
-How this translates down to the network layer is less clear. 
-We start by investigating how traffic is distributed by both AS and network prefixes for inbound traffic, as shown in figure \ref{fig:ecdf_from}. 
-Over the past five years, traffic has remained consistently concentrated in the top 100 ASes, accounting for approximately 90\% of all data received. 
-Between 2008 and 2009, traffic to NTT (AS2914) dropped significantly as a wide range of Japanese prefixes were rerouted through a different ingress. 
-Additionally, traffic from Limelight ceased to be visible from our measurement point. 
-Together, they contributed over 30\% of all inbound traffic in 2007 and 2008. 
-This explains the discrepancy in distribution between 2008 and 2009.
+In the inbound direction traffic has remained consistently concentrated in the top 100 \acp{AS} accounting for approximately 90\% of all data received, as shown by the cumulative distribution of inbound traffic by \acs{AS} in \ref{fig:asn_cdf_in}.
+There is a visible drop in concentration amongst the top \acp{AS} between 2008 and 2009 as a wide range of Japanese prefixes were rerouted through a different ingress.
+This shift is clarified in table \ref{table:topASin}, which lists the top ten \acp{AS} by received data for 2007, 2009 and 2011.
+While in 2007 traffic was already consolidated across a small set of \acp{AS}, a significant portion of transit traffic was still Asian: most traffic from \acs{NTT} and Limelight originated from within Japan. 
+Such traffic has gradually been pushed away from transit by 2011.
+Large carriers such as Cogent, Level3, Hanaro, China Telecom have also seen their importance diluted by \acp{AS} known to harbour \ac{OCH} services such as Choopa, Webazilla, WZ Communications, Carpathia and LeaseWeb.
+Many of the hosted websites facilitate the distribution of copyrighted content, and as such are not capable of growing large enough to expand beyond hosted infrastructure without risking prosecution.
 
-For outbound traffic, shown in figure \ref{fig:ecdf_to}a, consolidation has been much more perceptible. 
-For the top 10 ASes alone, the proportion of traffic has more than doubled between 2007 and 2011. 
-By 2011, the distribution of traffic amongst ASes for inbound and outbound traffic bears a striking similarity. 
-The nature of this concentration is markedly different however, as made apparent by the distribution of traffic over network prefixes. 
-The one hundred most popular network prefixes contribute 75\% of inbound traffic, yet only account for 50\% of outbound traffic. 
-This matches our expectations on the inherent differences between large ISPs, which reflect the heterogeneity of their customer base through addressing, and content providers and CDNs concentrating resources in fewer locations. 
+For outbound traffic, shown in figure \ref{fig:asn_cdf_out}, consolidation has been much more perceptible. 
+For the top 10 \acp{AS} alone, the proportion of traffic has more than doubled between 2007 and 2011. 
+By 2011, the distribution of traffic amongst \acp{AS} for inbound and outbound traffic bears a striking similarity but the nature of this concentration is markedly different, as made apparent by table \ref{table:topASout}.
+Despite the increased importance of content providers and \ac{OCH} services such as Google, Yahoo and Mediafire, significant portions of outgoing traffic continues to flow toward eyeball \acp{ISP} such as Korea Telecom, Infoweb, Global Crossing and Hanaro.
 
-
-
-To further highlight this trend we display the top 10 ASes for both inbound and outbound traffic for 2007 and 2011 in tables \ref{table:topASout} and \ref{table:topASin} respectively. For each table we list the number of observed networks - networks belonging to that AS to which traffic was routed to over the entire year - the number of network prefixes which belong to the top 10000 networks and the ratio of traffic. Additionally, we display the values of the latter two values for prefixes with mask values greater than 19.
-
-    For inbound traffic, both large consumer networks and content providers coexist in 2007. Youtube, Limelight, Google, Akamai and AcroNOC all send traffic almost exclusively from smaller address blocks. Additionally, most observed networks are amongst the highest ranked prefixes for inbound traffic, as opposed to large providers like NTT and Cogent, who have a much larger set of address blocks, but many of which do not have significant traffic. By 2011, NTT is the only ranked AS which still exhibits such behaviour for inbound traffic.
-
-    Outbound traffic differs in many respects. Firstly, traffic was much less concentrated in 2007, with top ranked Google receiving a mere 3.6\% of all traffic. The remainder of the list is mostly compromised of large providers receiving most traffic through less specific prefixes. Curiously, NTT displays different patterns between inbound and outbound traffic, with a tendency to send from less specific prefixes, and receive to more specific ones. 
-
-    In 2011 Korean telecom company KIXS exhibits a similar behaviour.  %WHY ??
-
-    In this section we have shown how traffic consolidation has occured at different paces depending on the direction of traffic. Inbound traffic already showed strong signs of concentration in 2007, whereas outbound traffic has become dominated by large consumer networks and regional providers over the past five years. For both cases, traffic has converged towards similar distributions when analyzed by autonomous system, but the impact on routing seems markedly different. We will next focus on how these trends affect end-to-end traffic.
-
+% overall summary: content consolidation, delay, etc
+Overall, the observed traffic patterns match the insights provided by Labovitz et al.\ on the changing nature of interdomain traffic in \cite{Labovitz:2010p175}, but highlight that such trends have occurred at different paces depending on the direction of traffic. 
+Inbound traffic showed strong signs of concentration as early as 2007, whereas outbound traffic has only become dominated by large consumer networks and regional providers more recently.
+The implications for transit traffic from an Asian perspective is less intuitive: with the increased adoption of \acp{CDN} and \acp{IXP}, more transit traffic is being retrieved from further away as content in the United States shifts eastward.
 
 \subsection{Delay}
+\label{section:malawi:delay}
  
 While understanding where traffic flows to and from is of great value at an operational, commercial and often political level, it portrays a small part of a wider picture. 
 For end-users it is of less concern where content is being retrieved from or routed through compared to how long it takes.
@@ -173,27 +189,56 @@ For end-users it is of less concern where content is being retrieved from or rou
     \caption{CDF of weighted RTT by AS. \label{fig:rtt_wcdf}}
 \end{figure}
 
-The respective cumulative distribution functions of delay is display in figure \ref{fig:rtt_ecdf}. As with traffic distributions, the plots once again illustrate the same overall trend in subtly different patterns. Overall, delay has been decreasing over time, with the notable exception of a small segment of inbound traffic for network prefixes, mostly based in Japan, which were rerouted at the end of 2008. The rate at which delay has improved however seems markedly different. 
+The respective cumulative distribution functions of delay is display in figure \ref{fig:rtt_ecdf}. 
+As with traffic distributions, the plots once again illustrate the same overall trend in subtly different patterns. 
+Overall, delay has been decreasing over time, with the notable exception of a small segment of inbound traffic for network prefixes, mostly based in Japan, which were rerouted at the end of 2008. 
+The rate at which delay has improved however seems markedly different. 
 
-Comparing plots at the AS granularity, for the top 400 ASes delay has dropped by 20ms between 2009 and 2011 for inbound traffic, while the equivalent decrease for outbound traffic has been closer to 50ms. The absolute values in both cases are still disparate: over 90\% of ASes are reached within a round trip time of approximately 400ms when ranked by inbound traffic, whereas the equivalent value for outbound traffic is almost 200ms higher. This same trend is apparent when looking at delay by network prefix.
+Comparing plots at the AS granularity, for the top 400 ASes delay has dropped by 20ms between 2009 and 2011 for inbound traffic, while the equivalent decrease for outbound traffic has been closer to 50ms. 
+The absolute values in both cases are still disparate: over 90\% of ASes are reached within a round trip time of approximately 400ms when ranked by inbound traffic, whereas the equivalent value for outbound traffic is almost 200ms higher. 
+This same trend is apparent when looking at delay by network prefix.
 
-For inbound traffic the average RTT is low enough that geographical properties are clearly visible. A first plateau close to 100ms is apparent for traffic to the american west coast, while traffic to european destinations is clustured close to 250ms. Tellingly, this second plateau seems to be receeding in both AS and network plots. When taken in conjunction with the geographic distribution of traffic presented in table \ref{table:dest} this seems to confirm our suspicions that there has indeed been a reduction in the number of sources within Europe. 
+For inbound traffic the average RTT is low enough that geographical properties are clearly visible. 
+A first plateau close to 100ms is apparent for traffic to the american west coast, while traffic to european destinations is clustured close to 250ms. 
+Tellingly, this second plateau seems to be receeding in both AS and network plots. 
+When taken in conjunction with the geographic distribution of traffic presented in table \ref{table:dest} this seems to confirm our suspicions that there has indeed been a reduction in the number of sources within Europe. 
 
-A pertinent question at this point is in trying to understand how delay relates to traffic volumes. Given the different nature of stakeholders monopolizing traffic at either end of the spectrum, what can we say about the evolution of delay in either case? To assess this we plot the cumulative distribution of the average RTT weighted by the respective volume of traffic, as shown in \ref{fig:wrtt_ecdf}. In interpreting such plots one should keep in mind that they provide a rough indicator of the average delay to be expected if one were to sample a packet belonging to the top $N$ sources or destinations. As $N$ increases, we will approach the average RTT for all traffic in a given direction.
+A pertinent question at this point is in trying to understand how delay relates to traffic volumes. 
+Given the different nature of stakeholders monopolizing traffic at either end of the spectrum, what can we say about the evolution of delay in either case? 
+To assess this we plot the cumulative distribution of the average RTT weighted by the respective volume of traffic, as shown in \ref{fig:wrtt_ecdf}. 
+In interpreting such plots one should keep in mind that they provide a rough indicator of the average delay to be expected if one were to sample a packet belonging to the top $N$ sources or destinations. 
+As $N$ increases, we will approach the average RTT for all traffic in a given direction.
 
-Inbound traffic by AS highlights and expected rise in delay between 2008 and 2009, as both NTT and Limelight are replaced by more distant sources. However, from 2009 onwards the overall delay is remarkably similar. While the cumulative distribution function of RTT shows improvement in delay at the tail, this results in very little improvement overall as traffic is dominated by a handful of entities.
+Inbound traffic by AS highlights and expected rise in delay between 2008 and 2009, as both NTT and Limelight are replaced by more distant sources. 
+However, from 2009 onwards the overall delay is remarkably similar. 
+While the cumulative distribution function of RTT shows improvement in delay at the tail, this results in very little improvement overall as traffic is dominated by a handful of entities.
 
 Focusing on inbound traffic by network prefix not only confirms this, but actually shows that average delay has increased consistently over time.
 In this case, the cumulative distribution of delay from \ref{fig:rtt_ecdf}b improved between 2009 and 2011, yet the average weighted RTT increased almost twofold for the top 10 network prefixes over the same period.
 
-Two explanations emerge for this behaviour. The first stems from the changing nature of the traffic we are sampling. While functionally NTT represents the same entity over time, the traffic we observe is very different. As local traffic has increasingly been exchanged over peering links our view of traffic has stretched further afield. To illustrate this, one needs only notice that the average delay towards NTT, the top AS for inbound traffic in both 2007 and 2011, increased by approximately 100ms in figure \ref{fig:wrtt_ecdf}a. This does not represent a degradation in quality of service, but rather a change in where traffic is flowing from within the AS.
+Two explanations emerge for this behaviour. 
+The first stems from the changing nature of the traffic we are sampling. 
+While functionally NTT represents the same entity over time, the traffic we observe is very different. 
+As local traffic has increasingly been exchanged over peering links our view of traffic has stretched further afield. 
+To illustrate this, one needs only notice that the average delay towards NTT, the top AS for inbound traffic in both 2007 and 2011, increased by approximately 100ms in figure \ref{fig:wrtt_ecdf}a. 
+This does not represent a degradation in quality of service, but rather a change in where traffic is flowing from within the AS.
 
-A further reason relates to the placement of content. As we had previously shown in \ref{table:dest}, there appears to be a migration of content away from California. Hosting sites such as Lemuria (Hotfile), based in Florida, Mediafire, based in Texas and District of Columbia and Carpathia, based in Virginia, are all contained within the top 20 ASes and have shifted traffic further from locations which had traditionally benefitted from low latency as viewed from Japan.
+A further reason relates to the placement of content. 
+As we had previously shown in \ref{table:dest}, there appears to be a migration of content away from California. 
+Hosting sites such as Lemuria (Hotfile), based in Florida, Mediafire, based in Texas and District of Columbia and Carpathia, based in Virginia, are all contained within the top 20 ASes and have shifted traffic further from locations which had traditionally benefitted from low latency as viewed from Japan.
 
-Analyzing the outbound traffic we seemingly get the opposite effect, with the average weighted RTT for the top 1000 ASes dropping by over 100ms. Once more, there is no single reason which accounts for the entirety of this effect. In 2007 many of the top destination ASes were in developing Asian countries, where infrastructure has improved greatly since. Improvements in routing to countries such as China and Korea have also had a positive net effect. This is visible in figure \ref{fig:rttyearcomp}, where the average RTT aggregated by country is plotted. For clarity, we filter out countries for which RTT estimates are available for less than 50 days in a year. Between 2007 and 2009 most Asian and European countries experience significant improvements in RTT. Those which don't tend to experience lower delays. Between 2009 and 2011 most countries reduce delay below 500ms. 
+Analyzing the outbound traffic we seemingly get the opposite effect, with the average weighted RTT for the top 1000 ASes dropping by over 100ms. 
+Once more, there is no single reason which accounts for the entirety of this effect. 
+In 2007 many of the top destination ASes were in developing Asian countries, where infrastructure has improved greatly since. 
+Improvements in routing to countries such as China and Korea have also had a positive net effect. 
+This is visible in figure \ref{fig:rttyearcomp}, where the average RTT aggregated by country is plotted. 
+For clarity, we filter out countries for which RTT estimates are available for less than 50 days in a year. 
+Between 2007 and 2009 most Asian and European countries experience significant improvements in RTT. 
+Those which don't tend to experience lower delays. Between 2009 and 2011 most countries reduce delay below 500ms. 
 
-Finally, many of the very same companies which have had an effect of increasing RTT for inbound traffic, such as Mediafire or Ustream.tv, are also amongst the top destinations of traffic. It is interesting to note that as of 2011, data travelling from the top 1000 AS traffic sources is expected to experience the same latency as data travelling towards the 1000 most popular AS traffic destinations. In 2007, the value was two times higher for outgoing traffic.
-
+Finally, many of the very same companies which have had an effect of increasing RTT for inbound traffic, such as Mediafire or Ustream.tv, are also amongst the top destinations of traffic. 
+It is interesting to note that as of 2011, data travelling from the top 1000 AS traffic sources is expected to experience the same latency as data travelling towards the 1000 most popular AS traffic destinations. 
+In 2007, the value was two times higher for outgoing traffic.
 
 \begin{figure}
     \centering

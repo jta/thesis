@@ -31,7 +31,7 @@ Hosts within Japan are instead fixed as traffic sinks, thus sharing a similar pe
 All \ac{TCP} flows are reassembled and analysed for each daily trace.
 In addition to the five tuple used to define each connection, two additional restrictions are imposed: a contiguous sequence number space and a three minute timeout. 
 These restrictions are helpful to deal with port reuse and unterminated flows respectively.  
-Although the total number of \ac{TCP} flows increased dramatically in 2011, the number of flows \emph{for which data payload was observed} has remained stable, averaging over 100 million data flows traced per year.  
+Although the total number of \ac{TCP} flows increased dramatically in 2011, the number of flows for which data payload was observed has remained stable, averaging over 100 million data flows traced per year.  
 
 There is much prior work with regards to reconstructing \ac{TCP} flow from passive measurements and using this information to understand the end-to-end properties of traffic \cite{firstRTT,Jaiswal:2007p233,Rewaskar:2007p195,Shakkottai:2004p408}. 
 However, the \acs{MAWI} traces impose two constraints which require careful consideration, and ultimately led to the use of a custom \ac{TCP} tracer. 
@@ -47,7 +47,7 @@ Loss is inferred by accounting for \emph{retransmissions} in the upstream data a
 Anecdotally, this was found to be an adequate indicator of loss --- with the exception of \emph{hanging} \ac{TCP} connections. 
 In such cases where connectivity is lost, a host will proceed to retransmit packets while performing an exponential back-off. 
 Although this results in negligible overall traffic, it can significantly skew the inferred loss ratio for uncommon destinations for which little traffic exists. 
-To account for these cases, a 3-second timeout on retransmissions was imposed, after which the congestion feedback loop to deemed to be broken. 
+To account for these cases, a 3-second timeout on retransmissions was imposed, after which the congestion feedback loop is considered to be broken. 
 
 Each daily trace in the dataset is processed from a packet level capture into a collection of flow level statistics, providing insight into the end-to-end characteristics of traffic. 
 However, since a core objective of this work is to augment this time-based information with data describing the endpoints of each flow, aggregating by location is also required. 
@@ -56,8 +56,8 @@ However, since a core objective of this work is to augment this time-based infor
 
 Location information is added by mapping the original source and destination \ac{IP} addresses to its geographical and topological counterpoints. 
 The routeviews archives \cite{routeviews} are used to reconstruct the mapping between each \ac{IP} and both \ac{AS} and network prefix; bi-hourly dumps of \ac{BGP} \acp{RIB} are available in the \acs{WIDE} archives since mid 2003. 
-A daily \ac{RIB} is reconstructed based on the views provided by contributing \acp{AS}, in particular \ac{IIJ} and \ac{APNIC}.
-Since exact routes are not disclosed (there is no record of local policy), there is no prior knowledge of the route taken by packets; this however does not hinder the ability to consistently map \acp{IP} to \acp{AS}.
+A daily \ac{RIB} is reconstructed based on the views provided by contributing \acp{AS}, in particular \acs{IIJ} and \acs{APNIC}.
+Since there is no record of local policy, exact routes are not disclosed and as such there is no prior knowledge of the route taken by packets; this however does not hinder the ability to consistently map \acp{IP} to \acp{AS}.
 While discrepancies in \ac{AS} destinations exist between different routeviews contributors, this happens almost exclusively on prefixes for which no actual traffic is seen. 
 
 Mapping \ac{IP} to country is done through the use of GeoLite \cite{maxmind}, a commercial geolocation database. 
