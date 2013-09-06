@@ -27,38 +27,35 @@ This resulting shift in behaviour may in turn conflict with the concurrent traff
 This antagonistic cycle leaves traffic engineering as a whole stuck in a rut, unable to adapt too often, out of fear of disrupting transport protocols, and unable to adapt often enough in order to react to changes in traffic. 
 As a result, there is still considerable space for improvement in existing traffic engineering:
 
-\begin{itemize}
-\item{
-    \textbf{The problem of optimizing routes given an expected demand has been solved.}
+\renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{#1}}
+\begin{description}
+\item[The problem of optimizing routes given an expected demand has been solved.]{
     Solutions for offline traffic engineering \cite{Fortz:2000p350,YufeiWang:1999p222,Wang:2001p506} are often touted to be optimal despite relying on approximate inputs, but for the most part the resulting routing optimizations are \emph{good enough}. 
     What remains to be solved is how traffic engineering can deal with deviations from the predicted traffic demand.
     For any form of online traffic engineering, the act of balancing traffic on-the-fly over a multipath routing architecture is perceived as more practical than attempting to design a routing substrate which adapts to traffic demand.
     Given a stable set of routes, how should traffic be balanced?
 }
 
-\item{
-    \textbf{At a small enough timescale, traffic engineering can replace resilient routing entirely.}
+\item[At a small enough timescale, traffic engineering can replace resilient routing entirely.]{
     For any sufficiently reactive \ac{TE} process, a path failure will lead to a shift of traffic onto alternate paths. 
-    Even online approaches such as MATE and TeXCP have hesitated to be computed at a sub-minute granularity however, and in many cases hosts are more capable of shifting traffic robustly given access to underlying path diversity.
+    Even online approaches such as \ac{MATE} and \ac{TeXCP} have hesitated to be computed at a sub-minute granularity however, and in many cases hosts are more capable of shifting traffic robustly given access to underlying path diversity.
     How can traffic engineering be designed to offer better resilience than routing protocols, and in what cases can it delegate such functionality to hosts?
 }
 
-\item{
-    \textbf{The distinction between intradomain and interdomain \ac{TE} is a hinderance.}
+\item[The distinction between intradomain and interdomain \ac{TE} is a hindrance.]{
     The duality emerges due to traditional traffic engineering being tightly coupled with the underlying routing protocol.
     All traffic engineering within a single domain however must target the same objectives or risk instability.
     A further source of instability of \ac{TE} methods is in taking local decisions without taking into account the end-to-end ramifications.
     How should traffic engineering methods be unified, and how can timely end-to-end information on traffic be collected in a scalable fashion within the network?
 }
 
-\item{
-    \textbf{The network has appropriated flow semantics from the transport layer.}
+\item[The network has appropriated flow semantics from the transport layer.]{
     Balancing traffic per-packet has been replaced by a per-flow granularity, further ingraining transport behaviour in the network.
     In part this reflects the changing nature of the \ac{IP} model, which now expects in-order delivery from the network \cite{Thaler:2010p223}.
-    FLARE \cite{Sinha:2004p124} illustrates that maintaining in-order delivery need not span the entirety of a flow, but maintains the notion of the flowlet internal to the network.
+    \ac{FLARE} \cite{Sinha:2004p124} illustrates that maintaining in-order delivery need not span the entirety of a flow, but maintains the notion of the flowlet internal to the network.
     What are the potential benefits of explicitly decoupling the notion of a transport flow from a network flowlet?
 }
-\end{itemize}
+\end{description}
 
 
 %CC
@@ -66,9 +63,8 @@ In stark contrast with traffic engineering, the interest in the use of congestio
 \ac{MPTCP} provides the means for stable traffic balancing from the transport layer.
 This alone however is unlikely to overcome significant architectural shortcomings:
 
-\begin{itemize}
-\item{
-    \textbf{Path diversity is in the network}. 
+\begin{description}
+\item[Path diversity is in the network.]{
     Given networks are already concerned with \ac{TCP}'s ability to share bandwidth in its single path incarnation, it remains unlikely \acp{ISP} will consider making path diversity visible to end-hosts. 
     This opaqueness currently restricts deployment of \ac{MPTCP} to multihomed hosts. 
     Experiments with one-hop source routing \cite{Gummadi:2004p131} indicate that a small set of network paths can provide the majority of the benefit in terms of resilience. 
@@ -76,8 +72,7 @@ This alone however is unlikely to overcome significant architectural shortcoming
     Diversity is in the network, how can it be pushed outwards?
 }
 
-\item{
-    \textbf{Traffic is best balanced from the edge, but may conflict with network objectives.}
+\item[Traffic is best balanced from the edge, but may conflict with network objectives.]{
     Work by Kelly and Voice \cite{Kelly:2005p140} indicates load balancing can be more effectively performed at the transport layer in order to maximize social welfare.
     However this fails to take into account the requirements of network operators, who are saddled with costs which bear little resemblance to the congestion pricing schemes advocated by Kelly.
     While \ac{TE} methods are crude, they address valid concerns and accommodating these mechanisms within the Internet architecture is essential in order to minimize conflict with end-to-end resource pooling. 
@@ -86,16 +81,14 @@ This alone however is unlikely to overcome significant architectural shortcoming
     If the constraints on providing accurate accountability are relaxed, can some form of congestion exposure provide useful feedback on host preferences to the network?
 }
 
-\item{
-    \textbf{Most flows may not benefit from \ac{MPTCP}.}
+\item[Most flows may not benefit from \ac{MPTCP}.]{
     For short flows, the overhead incurred in multiple subflow establishment is excessive.
     Furthermore, for long flows with bursty behaviour, such as rate-limited video streaming \cite{Rao:2011p547}, \ac{MPTCP} may not have sufficient time to pool bandwidth across multiple paths efficiently.
     The transport layer requires probing the network for every connection and with no prior information or limited time to collect information on network state the full benefits of multiple paths for resilience in particular are unlikely to be harnessed.
     In such cases, how can the network complement, rather than necessarily override, transport balancing?
 }
 
-
-\end{itemize}
+\end{description}
 
 %end-to-end is not the point
 Neither congestion control or traffic engineering alone seem fully capable of bridging the divide between networks and end-hosts. 

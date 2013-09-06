@@ -7,15 +7,20 @@ At its most liberal, \ac{PREFLEX} enables resource pooling to be entirely perfor
 In order to make \ac{PREFLEX} deployable, the scope of the architecture has been restricted to stub domains.
 While this necessarily reduces the amount of path diversity which can be explored, there are compelling reasons to abdicate some flexibility in favour of a more practical solution:
 
-\begin{itemize}
-\item{
-    \textbf{Most benefit derives from a limited set of paths}.
+\renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{#1}}
+\begin{description}
+\item[Most benefit derives from a limited set of paths.]{Work on source routing \cite{Gummadi:2004p131,Yang:2006p405} suggests most improvement in resilience can be extracted from a small set of deflections.
+    Stub domains such as \acp{ISP} and enterprise networks are naturally multi-homed, and can provide reasonable path diversity given an adequate selection of providers.
+    Expecting the establishment of cross-domain paths has been a pitfall for previous research in \ac{QoS} in particular and is marred by difficulties in providing incentives for all parties involved.
+}
+
+\item[Most benefit derives from a limited set of paths.]{
     Work on source routing \cite{Gummadi:2004p131,Yang:2006p405} suggests most improvement in resilience can be extracted from a small set of deflections.
     Stub domains such as \acp{ISP} and enterprise networks are naturally multi-homed, and can provide reasonable path diversity given an adequate selection of providers.
     Expecting the establishment of cross-domain paths has been a pitfall for previous research in \ac{QoS} in particular and is marred by difficulties in providing incentives for all parties involved.
 }
-\item{
-    \textbf{Stub domains are most aligned with user interests}. 
+
+\item[Stub domains are most aligned with user interests.]{
     For enterprise, academic and content distribution networks, end-hosts are typically managed by the same entity which operates the network.
     For \acp{ISP}, there is a binding contract between end-users and provider.
     In either case, the stub domain not only benefits from not deteriorating the quality of service provided to hosts locally, but also has an interest in making sure end-to-end traffic is unaffected by outages or degraded performance.
@@ -24,14 +29,13 @@ While this necessarily reduces the amount of path diversity which can be explore
     \ac{PREFLEX} allows resources not only to be shared more efficiently, but also potentially reduces the impact of remote network events on stub domains.
 }
 
-\item{
-    \textbf{The Internet topology is flattening}. 
+\item[The Internet topology is flattening.]{
     In studying over 100 \acp{ISP}, transit providers and content providers for over two years, Labovitz et al.\ \cite{Labovitz:2010p175} established the changing nature of the Internet topology, migrating from a hierarchy of providers to an increasingly interconnected model.
     The rise of \acp{IXP} where customer networks peer directly with content providers has had a profound impact in shaping traffic patterns and interdomain traffic in particular.
     The length of \ac{AS} paths has decreased for most \emph{content}.
     As a consequence, it has become simpler for a stub domain to ensure path disjointness as a larger portion of the end-to-end path is under its control.
 }
-\end{itemize}
+\end{description}
 
 The resulting architecture provides many benefits. 
 Balancing is both transport agnostic and allows flow state to be kept to a minimum, requiring policing at the edges only if congestion accountability is required. 

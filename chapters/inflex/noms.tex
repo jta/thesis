@@ -1,0 +1,75 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage[utf8x]{inputenc}
+
+\usepackage{dcolumn}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{array}
+\usepackage{listings}
+\lstset{language=C}
+
+\usepackage{times}
+
+\begin{document}
+
+\title{Software-defined network support for transport resilience}
+
+%\author{
+%\alignauthor Jo\~{a}o Taveira Ara\'{u}jo\\
+%        \email{j.araujo@ucl.ac.uk}
+%\alignauthor Raul Landa \\
+%        \email{r.landa@ucl.ac.uk}
+%\alignauthor Kensuke Fukuda \\
+%        \email{kensuke@nii.ac.jp}
+%\alignauthor George Pavlou \\
+%        \email{g.pavlou@ucl.ac.uk}
+%\end{tabular}\newline\begin{tabular}{cc}
+%    \affaddr{University College London} & \affaddr{University College London}\\
+%    \affaddr{London, UK} & \affaddr{London, UK}\\
+%}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{\IEEEauthorblockN{Jo\~{a}o Taveira Ara\'{u}jo, Ra\'{u}l Landa, Richard G. Clegg, George Pavlou}
+\IEEEauthorblockA{University College London\\
+Email: \{j.araujo, r.landa, r.clegg, g.pavlou\}@ucl.ac.uk}}
+%\and
+%\IEEEauthorblockN{Kensuke Fukuda}
+%\IEEEauthorblockA{National Institute of Informatics\\
+%kensuke@nii.ac.jp}}
+
+\maketitle
+
+\maketitle
+\begin{abstract}
+Existing methods for traffic resilience at the network and transport layers typically work in isolation, often resorting to inference in fault detection and recovery respectively.
+This both duplicates functionality across layers, eroding efficiency, and leads to protracted recovery cycles, affecting responsiveness.
+Such misalignment is particularly at odds with the unprecedented concentration of traffic in data-centers, in which network and hosts are managed in unison.
+
+This paper advocates instead a cross-layer approach to traffic resilience.
+The proposed architecture, INFLEX, builds on the abstractions provided by software-defined networking (SDN) to maintain multiple virtual forwarding planes which the network assigns to flows.
+In case of path failure, transport protocols pro-actively request to switch plane in a manner which is unilaterally deployable by an edge domain, providing scalable end-to-end forwarding path resilience.
+
+
+\end{abstract}
+
+\input{intro}
+\input{background}
+\input{design}
+\input{architecture}
+\input{analysis}
+\input{conclusion}
+
+\bibliographystyle{IEEEtran}
+{\footnotesize \bibliography{noms}}
+
+\end{document}

@@ -47,13 +47,13 @@ Originally \ac{ECMP} was specified to split traffic on a per-packet basis, which
 This approach has since been obsoleted and replaced by splitting traffic on a per-flow basis \cite{Feldmann:2000p503}.
 
 \textbf{Online intradomain \ac{TE}} proposals built on their offline counterpart and fulfilled a desire for controlling traffic at a finer granularity. 
-MATE \cite{Elwalid:2002p153} proposes splitting traffic dynamically over precomputed \acp{LSP}. 
-By using probes, MATE continuously monitors packet delay and loss over each path between ingress and egress \ac{LSR} in order to adjust the ratio of traffic to be split at the ingress.
-TeXCP \cite{Kandula:2005p90} improves on MATE by emitting probes which retrieve explicit feedback from intermediate TeXCP-aware routers in a manner similar to \ac{XCP}.
-Furthermore, TeXCP distributes load using FLARE \cite{Sinha:2004p124} which balances traffic by \emph{flowlet} rather than flow.
+\ac{MATE} \cite{Elwalid:2002p153} proposes splitting traffic dynamically over precomputed \acp{LSP}. 
+By using probes, \ac{MATE} continuously monitors packet delay and loss over each path between ingress and egress \ac{LSR} in order to adjust the ratio of traffic to be split at the ingress.
+\ac{TeXCP} \cite{Kandula:2005p90} improves on \ac{MATE} by emitting probes which retrieve explicit feedback from intermediate \ac{TeXCP}-aware routers in a manner similar to \ac{XCP}.
+Furthermore, \ac{TeXCP} distributes load using \ac{FLARE} \cite{Sinha:2004p124} which balances traffic by \emph{flowlet} rather than flow.
 Given the bursty nature of \ac{TCP}, traffic splitting may be performed on a smaller scale than a flow so long as there is no risk of causing packet reordering.
 A flowlet is therefore defined as a sequence of packets with an inter-arrival time shorter than the difference in delay between potential paths.
-Balancing by flowlet allows FLARE to achieve not only greater efficiency than flow variants of \ac{ECMP}, but also maintain less state as flowlets expire more rapidly than flows.
+Balancing by flowlet allows \ac{FLARE} to achieve not only greater efficiency than flow variants of \ac{ECMP}, but also maintain less state as flowlets expire more rapidly than flows.
 
 A second approach to online intradomain \ac{TE} is to dynamically optimize routes in accordance to demand.
 In \ac{MPLS} networks this may however cause \ac{LSP} interference \cite{Kodialam:2000p508}, in which excessive paths crossing the same critical link are set up resulting in congestion.

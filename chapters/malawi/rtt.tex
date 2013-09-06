@@ -112,7 +112,7 @@ Similarly, additional multiples and sub multiples were excluded as they showed v
 
 \subsection{Comparing recovery algorithms}
 \label{sect:comparingRecoveryAlgos}
-As described in Section \ref{subsection:malawi:PeriodicEnhancement}, $H(t)$ is calculated in such a way that \ac{RTT} periodicity is amplified. 
+As described in section \ref{section:malawi:rtt}, $H(t)$ is calculated in such a way that \ac{RTT} periodicity is amplified. 
 This means that \acs{FFT}-based techniques could potentially perform better on $H(t)$ than on the packet stream with no pre-processing. 
 However, this is complicated not only because $H(t)$ contains periodicities at multiples of $T$, but also discontinuities that generate harmonics at frequency multiples of the \ac{RTT} fundamental. 
 Hence, although the \acs{FFT} $|\hat{H}(\omega)|$ of $H(t)$ is much cleaner than that of the packet inter arrival time series on its own, its maximum peak rarely coincides exactly with the \ac{RTT} clock (this corroborates reports by Qian et al.\ \cite{Qian:2009p429}). 

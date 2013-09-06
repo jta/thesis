@@ -1,4 +1,17 @@
-\section{Introduction}
+{\COMMENT Missing bridging element from previous chapter}
+
+%Our contribution
+This chapter presents INFLEX, an \ac{SDN}-based architecture for cross-layer network resilience which provides on-demand path fail-over for \ac{IP} traffic. 
+The architecture is both unilaterally deployable, providing benefits even when adopted by individual domains, and inherently end-to-end, potentially covering third party failures.
+
+%INFLEX operates by allowing an \ac{SDN}-enabled routing layer to expose multiple \emph{routing planes} to the transport layer. 
+%Hence, traffic can be shifted by one routing plane to another as a response to end-to-end failure detection.
+%Since INFLEX operates as an extension to the network abstraction provided by \ac{IP}, it can be used by all transport protocols.
+%At the host, the proposed architecture allows transport protocols to switch network paths at a timescale which avoids flow disruption and which can be transparently integrated into existing congestion control mechanisms.
+%Within the network, INFLEX provides both greater insight into end-to-end path quality, assisting fault detection, and more control over flow path assignment, enabling more effective fault recovery. 
+%Modifications to both the \ac{TCP}/\ac{IP} network stack and a popular Openflow controller \cite{pox} are made publicly available.
+
+\section{Motivation}
 
 % generic "failures are bad"
 Despite being broadly designed for robustness, the current Internet architecture remains remarkably vulnerable to failures.
@@ -10,14 +23,13 @@ Modern transport protocols such as the \ac{SCTP} \cite{rfc4960} and \ac{MPTCP} \
 % Transport methods are bad (same paragraph)
 Unfortunately, neither is likely to be widely deployed in the near future, with the former lacking critical middlebox support and the latter still undergoing standardization. 
 This is compounded by the fact that end-host multihoming in itself poses a barrier to deployment.
-Finally, both \ac{MPTCP} and \ac{MPTCP}, being confined to the transport layer, rely only on knowledge of faults within an individual flow. Hence, each flow must detect failures independently, even when many flows are affected by the same fault.
+Finally, both \ac{SCTP} and \ac{MPTCP}, being confined to the transport layer, rely only on knowledge of faults within an individual flow. Hence, each flow must detect failures independently, even when many flows are affected by the same fault.
 
 % network methods
 An alternative approach to resilience is to target the network layer, hence shifting the onus of resilience from the endpoints to the network operators.
 Traditionally, this has been achieved by designing improved routing algorithms.
-The deployment of real time applications with harder constraints on reliability coupled with better failure detection methods embedded in linecards have provided both the motivation and the means for achieving sub-second recovery within \ac{IGP} networks \cite{Francois:2005p514}.
-Even with reduced recovery times however, the transient effects of routing changes can still disrupt the forwarding path. 
-Other frameworks \cite{Bryant:2007p522,Torvi:2008p518,Lor:2010:PRE:1868447.1868449} have been proposed to provide repair paths for use between the detection of a failure and the convergence of the routing process.
+For intradomain routing protocols sub-second recovery is largely achievable \cite{Francois:2005p514}, but nonetheless transient effects of routing changes can still disrupt the forwarding path. 
+Under such cases, proposed frameworks \cite{Bryant:2007p522,Torvi:2008p518,Lor:2010:PRE:1868447.1868449} can provide repair paths for use between the detection of a failure and the convergence of the routing process.
 % Network methods are bad (same paragraph)
 Unfortunately, such methods are rarely sufficient.
 Firstly, their application is circumscribed to individual domains, and as such cannot provide end-to-end coverage in a federated, best-effort Internet. 
@@ -31,43 +43,4 @@ Finally, fault reparation purely at the network layer often disregards (and can 
 However, network resilience problems cannot be solved by this flexibility alone. 
 Instead, what is needed is a cross-layer approach that bridges the gap between the transport and the network layers and provides end-to-end insight into network routing decisions.
 
-%Our contribution
-This paper presents INFLEX, an \ac{SDN}-based architecture for cross-layer network resilience which provides on-demand path fail-over for \ac{IP} traffic. 
-The architecture is both unilaterally deployable, providing benefits even when adopted by individual domains, and inherently end-to-end, potentially covering third party failures.
-INFLEX operates by allowing an \ac{SDN}-enabled routing layer to expose multiple \emph{routing planes} to the transport layer. 
-Hence, traffic can be shifted by one routing plane to another as a response to end-to-end failure detection.
-Since INFLEX operates as an extension to the network abstraction provided by \ac{IP}, it can be used by all transport protocols.
-At the host, the proposed architecture allows transport protocols to switch network paths at a timescale which avoids flow disruption and which can be transparently integrated into existing congestion control mechanisms.
-Within the network, INFLEX provides both greater insight into end-to-end path quality, assisting fault detection, and more control over flow path assignment, enabling more effective fault recovery. 
-In addition to describing our architecture design and justifying our design choices with extensive network measurements, we also implement INFLEX and verify its operation experimentally. 
-We make our modifications to both the \ac{TCP}/\ac{IP} network stack and a popular Openflow controller \cite{pox} publicly available.
 
-The remainder of the paper is structured as follows.
-Section \ref{section:inflex:background} provides a brief background on software-defined networks.
-Section \ref{section:inflex:design} reviews some of the design decisions in the light of longitudinal measurements performed on the MAWI dataset \cite{mawi}.
-An overview of the proposed architecture is the presented in section \ref{section:inflex:arch}, followed by an evaluation of INFLEX in section \ref{section:inflex:eval}.
-Finally, conclusions are drawn in section \ref{section:inflex:conc}.
-
-%Outside their networks however, operators are reduced to negotiating service level agreements with their own providers who are invariably unable to cater for such specialized demands \cite{}.
-%Even if such terms were met, the Internet architecture provides limited visibility beyond one's own domain.
-%This opaqueness, in addition to the fact that failures themselves may be distributed in nature \cite{}, severely limits the ability for a customer network to trace remote problems to a single source \cite{}.
-%With no means to hold providers accountable for failures, there is little to enforce the terms of a truly end-to-end SLA.
-%
-%Unfortunately, such intradomain methods 
-
-
-%Alongside this increased centralization of resources comes a heightened sense of accountability.
-%The commercial nature of the agreements between customers and cloud hosting companies such as AWS \cite{} often involve the establishment of service level agreements.
-%Even where such agreements are not explicit, such as the base option of tiered services such as Dropbox or Heroku, there is an inherent need to minimize the impact of outages -- non paying customers may be less demanding, but they are also less sensitive to the switching cost incurred in changing service provider.
-%
-%Unfortunately, the federated, best-effort nature of the Internet seemingly does not lend itself to such high expectations.
-
-
-
-%Under such cases, a network operator is currently expected to detect, repair and recover from such faults.
-%Detection often requires scale -- the reliability with which a fault can be identified relies on the proportion of traffic affected. 
-%In many cases, faults affecting single flows may go undetected by the network.
-%Once detected, reparation varies according to the nature and origin of the fault.
-%For some cases, such as intradomain routing, this process is often automated and robust.
-%For many others however, such as faulty hardware or misconfigured devices, recovery is difficult and error-prone.
-%In either case, the amount of time expended in detection and repair can often preclude recovery, since most flows will terminate after successive timeouts.

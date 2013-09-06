@@ -1,0 +1,9 @@
+\section{Conclusions}
+\label{section:conc}
+
+This chapter presented INFLEX, a scalable and easily deployable end-to-end resilience framework based on the cross-layer control of an \ac{SDN}-enabled network layer.
+The proposed architecture is shown to perform end-to-end path fail-over on much shorter time scales than existing solutions and is inherently modular, providing failure recovery through cooperation between end-hosts and the \ac{IP} network. 
+In comparison to reliability mechanisms operating purely at the transport layer, such as \ac{MPTCP} or \ac{SCTP}, INFLEX enables transport resilience when communicating with legacy endpoints and does not require host multi-homing. 
+Conversely, when compared to mechanisms operating purely at the network layer, INFLEX provides end-to-end visibility into path failures, allowing both fast detection and the implementation of remedial actions requiring fine-grained network control. 
+The architecture  design presented is based on network measurements and implemented as a set of extensions to the Linux kernel and a popular Openflow controller. 
+This implementation is then evaluated experimentally, demonstrating that high availability over multiple routing planes can be achieved without compromising network control scalability.
