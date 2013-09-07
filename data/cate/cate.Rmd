@@ -1,0 +1,25 @@
+Congestion aware traffic engineering.
+
+```{r}
+source('../aux.R')
+data <- data.table(rbind(cbind(bw="diff", read.table('diffduration.csv')), cbind(bw="equal", read.table('eqduration.csv'))))
+setnames(data, c("Bandwidth", "num", "equal", "tequal", "preflex", "tpreflex"))
+data <- data.table(melt(data[, list(Bandwidth, num, equal, preflex)], id.vars=c("Bandwidth", "num"), variable_name="Balancer"))
+
+
+data[, Balancer := factor(Balancer, levels=c("equal", "preflex"), labels=c("Equalisation", "PREFLEX")) ]
+data[, Bandwidth := factor(Bandwidth, levels=c("equal", "diff"), labels=c("Equal", "Different")) ]
+
+g <- ggplot(data=data, aes(x=num, y=value, color=Bandwidth, linetype=Balancer)) + geom_line() + geom_point()
+g <- g + scale_colour_grey( start=0.4, end=0.8) + theme_bw() + scale_linetype_manual(values=c('dashed', 'solid', 'dotdash', 'solid'))
+g <- g + theme_bw()
+g <- g + theme(legend.key = element_blank(),
+               panel.border = element_blank(),
+               panel.grid.minor = element_blank(), 
+               axis.ticks.margin = unit(2/11, "lines"),
+               axis.line = element_line())
+g <- g + xlab("Number of paths")
+g <- g + ylab("Mean flow completion time (s)")
+g <- g + scale_y_continuous(limits=c(10, 30))
+```
+
