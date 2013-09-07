@@ -1,46 +1,25 @@
-{\COMMENT Missing bridging element from previous chapter}
+This chapter refines the concepts proposed \ac{PREFLEX} given the insights provided by the \ac{MAWI} dataset presented in chapters \ref{chapter:malawi} and \ref{chapter:rate}.
+This evidence-based approach is further enhanced by adapting the resulting architecture, INFLEX, to function within existing frameworks for \ac{SDN}.
+This chapter is organized as follows:
+
+\renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{Section #1}}
+\begin{description}
+\item[\ref{section:inflex:design}] reviews results from the \ac{MAWI} dataset and their implications for the design of a resource pooling architecture.
+\item[\ref{section:inflex:background}] provides an overview of \ac{SDN} and Openflow, a standardized protocol for interfacing between control and data plane.
+\item[\ref{section:inflex:arch}] describes the design of INFLEX, a cross-layer architecture for network resilience.
+\item[\ref{section:inflex:eval}] evaluates path fail-over and network overhead of the proposed solution
+\item[\ref{section:inflex:discussion}] discusses how INFLEX can be extended from providing resilience alone into a unifying traffic management solution, encompassing most of the benefits put forward in chapters \ref{chapter:preflex} and \ref{chapter:cate}.
+\end{description}
+
 
 %Our contribution
-This chapter presents INFLEX, an \ac{SDN}-based architecture for cross-layer network resilience which provides on-demand path fail-over for \ac{IP} traffic. 
-The architecture is both unilaterally deployable, providing benefits even when adopted by individual domains, and inherently end-to-end, potentially covering third party failures.
-
+%This chapter presents INFLEX, an \ac{SDN}-based architecture for cross-layer network resilience which provides on-demand path fail-over for \ac{IP} traffic. 
+%The architecture is both unilaterally deployable, providing benefits even when adopted by individual domains, and inherently end-to-end, potentially covering third party failures.
+%
 %INFLEX operates by allowing an \ac{SDN}-enabled routing layer to expose multiple \emph{routing planes} to the transport layer. 
 %Hence, traffic can be shifted by one routing plane to another as a response to end-to-end failure detection.
 %Since INFLEX operates as an extension to the network abstraction provided by \ac{IP}, it can be used by all transport protocols.
 %At the host, the proposed architecture allows transport protocols to switch network paths at a timescale which avoids flow disruption and which can be transparently integrated into existing congestion control mechanisms.
 %Within the network, INFLEX provides both greater insight into end-to-end path quality, assisting fault detection, and more control over flow path assignment, enabling more effective fault recovery. 
 %Modifications to both the \ac{TCP}/\ac{IP} network stack and a popular Openflow controller \cite{pox} are made publicly available.
-
-\section{Motivation}
-
-% generic "failures are bad"
-Despite being broadly designed for robustness, the current Internet architecture remains remarkably vulnerable to failures.
-Managing faults still poses a significant operational challenge, in part because faults can occur at every layer of the networking stack, and can affect any element along a network path. 
-% Transport methods (same paragraph)
-This inherent diversity has traditionally favoured placing resilience mechanisms at the transport layer. 
-Since endpoints possess both intrinsic knowledge of application needs and fine-grained measurements on end-to-end path characteristics, transport protocols offer a natural fit for providing scalable resilience.
-Modern transport protocols such as the \ac{SCTP} \cite{rfc4960} and \ac{MPTCP} \cite{Wischik:2008p137} address resilience by providing transparent fail-over through multihoming.
-% Transport methods are bad (same paragraph)
-Unfortunately, neither is likely to be widely deployed in the near future, with the former lacking critical middlebox support and the latter still undergoing standardization. 
-This is compounded by the fact that end-host multihoming in itself poses a barrier to deployment.
-Finally, both \ac{SCTP} and \ac{MPTCP}, being confined to the transport layer, rely only on knowledge of faults within an individual flow. Hence, each flow must detect failures independently, even when many flows are affected by the same fault.
-
-% network methods
-An alternative approach to resilience is to target the network layer, hence shifting the onus of resilience from the endpoints to the network operators.
-Traditionally, this has been achieved by designing improved routing algorithms.
-For intradomain routing protocols sub-second recovery is largely achievable \cite{Francois:2005p514}, but nonetheless transient effects of routing changes can still disrupt the forwarding path. 
-Under such cases, proposed frameworks \cite{Bryant:2007p522,Torvi:2008p518,Lor:2010:PRE:1868447.1868449} can provide repair paths for use between the detection of a failure and the convergence of the routing process.
-% Network methods are bad (same paragraph)
-Unfortunately, such methods are rarely sufficient.
-Firstly, their application is circumscribed to individual domains, and as such cannot provide end-to-end coverage in a federated, best-effort Internet. 
-In order to detect failures in remote domains, an operator may employ active monitoring techniques \cite{DBLP:conf/im/FokLMLLCC13}, but such approaches can neither scale to cover most destinations nor operate at a small enough timescale to ensure timely recovery.
-Secondly, there are many faults which do not directly pertain to routing \cite{Turner:2010:CFL:2043164.1851220}, such as middlebox misconfiguration or hardware malfunctions.
-For these kinds of faults, routing-based approaches are completely ineffective.
-Finally, fault reparation purely at the network layer often disregards (and can even potentially disrupt) the transport layer by causing out-of-order delivery of packets.
-
-% SDN to the rescue
-\ac{SDN} \cite{McKeown:2008:OEI:1355734.1355746} is a promising tool for improving network resilience. By decoupling the control and data planes, \ac{SDN} provides vastly improved flexibility for scalable, policy-based network control. 
-However, network resilience problems cannot be solved by this flexibility alone. 
-Instead, what is needed is a cross-layer approach that bridges the gap between the transport and the network layers and provides end-to-end insight into network routing decisions.
-
 

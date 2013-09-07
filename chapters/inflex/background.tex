@@ -1,7 +1,7 @@
 \section{Openflow background}
 \label{section:inflex:background}
 
-%layout
+A valuable development in assisting traffic management has been the emergence of \ac{SDN}, which can facilitate vastly improved flexibility for scalable, policy-based network control.
 Software defined networks decouple the data plane and control plane, allowing both to evolve independently.
 A traditional instantiation of a software defined network for data centres is shown in figure \ref{fig:ofparch}.
 Each physical host runs a number of virtual machines, each connected locally through a edge, software-based switch (such as OpenVSwitch \cite{openvswitch}) running on the underlying physical host operating system, which will be denoted as \emph{dom0}.
@@ -46,6 +46,9 @@ Compared to the underlying, abstracted network elements which compose the data p
 In practice, this freedom is curbed as increasing complexity at the controller both reduces the rate at which packets are processed, as well as increasing latency for packets buffered at the switch.
 
 % 2 tradeoffs: 
+\ac{SDN} provides an abstraction over which different architectural paradigms can be adapted and even coexist.
+It does not however prescribe or advocate a specific design -- network practitioners must still consider system properties when grappling with fundamental trade-offs affecting consistency, isolation, reliability and efficiency.
+Some of the design considerations for scalable traffic management were previously described in section \ref{section:inflex:design}.
 The overall performance of the described architecture is subject to two further critical trade-offs.
 % - granularity vs speed
 Firstly, the granularity at which flow entries are installed determines how often a controller is called to intervene.

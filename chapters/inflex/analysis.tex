@@ -1,5 +1,5 @@
 \section{Analysis}
-\label{section:eval}
+\label{section:inflex:eval}
 
 This section details the evaluation of INFLEX as well as details pertaining to its implementation.
 A reference implementation of the inflector was developed as a component of the POX network controller \cite{pox}.
@@ -42,13 +42,13 @@ From the perspective of the network, such inflection requests should be both rar
 \begin{figure}
     \begin{subfigure}[b]{1.0\linewidth}
         \centering
-        \includegraphics[width=5.0in]{figures/inflex/sender-legacy.pdf}
+        \includegraphics[width=4.5in]{figures/inflex/sender-legacy.pdf}
         %\caption{Legacy server\label{fig:legacy-sender}}
     \end{subfigure}%
 
     \begin{subfigure}[b]{1.0\linewidth}
         \centering
-        \includegraphics[width=5.0in]{figures/inflex/sender-inflex.pdf}
+        \includegraphics[width=4.5in]{figures/inflex/sender-inflex.pdf}
         %\caption{INFLEX server\label{fig:inflex-sender}}
     \end{subfigure}%
     \caption{Congestion window for concurrent downloads towards client from legacy (above) and INFLEX (below) servers.
@@ -86,7 +86,7 @@ Furthermore, in the absence of data packets to be sent, there is no \ac{RTO} on 
 \begin{figure}
     \begin{subfigure}[b]{1.0\linewidth}
         \centering
-        \includegraphics[width=5.0in]{figures/inflex/recv-cwnd.pdf}
+        \includegraphics[width=4.5in]{figures/inflex/recv-cwnd.pdf}
     \end{subfigure}
     \caption{Concurrent uploads from client towards servers.\label{fig:receiver}}
 \end{figure}
@@ -94,11 +94,11 @@ Furthermore, in the absence of data packets to be sent, there is no \ac{RTO} on 
 \begin{figure}
     \begin{subfigure}[b]{1.0\linewidth}
         \centering
-        \includegraphics[width=5.0in]{figures/inflex/recv-legacy.pdf}
+        \includegraphics[width=4.5in]{figures/inflex/recv-legacy.pdf}
     \end{subfigure}
     \begin{subfigure}[b]{1.0\linewidth}
         \centering
-        \includegraphics[width=5.0in]{figures/inflex/recv-inflex.pdf}
+        \includegraphics[width=4.5in]{figures/inflex/recv-inflex.pdf}
     \end{subfigure}%
     \caption{Data packet inter-arrival time for legacy (above) and INFLEX (below) receivers.\label{fig:inter-arrival-time}}
 \end{figure}
