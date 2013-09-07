@@ -2,6 +2,51 @@ Congestion aware traffic engineering.
 
 ```{r}
 source('../aux.R')
+figuredir <- paste0(figuredir, 'cate/')
+```
+
+```{r}
+data <- data.table(read.table('dummy2.csv'))
+setnames(data, c("t", "d1", "d2"))
+data <- melt(data, id.vars=c("t"), variable_name="Server")
+g <- ggplot(data, aes(x=t, y=value)) + geom_step(aes(group=Server, colour=Server)) + coord_cartesian(xlim=c(0,4), ylim=c(0,1))
+g <- g + ylab("Number of requests") + xlab("Time")
+g <- g + scale_colour_discrete(breaks=levels(data$Server), labels=c(expression(D[1]), expression(D[2])))
+g <- g + scale_y_continuous(breaks=c(0, 0.5, 1.0), labels=c(0, expression(frac(G,2)), "G"))
+g <- g + scale_x_continuous(breaks=c(0, 1, 2, 3, 4), labels=c(0, expression(frac(T,4)), expression(frac(T,2)), expression(frac(3*T,4)), "T"))
+g <- g + theme_bw()
+g <- g + theme(legend.key = element_blank(),
+               panel.border = element_blank(),
+               panel.grid.minor = element_blank(), 
+               axis.ticks.margin = unit(2/11, "lines"),
+               axis.line = element_line())
+write.to.pdf('dummy2.pdf', g, 5, 3)
+```
+
+```{r}
+g
+data <- data.table(read.table('dummy4.csv'))
+setnames(data, c("t", "d1", "d2", "d3", "d4"))
+data <- melt(data, id.vars=c("t"), variable_name="Server")
+g <- ggplot(data, aes(x=t, y=value)) + geom_step(aes(group=Server, colour=Server)) + coord_cartesian(xlim=c(0,6), ylim=c(0,1))
+g <- g + ylab("Number of requests") + xlab("Time")
+g <- g + scale_colour_discrete(breaks=levels(data$Server), labels=c(expression(D[1]), expression(D[2]), expression(D[3]), expression(D[4])))
+g <- g + scale_y_continuous(breaks=c(0, 0.5, 1.0), labels=c(0, expression(frac(G,2)), "G"))
+g <- g + scale_x_continuous(breaks=seq(0, 6), labels=c(0, expression(frac(T,6)), expression(frac(T,3)), expression(frac(T,2)), expression(frac(2*T,3)), expression(frac(5*T,6)), "T"))
+g <- g + theme_bw()
+g <- g + theme(legend.key = element_blank(),
+               panel.border = element_blank(),
+               panel.grid.minor = element_blank(), 
+               axis.ticks.margin = unit(2/11, "lines"),
+               axis.line = element_line())
+
+write.to.pdf('dummy4.pdf', g, 5, 3)
+
+```
+
+
+Flow completion time
+```{r}
 data <- data.table(rbind(cbind(bw="diff", read.table('diffduration.csv')), cbind(bw="equal", read.table('eqduration.csv'))))
 setnames(data, c("Bandwidth", "num", "equal", "tequal", "preflex", "tpreflex"))
 data <- data.table(melt(data[, list(Bandwidth, num, equal, preflex)], id.vars=c("Bandwidth", "num"), variable_name="Balancer"))
@@ -21,5 +66,7 @@ g <- g + theme(legend.key = element_blank(),
 g <- g + xlab("Number of paths")
 g <- g + ylab("Mean flow completion time (s)")
 g <- g + scale_y_continuous(limits=c(10, 30))
+
+write.to.pdf('duration.pdf', g, 6, 3)
 ```
 
