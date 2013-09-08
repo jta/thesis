@@ -34,11 +34,12 @@ The remainder of the description of INFLEX is split across its main components: 
     \includegraphics[width=0.5\linewidth]{figures/inflex/header}
     %\caption{\label{fig:inflexheader}}
     \end{subfigure}
-    \caption{INFLEX architecture (above) and header (below). The edge switch forwards traffic across virtual planes set up by a centralized routing service.
+    \caption[INFLEX architecture and header.]{INFLEX architecture (above) and header (below). The edge switch forwards traffic across virtual planes set up by a centralized routing service.
     \label{fig:inflexarch}}
 \end{figure}
 
 \subsection{INFLEX end-hosts}
+\label{section:inflex:host}
 
 INFLEX hosts set the \ac{INF} label of outbound packets according to the value assigned by the inflector, reproducing the path re-feedback design pattern introduced in chapter \ref{chapter:preflex}.
 INFLEX however cannot rely on marking by the remote endpoint to trigger network action, as this has been shown to be essentially undeployable.

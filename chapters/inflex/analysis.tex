@@ -51,7 +51,7 @@ From the perspective of the network, such inflection requests should be both rar
         \includegraphics[width=4.5in]{figures/inflex/sender-inflex.pdf}
         %\caption{INFLEX server\label{fig:inflex-sender}}
     \end{subfigure}%
-    \caption{Congestion window for concurrent downloads towards client from legacy (above) and INFLEX (below) servers.
+    \caption[Congestion window for concurrent downloads towards client.]{Congestion window for concurrent downloads towards client from legacy (above) and INFLEX (below) servers.
 \label{fig:sender}}
 \end{figure}
 
@@ -88,7 +88,7 @@ Furthermore, in the absence of data packets to be sent, there is no \ac{RTO} on 
         \centering
         \includegraphics[width=4.5in]{figures/inflex/recv-cwnd.pdf}
     \end{subfigure}
-    \caption{Concurrent uploads from client towards servers.\label{fig:receiver}}
+    \caption[Congestion window for concurrent uploads from client.]{Congestion window for concurrent uploads from client towards servers.\label{fig:receiver}}
 \end{figure}
 
 \begin{figure}
@@ -100,7 +100,7 @@ Furthermore, in the absence of data packets to be sent, there is no \ac{RTO} on 
         \centering
         \includegraphics[width=4.5in]{figures/inflex/recv-inflex.pdf}
     \end{subfigure}%
-    \caption{Data packet inter-arrival time for legacy (above) and INFLEX (below) receivers.\label{fig:inter-arrival-time}}
+    \caption[Data packet inter-arrival time.]{Data packet inter-arrival time for legacy (above) and INFLEX (below) receivers.\label{fig:inter-arrival-time}}
 \end{figure}
 
 A receiver must instead rely on inferring path failure from the packet inter-arrival time when generating duplicate acknowledgements.

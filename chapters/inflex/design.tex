@@ -4,7 +4,7 @@
 In chapter \ref{chapter:preflex}, one of the primary justifications for network assisted resource pooling was that existing solutions, such as \ac{MPTCP}, were not suitable for most flows. 
 This assumption was founded on the fact that most flows were too short to make effective use of available bandwidth without prior knowledge of path quality.
 The analysis in chapter \ref{chapter:rate} paints an even starker picture than was originally assumed: significant portions of traffic are limited and as such not inclined to make efficient use of capacity even if it were available.
-With over half of all \ac{TCP} traffic constrained by factors other than loss, the allure of \ac{MPTCP} as a means of making use of all end-to-end capacity between two endpoints seems circumscribed to a small set of high-throughput transfers.
+With over half of all \ac{TCP} traffic constrained by factors other than loss, the allure of \ac{MPTCP} as a means of making use of all available end-to-end capacity between endpoints seems circumscribed to a small set of high-throughput transfers.
 
 This suggests that the flexibility and robustness provided by resource pooling may be a more compelling feature than efficiency alone.
 Despite being broadly designed for robustness, the current Internet architecture remains remarkably vulnerable to failures.
@@ -12,7 +12,7 @@ Managing faults still poses a significant operational challenge, in part because
 \ac{PREFLEX} was designed with efficiency in mind, addressing resilience in passing.
 In particular, \ac{PREFLEX} expects sufficient host feedback in order to adjust path weights.
 This proves adequate for when many flows experience the same outage, but may fail to detect faults which affect isolated flows.
-This chapter instead formulates a resource pooling architecture by first dealing with the single case -- addressing when a transport protocol detects failure -- and then extrapolating to the domain level, providing tools for efficient traffic management.
+This chapter instead formulates a resource pooling architecture by first dealing with the single case -- addressing when a transport protocol detects failure -- and then extrapolating to the domain level, providing efficient traffic management.
 
 \subsection{Latency}
 
@@ -27,7 +27,7 @@ The original design of \ac{PREFLEX} imposes a potentially significant burden on 
 While such network processing is small, and will necessarily improve over time, in hindsight tying together path selection and flowlet start does not feel entirely justified.
 Chapter \ref{chapter:rate} demonstrated that over 40\% of all traffic is regularly application paced, and so the prevalence of opportunities for balancing at the flowlet level is unquestionable.
 However, imposing network intervention on each flowlet start is excessive for short, delay-sensitive traffic, particularly since the benefit such small-grained balancing provides the network is negligible.
-Requiring every \ac{PREFLEX} router to inspect packets on the basis of packet markings made by external entities was also a potential source of \acf{DOS} as discussed in chapter \ref{chapter:preflex}.
+Requiring every \ac{PREFLEX} router to inspect packets on the basis of packet markings made by external entities was also a potential source of \acf{DOS}.
 While such attacks are easily dismantled by rate limiting the number of \ac{FNE} packets received across network boundaries, at the very least this represents additional overhead for the operator, who must adequately configure and manage such a service.
 As such, in considering an architecture for resilience, it would be beneficial to both instantiate network processing only when required and be robust to \ac{DOS} attacks by design.
 
@@ -54,7 +54,7 @@ Despite offering a clear benefit to both endpoints, being simple to implement an
 Expecting substantial deployment of a more complex and costly extension such as \ac{MPTCP} over the near future is likely optimistic.
 Critically, transport extensions require receiver adoption and are therefore subject to the willingness and ability of users to upgrade their OS.
 
-This shortcoming \ac{PREFLEX} in equal measure.
+This shortcoming affects \ac{PREFLEX} in equal measure.
 The original assumptions for deployment in chapter \ref{chapter:preflex} were consistent with an Internet where traffic was mostly exchanged between peers.
 Currently however, the asymmetry between the software which runs on either endpoint has never been greater, in large part due to the proliferation of mobile devices.
 The barrier to deployment has been raised further: receiver side deployment of even modest \ac{TCP} extensions can be protracted, even when incentives are aligned.
@@ -79,7 +79,7 @@ Rather than reflect the entirety of its potential path diversity for all traffic
         \includegraphics[width=3.0in]{figures/inflex/ecdf_network_dst_data_bytes_to_10000.eps}
         \caption{\label{prefix_out}}
     \end{subfigure}%
-    \caption{\acs{CDF} of traffic by announced network prefix for (\subref{prefix_in}) inbound and (\subref{prefix_out}) outbound traffic.\label{fig:prefix}}
+    \caption[\acs{CDF} of traffic by announced network prefix.]{\acs{CDF} of traffic by announced network prefix for (\subref{prefix_in}) inbound and (\subref{prefix_out}) outbound traffic.\label{fig:prefix}}
     \hfill
 \end{figure}
 

@@ -42,7 +42,7 @@ In addition to redirections, valid instructions include modifying packet fields,
 If at any point no matching entry is found, the packet is buffered at the switch, and the truncated packet header is sent to the controller.
 % controller
 Based on the header contents, a controller may decide to install a new flow entry on the switch, or allow the packet to be dropped altogether.
-Compared to the underlying, abstracted network elements which compose the data path, the controller is often expected to be entirely software based, and as such is not constrained in how it should process packets.
+Compared to the underlying abstracted network elements which compose the data path, the controller is often expected to be entirely software based, and as such is not constrained in how it should process packets.
 In practice, this freedom is curbed as increasing complexity at the controller both reduces the rate at which packets are processed, as well as increasing latency for packets buffered at the switch.
 
 % 2 tradeoffs: 

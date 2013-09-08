@@ -44,6 +44,37 @@ write.to.pdf('dummy4.pdf', g, 5, 3)
 
 ```
 
+```{r}
+data <- read.table('gamma.csv')
+g <- ggplot(data=data, aes(x=V1, y=V2)) + geom_area(aes(y=1), fill="white")
+g <- g + geom_area(fill="gray", colour="black") + coord_cartesian(ylim=c(0, 1), xlim=c(0, 1200))
+g <- g + annotate("text", label ="Conservative", x=100, y = 0.2, size = 5, hjust=0)
+g <- g + annotate("text", label ="Loss-driven", x=600, y = 0.8, size = 5, hjust=0)
+g <- g + labs(x="Time (s)", y = expression(gamma))
+g <- g + theme_bw()
+g <- g + theme(legend.key = element_blank(),
+               panel.border = element_blank(),
+               panel.grid.minor = element_blank(), 
+               axis.ticks.margin = unit(2/11, "lines"),
+               axis.line = element_line())
+
+write.to.pdf("gamma.pdf", g, 5, 3)
+```
+
+```{r}
+data <- read.table('tau.csv')
+g <- ggplot(data=data, aes(x=V1, y=V2)) + geom_line()
+g <- g + coord_cartesian(xlim=c(0, 1200), ylim=c(0, 16))
+g <- g + theme_bw()
+g <- g + theme(legend.key = element_blank(),
+               panel.border = element_blank(),
+               panel.grid.minor = element_blank(), 
+               axis.ticks.margin = unit(2/11, "lines"),
+               axis.line = element_line())
+g <- g + labs(x="Time (s)", y="Interval (s)")
+
+write.to.pdf("tau.pdf", g, 5, 3)
+```
 
 Flow completion time
 ```{r}

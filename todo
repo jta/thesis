@@ -3,7 +3,7 @@
     - explain window concept
 - frto, proper cwnd
 - tcp options
-- redo preflex results in ggplot2 or table?
+- redo stacked preflex results
 - fix dedication
 - acknowledgements
 
@@ -12,3 +12,4 @@
 - diffserv, intserv, qos??
 
 - figure 5.3b) time markers.
+- adjust figure 7.5
