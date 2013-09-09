@@ -192,8 +192,9 @@ Define $W$ the \ac{CV} weighted by transmitted packets over the prefix as $W= \s
 The ``accuracy" of the measurement of $p_i$ is determined by the accuracy of $l_i$ and hence, for the prefix as a whole by the \ac{CV} $W$.
 The aim now is to pick the time period for the next measurement $\tau'$ such that $W \leq \delta$ for some $\delta$.  
 Assuming that the loss rates and traffic rates will be the same in the next time period will give a good indication of how to set $\tau'$.  
-Therefore for the next time period $$\delta \geq W = \frac{1}{\sqrt{\tau'}}\sum_i \frac{t_i}{t} \sqrt{\frac{(1- \hat{p_i})} {r_i }}$$.
-This gives an estimated minimum time period to set for the next time period.  In order to get weighted \ac{CV} of packet loss (and hence loss rate) equal to or below $\delta$ the time period $\tau'$ is bounded by
+Therefore for the next time period $$\delta \geq W = \frac{1}{\sqrt{\tau'}}\sum_i \frac{t_i}{t} \sqrt{\frac{(1- \hat{p_i})} {r_i }}.$$
+This gives an estimated minimum time period to set for the next time period. 
+In order to get weighted \ac{CV} of packet loss (and hence loss rate) equal to or below $\delta$ the time period $\tau'$ is bounded by
 $$
 \tau' \geq \tau \left( \frac{1}{\delta t}\sum_i
 \sqrt{t_i- l_i} \right)^2.
