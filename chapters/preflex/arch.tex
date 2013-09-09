@@ -43,7 +43,9 @@ If run as a complement of re-\ac{ECN}, three of the four code points in table~\r
 
 For networks, the most significant hurdle in adopting multiple paths for a single destination is not the path selection process, but rather the difficulty in assigning packets to paths. Since balancing traffic at a packet granularity has severe repercussions for the transport layer, network operators have typically resorted to splitting traffic by destination prefix. Increasingly, networks have also been able to afford the cost of keeping flow state in an attempt to balance traffic at a finer granularity. 
 
-Neither of these approaches are strictly necessary in a mutualistic architecture. Since hosts are made aware of the path packets take, flow state can be pushed outwards, placing the responsibility for assigning packets to paths at the endpoints. In such a case, a network only needs to perform path selection according to local policy and pass the information onto the end-host.
+Neither of these approaches are strictly necessary in a mutualistic architecture. 
+Since hosts are made aware of the path packets take, flow state can be pushed outwards, placing the responsibility for assigning packets to paths at the endpoints. 
+In such a case, a network only needs to perform path selection according to local policy and pass the information onto the end-host.
 
 For this purpose, \ac{FNE} packets, as defined in \ac{LEX}, are used to act as network triggers for path selection. 
 An \ac{ISP} or stub domain, upon detecting an incoming \ac{FNE} packet, selects a preferred outgoing path based on the reverse lookup of the source address, and marks the packet with a path identifier. 
@@ -74,9 +76,14 @@ In \ac{PREF} the network selects a preferred outgoing path for each incoming \ac
 Upon receiving the first packet of a flowlet, the \ac{PREFLEX} aware router performs a reverse lookup on the source address (step 1) and selects a path according to the perceived performance (2). 
 The router then associates the chosen path identifier to the packet and forwards the packet toward the host (3).
 The treatment of outbound traffic by \ac{PREFLEX} is illustrated in figure \ref{fig:preflexout}. 
-The host, having received indication of the preferred path, tags all traffic deemed sensitive to reordering with the given path identifier. 
+The host, having received indication of the preferred path, tags all subsequent traffic with the given path identifier. 
 As the \ac{PREFLEX} aware router receives this marked traffic it updates statistics associated to path, aggregating loss for each destination prefix (4). 
 It then discards the path identifier (5) and forwards traffic along the appropriate path (6). 
 
-A subtle implication of triggering path selection based on incoming packets, rather than resorting to out-of-band signalling for example, is that path selection becomes receiver driven. The responsibility for defining a strategy on when and how often to attempt a path request lays firmly with the stakeholder who extracts the most benefit. The flip side is that because \ac{FNE} packets require additional network intervention, whether for selecting a new path or setting up state, networks may rate limit the amount of \ac{FNE} packets they receive in order to protect themselves from overload. This is the current line of thinking with re-\ac{ECN}, where \ac{FNE} packets are used to set state in congestion policers.
+A subtle implication of triggering path selection based on incoming packets, rather than resorting to out-of-band signalling for example, is that path selection becomes receiver driven. 
+The responsibility for defining a strategy on when and how often to attempt a path request lays firmly with the stakeholder who extracts the most benefit. 
+For example, a receiver valuing flow completion time may decide to minimize the amount of \ac{FNE} packets it sends in order to reduce network processing.
+Conversely, a receiver valuing resilience or efficiency may emit additional \ac{FNE} packets in the hopes that the sender may acquire more network paths.
+The flip side is that because \ac{FNE} packets require additional network intervention, whether for selecting a new path or setting up state, networks may rate limit the amount of \ac{FNE} packets they receive in order to protect themselves from overload. 
+This is the current line of thinking with re-\ac{ECN}, where \ac{FNE} packets are used to set state in congestion policers.
 

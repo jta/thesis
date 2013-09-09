@@ -61,7 +61,7 @@ This means that, although there is a correlation between flow volume in bytes an
 The problem statement singled out the network and transport layers as the point in the Internet architecture where the tussle surrounding traffic management is greatest.
 At the hosts, \ac{TCP} is designed to saturate available bandwidth, making efficient use of the network.
 Within the network, operators attempt to manage traffic in order to minimize costs and ensure some degree of \ac{QoS}.
-Re-feedback was originally proposed by Briscoe et al.\ \cite{Briscoe:2005p346} and applied to the re-\ac{ECN} protocol \cite{}, which was put forward as a potential solution for resolving the contention surrounding resource sharing -- how capacity is shared end-to-end.
+Re-feedback was originally proposed by Briscoe et al.\ \cite{Briscoe:2005p346} and applied to the re-\ac{ECN} protocol \cite{Briscoe:2008p494}, which was put forward as a potential solution for resolving the contention surrounding resource sharing -- how capacity is shared end-to-end.
 It was therefore naturally identified as a starting point for addressing the contention surrounding resource pooling -- how traffic is allocated amongst paths.
 
 Chapter \ref{chapter:preflex} began by stripping down re-\ac{ECN} into a coarser, more practical method for \acf{LEX}.
@@ -143,13 +143,22 @@ INFLEX was implemented and verified experimentally through modifications to both
 %\COMMENT{Generality of TCP: initial assertion was that TCP was too general.. must infer everything from the network for each flow. Final conclusion is that ultimately this conservativeness is justified and useful, since lack of assumptions makes it adaptable in ways we still can't foresee.
 %Measurement also likely an inflection point in time, where need for new transport requirements collapse on TCP / UDP. The pluralism which first manifested itself as multiple congestion control algorithms moves onto multiple transport paradigms.}
 %
-%
+ 
 \section{Future work}
 
-Industry.
+\LOREM
 
+\textit{Integration}
+\LOREM
 
-%\section{Closing remarks}
+\textit{\ac{QoS}}
+\LOREM
+
+\textit{Evolving \ac{TCP}}
+\LOREM
+\LOREM
+
+\section{Closing remarks}
 Arguably the single most valuable legacy of this work was in proposing \acl{PREF} to push network state outwards to the end-host, exposing path diversity in the process.
 Compared to both the \ac{ToS} or \ac{DS} fields, it is in many ways a stronger ideological heir to the original design philosophy of the \acs{DARPA} internet protocols.
 In deliberating on the success of the latter in \cite{Clark:1988p478}, Clark concludes by identifying shortcomings of the datagram model given requirements which had not originally been contemplated:
@@ -164,8 +173,10 @@ Imposing the datagram model on the internet layer has deprived that layer of an 
 \end{quote}
 
 In the intervening quarter of a century, progress in resource management and accountability has remained fleeting.
-Driven predominantly by operators, most advances have involved coaxing existing practices from the telephone network, few of which are adequately assessed in terms of their impact on the datagram model.
+Driven predominantly by operators, most advances have involved coaxing existing practices from the telephone network, few of which are adequately assessed in terms of their impact on the long term evolution of the datagram model.
 Instead, practices such as the maintenance of flow state within the network or the prescription of classes of service are often justified on technical feasibility alone.
+%The advent of software-defined networking will likely only exacerbate this trend, enabling ideas previously found wanting to emerge.
+%While software-defined networking can enable innovation, the opportunity is currently mostly taken by industry to rebrand ideas previously found wanting.
 \LOREM
 \LOREM
 

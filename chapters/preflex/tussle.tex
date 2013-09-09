@@ -14,7 +14,6 @@ While unilateral control of a network resource by hosts was already polemic in a
 %cut rate, reduce volume, shape traffic etc .
 Network operators have now become accustomed to inspect, shape and throttle traffic in an attempt to override resource sharing as implicitly performed by \ac{TCP}. 
 A common cause for such behaviour could derive from the perceived free riding made possible by \ac{TCP}, whereby a minority of users can gain an disproportionate amount of bandwidth, with detrimental effects for the majority of users. 
-
 In a broader sense, networks attempt to reflect their own objectives and concerns. 
 Because this was not contemplated when designing the existing resource sharing model, subsequent violations of the end-to-end principle say more about the limitations of the current architecture than the ill intent of the perpetrators. 
 
@@ -71,14 +70,14 @@ This alone however is unlikely to overcome significant architectural shortcoming
     This opaqueness currently restricts deployment of \ac{MPTCP} to multihomed hosts. 
     Experiments with one-hop source routing \cite{Gummadi:2004p131} indicate that a small set of network paths can provide the majority of the benefit in terms of resilience. 
     While multihoming may become popular amongst hosts, it is already a requirement amongst providers. 
-    Diversity is in the network, how can it be pushed outwards?
+    Diversity is in the network, how can it be pushed outwards and made available to end-hosts?
 }
 
 \item[Traffic is best balanced from the edge, but may conflict with network objectives.]{
     Work by Kelly and Voice \cite{Kelly:2005p140} indicates load balancing can be more effectively performed at the transport layer in order to maximize social welfare.
     However this fails to take into account the requirements of network operators, who are saddled with costs which bear little resemblance to the congestion pricing schemes advocated by Kelly.
     While \ac{TE} methods are crude, they address valid concerns and accommodating these mechanisms within the Internet architecture is essential in order to minimize conflict with end-to-end resource pooling. 
-    Re-\ac{ECN} \cite{Briscoe:2008p494} demonstrated the value of congestion as a metric within the network, but its operation is too tightly coupled to an ailing protocol. 
+    Re-\ac{ECN} \cite{Briscoe:2008p494} demonstrated the value of congestion as a metric within the network, but its operation is too tightly coupled to \ac{ECN} which is itself not widely deployed.
     Additionally, retrofitting accountability into the Internet seems marred in technical pitfalls.
     If the constraints on providing accurate accountability are relaxed, can some form of congestion exposure provide useful feedback on host preferences to the network?
 }
@@ -96,8 +95,8 @@ This alone however is unlikely to overcome significant architectural shortcoming
 %end-to-end is not the point
 Neither congestion control or traffic engineering alone seem fully capable of bridging the divide between networks and end-hosts. 
 The discussion around the relative merits of both is often manichaean and erroneously simplified as a conflict between advocates and opposers of the end-to-end principle. 
-This entirely misses the point. 
-The concern should not revolve around whether an approach is right or wrong, but whether it is applicable within a given context or not. 
+This entirely misses the point.
+\textit{The concern should not revolve around whether an approach is right or wrong, but whether it is applicable within a given context or not.}
 The recognition of the commercial network as a fundamental stakeholder is intrinsic to the evolvability of the current architecture. 
 In the absence of such recognition, the gulf between the perception of how the Internet should behave and how it functions in practice will only widen. 
 Traffic engineering and congestion control represent an explicit duality -- underlying both should lay a unifying architecture allowing either to evolve independently while not foregoing cooperation.
@@ -117,10 +116,6 @@ Building upon this approach, the next section presents PREFLEX, a joint, mutuali
 %\cite{Arkko:2009p122}
 %dagstuhl
 
-
-%Resource sharing has evolved haphazardly to being performed by end-hosts and network alike. 
-%This apparent duplication of effort and source of potential conflict suggests a rare lack of foresight within the Internet architecture. 
-%More confounding however is that unlike other architectural mishaps, such as the conflation of locater and identifier within addressing, the absence of progress regarding a solution is rooted in a lack of consensus in identifying the problem.
 
 
 %\begin{itemize}

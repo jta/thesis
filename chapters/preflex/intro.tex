@@ -1,16 +1,16 @@
 While the Internet has become evermore interconnected, exploring path diversity has been relegated to an afterthought in an architecture modelled around assumptions that no longer stand. 
 Single-path forwarding as a paradigm arose not as a guiding principle, but as a natural aversion towards increasing both the complexity and cost of a resource starved network.
 %engineering for scarcity worked, but cracking
-Engineering for scarcity has propelled the Internet to an unprecedented scale, but problems arise when what was otherwise scarce becomes plentiful. 
+Engineering for scarcity has propelled the Internet to an unprecedented scale, but nagging issues arise when what was otherwise scarce becomes plentiful. 
 Protocols designed to be bit conservative at the expense of latency have become technological anachronisms as bandwidth costs continue to plummet. 
 Similarly, the notion of a router as a device merely capable of forwarding packets has long been obsolete as Moore's law continues to pave the way for greater functionality within the network. 
-\ac{NAT}, \ac{DPI} or \ac{PEP} are all examples that when it comes to drawing a boundary between network and transport, the line begins to blur \cite{Ford:2008p34}.
+\ac{NAT}, \ac{DPI} or \ac{PEP} middleboxes are all examples that when it comes to drawing a boundary between network and transport, the line begins to blur \cite{Ford:2008p34}.
 
 %% paralelism increasing
 Furthermore, parallelism seems to be a dominant trend at every level of the Internet architecture as a cost-effective means of increasing both performance and robustness. 
 At the inter-domain level, the \ac{AS} graph is becoming flatter and more highly interconnected \cite{Haddadi:2010p129}. 
 Within domains, the sheer complexity of managing paths has led to the streamlined design and deployment of \ac{MPLS} \cite{Rosen:2001p147}, implementing a fully fledged layer in its own right. 
-At the edges the rise in multi-homing continues to increase the strain on an already overloaded routing architecture. 
+At the edges, the rise in multi-homing continues to increase the strain on an already overloaded routing architecture. 
 Even within network components, parallelism is such that packet re-ordering can no longer be considered pathological \cite{Bennett:1999p120}.
 
 Given these trends, one would expect the ability to pool traffic across such emergent path diversity to have become a network primitive. 
@@ -18,4 +18,4 @@ In reality, each stakeholder in the Internet architecture seems to balance traff
 At best, this interaction between stakeholders can be seen as a form of commensalism, where one entity can extract benefits while others remain unaffected. 
 At worst, the competitive nature of the tussle \cite{Clark:2005p67} that ensues can spiral into a situation where few profit.
 
-This chapter investigates the nature of this antagonism between network and endpoints and reflects on how the Internet can accommodate the needs of both through the use of \ac{PREFLEX}, a proposed architecture for balancing congestion which foments mutualism between end-hosts and edge network providers.
+This chapter investigates the nature of this antagonism between network and endpoints and reflects on how the Internet can accommodate the needs of both through the use of \ac{PREFLEX}, a proposed architecture for balancing congestion which promotes mutual cooperation between end-hosts and edge network providers.
