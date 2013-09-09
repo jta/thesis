@@ -6,11 +6,12 @@ While functionally separate, in practice both components work in tandem. The use
 
 \subsection{Loss Exposure}
 
-\ac{LEX} is proposed as a simple protocol for revealing loss, which not only borrows heavily from re-\ac{ECN} \cite{Briscoe:2008p494}, a protocol for congestion exposure, but which can coexist and serve as a stepping stone for the deployment of the latter. Revealing information currently confined to the transport layer down to the network both reduces the need for the network to inspect higher level protocol headers in order to redistribute bandwidth differently and corrects the information asymmetry that currently afflicts networks, who know less about the quality of service they provide than their customers.
+\ac{LEX} is proposed as a simple protocol for revealing loss, which not only borrows heavily from re-\ac{ECN} \cite{Briscoe:2008p494}, a protocol for congestion exposure, but which can coexist and serve as a stepping stone for the deployment of the latter. 
+Revealing information currently confined to the transport layer down to the network both reduces the need for the network to inspect higher level protocol headers in order to redistribute bandwidth differently and corrects the information asymmetry that currently afflicts networks, who know less about the quality of service they provide than their customers.
 
 The first change proposed for \ac{LEX} is to have end-hosts mark, at the network layer, packets belonging to flows where feedback has not been established. 
 This typically corresponds to the first packet exchange in a flow, such as SYN packets in \ac{TCP}, but may also include the first packet after a significant idle period, a keep-alive packet or a renewed attempt at a retransmission after successive timeouts in the case of network failure. 
-Within \ac{LEX}, as with re-\ac{ECN}, such packets are labelled \ac{FNE}.
+Within \ac{LEX}, as with re-\ac{ECN}, such packets are labelled \ac{FNE}, with the \ac{IP} header being marked accordingly.
 
 %re-ecn uses only for policing
 The signalling of such packets has many practical implications. 

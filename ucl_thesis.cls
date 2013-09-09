@@ -236,8 +236,8 @@
     A dissertation submitted in partial fulfilment \\
     of the requirements for the degree of \\
     \textbf{\@degree@string} \\
-    of the \\
-    \textbf{University of London}.
+    of \\
+    \textbf{University College London}.
     \end{center}%
     \vspace{2em}%
     \begin{center}%

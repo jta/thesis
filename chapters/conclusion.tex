@@ -14,8 +14,8 @@ Importantly, it addresses concerns which are relevant to operators and users ali
 
 \renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{#1}}
 \begin{description}
-\item[Efficient] through the use of congestion balancing. A model is derived for traffic assignment across different paths in proportion to the amount of congestion incurred by ongoing flows. In contrast to past efforts, this allows the network to balance traffic according to end-to-end loss. The resulting system is shown to make better use of available end-to-end capacity than existing methods traditionally applied by operators for traffic engineering purposes.
-\item[Flexible] through the use of cross-layer signalling. The use of \emph{path re-feedback} in particular allows varying degrees of control by the network over how traffic is assigned to links while minimizing required state. Likewise, hosts are afforded path diversity but are free to opt-out at no cost. This contrasts positively with existing solutions such as \ac{MPTCP}, where path setup incurs additional bandwidth and latency.
+\item[Efficient] through the application of congestion balancing. A model is derived for traffic assignment across different paths in proportion to the amount of congestion incurred by ongoing flows. In contrast to past efforts, this allows the network to balance traffic according to end-to-end loss. The resulting system is shown to make better use of available end-to-end capacity than existing methods traditionally applied by operators for traffic engineering purposes.
+\item[Flexible] through the use of cross-layer signalling. \emph{Path re-feedback} in particular allows varying degrees of control by the network over how traffic is assigned to links while minimizing required state. Likewise, hosts are afforded path diversity but are free to opt out at no cost. This contrasts positively with existing solutions such as \ac{MPTCP}, where path setup can incur additional bandwidth and latency.
 %TE, opt-out
 \item[Robust] through the delegation of fault detection to hosts. The transport protocol can request path changes on-demand, which explicitly signals end-to-end path faults to the network. This information can in turn be crowd-sourced by the network and assist in fault location and reparation.
 \end{description}
@@ -35,22 +35,21 @@ Given the nature of Internet traffic, how can the current architecture be realig
 
 This thesis began by providing a broader context within which to frame the evolution of resource pooling.
 Chapter \ref{chapter:resourcepooling} traces how successive waves of new stakeholders and novel applications have influenced and shaped the protocols and tools which form the Internet.
-Importantly, this chapter highlights traffic management as an architectural afterthought, largely driven by the nature of the traffic and available capacity at hand.
+Importantly, this chapter highlights traffic management as an architectural afterthought, best understood as being driven by the nature of the traffic and available capacity at hand.
 
 To this end, an extensive longitudinal study of Internet interdomain traffic was undertaken and documented in chapter \ref{chapter:malawi}.
-The resulting analysis of the \ac{MAWI} dataset characterized over five years of TCP traces in relation to where traffic flows. 
+The analysis of the \ac{MAWI} dataset characterized over five years of TCP traces in relation to where traffic flows. 
 The resulting longitudinal snapshot, from a single transit link, portrays an increasing dichotomy in interdomain traffic, corroborating previous findings \cite{Labovitz:2010p175} showing a shift in content distribution.
 Of particular relevance to the present work was the increased consolidation of traffic across a smaller set of stakeholders, with the ten most popular \acp{AS} alone accounting for over 50\% of all traffic in either direction.
 From an operator perspective, this allows ample opportunity for balancing traffic by manipulating a smaller set of traffic prefixes.
 
 Section \ref{section:malawi:rtt} further presented a novel \ac{RTT} recovery mechanism based on cumulative histogram construction and peak detection which assisted in analysing how large-scale shifts in where traffic flows from has impacted end-to-end delay.
 The results highlight that traffic downstream is moving further away from Japan as content is not only placed closer to consumers and bypasses the transit link entirely, but also moves eastwards within the United States.
-Within the observed time frame, the average \ac{RTT} for inbound data rose by approximately a third.
 Conversely, upstream traffic has moved closer as data is predominantly uploaded to the very same co-location centres and content providers from which data is retrieved.
-Consequently, the average \ac{RTT} for outbound data dropped by approximately 40\%.
-As of 2011, the average \ac{RTT} for a data packet in either direction had converged to 200$ms$.
+Within the observed time frame, the average \ac{RTT} for inbound and outbound data has converged to approximately 200$ms$.
 
-Chapter \ref{chapter:rate} further expanded upon this analysis, providing a re-evaluation of commonly held assumptions regarding Internet flow rates.
+\ac{RTT} recovery is in turn used to scalably reconstruct and classify flow throughput behaviour in chapter \ref{chapter:rate}.
+The main contribution of this thread of work is in providing a re-evaluation of commonly held assumptions regarding Internet flow rates.
 This was done by systematically identifying artificial constraints to \ac{TCP} traffic throughput across three categories: \emph{application pacing}, \emph{host limiting} and \emph{receiver shaping}. 
 The resulting analysis shows that flow rates are not typically dictated by \ac{TCP} congestion control alone, and has significant implications on how to reason about resource sharing in particular.
 The findings equally confirm that \ac{TCP} throughput is mostly determined by the actions of the sender and that continuing \acl{OS} updates have progressively lifted many of the limitations inherent to socket buffer sizes. 
@@ -59,53 +58,57 @@ This means that, although there is a correlation between flow volume in bytes an
 
 \subsection{Architectural contributions}
 
-%This thesis set off by exploring the use of re-feedback, originally proposed by Briscoe et al. \cite{}, for purposes other than accountability.
-%While the expectation that networks could be held accountable for congestion conferred interesting properties
-%Removing the expectation that networks would be held accountable for congestion lead to a fundamentally poorer architecture, but one in which enforcement
-%To this end, \ac{LEX} was proposed in \ref{chapter:preflex} as a simplified mechanism for echoing loss back into the network.
+The problem statement singled out the network and transport layers as the point in the Internet architecture where the tussle surrounding traffic management is greatest.
+At the hosts, \ac{TCP} is designed to saturate available bandwidth, making efficient use of the network.
+Within the network, operators attempt to manage traffic in order to minimize costs and ensure some degree of \ac{QoS}.
+Re-feedback was originally proposed by Briscoe et al.\ \cite{Briscoe:2005p346} and applied to the re-\ac{ECN} protocol \cite{}, which was put forward as a potential solution for resolving the contention surrounding resource sharing -- how capacity is shared end-to-end.
+It was therefore naturally identified as a starting point for addressing the contention surrounding resource pooling -- how traffic is allocated amongst paths.
 
-%Given the Internet architecture should not dictate the outcome of the tussle between end-host and network solutions for resource pooling, the \ac{PREFLEX} architecture attempts to make both aware of each other.
-%\acf{LEX} transmits information on loss as viewed by the transport layer to network resources, allowing traffic engineering to be performed taking into account end-to-end path quality.
-%\acf{PREF} offers the ability for the network to select and offer paths to hosts, thereby unlocking the path diversity which already exists at stub domains such as \acp{ISP}, \acp{CDN} and enterprise networks.
-%
-%\ac{PREFLEX} permits more efficient, reliable and flexible traffic balancing whilst allowing for a range of outcomes in how burden of resource pooling is shared between host and network.
+Chapter \ref{chapter:preflex} began by stripping down re-\ac{ECN} into a coarser, more practical method for \acf{LEX}.
+Re-\ac{ECN} was designed to provide congestion accountability, allowing each domain to precisely quantify the congestion incurred by others.
+Operators could then be expected to charge their providers according to congestion volume - a metric exposed by re-\ac{ECN}.
+Exposing congestion in an accurate and enforceable manner however made an otherwise elegant mechanism complicated to deploy.
+\ac{LEX} transmits information on loss as viewed by the transport layer to network resources, allowing traffic engineering to be performed taking into account end-to-end path quality.
+In comparison to re-\ac{ECN}, \ac{LEX} requires neither congestion marking at bottleneck routers, nor traffic shaping policers at the edges.
 
-Arguably the single most valuable legacy of this work was in proposing \acf{PREF} as a cross-layer signalling mechanism between the transport and network layer, first presented in chapter \ref{chapter:preflex}.
-Within the self-imposed constraints of \ac{IPv4} deployability, the resulting mechanism is necessarily simple, but also shown to be surprisingly versatile, enabling novel end-to-end traffic management techniques such as congestion balancing, presented in chapter \ref{chapter:cate}, and resilient path fail-over, presented in chapter \ref{chapter:inflex}.
+The use of loss exposure was then complemented with \acf{PREF}, a cross-layer signalling mechanism between the transport and network layer, also presented in chapter \ref{chapter:preflex}.
+\ac{PREF} offers the ability for the network to select and offer paths to hosts, thereby unlocking the path diversity which already exists at stub domains such as \acp{ISP}, \acp{CDN} and enterprise networks.
+Within the self-imposed constraints of \ac{IPv4} deployability, the resulting mechanism is necessarily simple, but also shown to be surprisingly versatile.
+%, enabling novel end-to-end traffic management techniques such as congestion balancing, presented in chapter \ref{chapter:cate}, and resilient path fail-over, presented in chapter \ref{chapter:inflex}
 Historically, the \ac{PREF} field can be interpreted as a synthesis of the previously sanctioned uses for the same header space: neither strictly abiding by the thesis that end-hosts should independently determine their own \acf{ToS}, nor aligning itself with the antithetical view that the network alone should establish \acf{DS}.
-In many respects, it is a stronger ideological heir to the original design philosophy of the \ac{DARPA} internet protocols. 
 
+Finally, chapter \ref{chapter:inflex} refines these proposals in the context of \ac{SDN}.
+Section \ref{section:inflex:design} grounded the design of INFLEX on the observations made in chapters \ref{chapter:malawi} and \ref{chapter:rate}.
+In comparison to \ac{PREFLEX}, INFLEX addresses resilience explicitly and minimizes the occurrence of path switching due to the delay incurred by network processing.
+Existing transport proposals such as \ac{SCTP} and \ac{MPTCP} provide resilience through precautionary establishment of multiple end-to-end paths.
+For short flows, such set up costs can be prohibitive in terms of latency.
+By design, INFLEX provides resilience at no additional cost to flows: hosts can simply request to change path in reaction to network events.
+
+% generality of TCP
 \subsection{Resource pooling enhancements}
 
-%One extreme outcome, in which the network is responsible for all resource pooling, is explored in depth in chapter \ref{chapter:cate}.
-%A congestion balancer is derived in which \ac{PREFLEX} can reap much of the benefit of \ac{MPTCP} by balancing flowlets according to loss.
-%Unlike most existing \ac{TE} methods, \ac{PREFLEX} is designed to minimize the impact of route changes on the transport layer and as such is assessed by its impact on transport metrics rather than traffic aggregates.
-%The use of congestion balancing in the network not only leads to a more efficient use of network capacity, but also a reduction of flow completion times for flows.
-%
+Given the Internet architecture should not dictate the outcome of the tussle between end-host and network solutions for resource pooling, the proposed architectural additions attempt to make both aware of each other.
+This enables novel end-to-end traffic management techniques which are not currently possible.
 
-%This paper presents INFLEX, an \ac{SDN}-based architecture for cross-layer network resilience which provides on-demand path fail-over for \ac{IP} traffic. 
-%The architecture is both unilaterally deployable, providing benefits even when adopted by individual domains, and inherently end-to-end, potentially covering third party failures.
-%INFLEX operates by allowing an \ac{SDN}-enabled routing layer to expose multiple \emph{routing planes} to the transport layer. 
-%Hence, traffic can be shifted by one routing plane to another as a response to end-to-end failure detection.
-%Since INFLEX operates as an extension to the network abstraction provided by \ac{IP}, it can be used by all transport protocols.
-%At the host, the proposed architecture allows transport protocols to switch network paths at a timescale which avoids flow disruption and which can be transparently integrated into existing congestion control mechanisms.
-%Within the network, INFLEX provides both greater insight into end-to-end path quality, assisting fault detection, and more control over flow path assignment, enabling more effective fault recovery. 
-%In addition to describing our architecture design and justifying our design choices with extensive network measurements, we also implement INFLEX and verify its operation experimentally. 
-%We make our modifications to both the \ac{TCP}/\ac{IP} network stack and a popular Openflow controller \cite{pox} publicly available.
-%}
+Chapter \ref{chapter:cate} describes one possible extreme of the tussle, in which the network is entirely responsible for resource pooling.
+A congestion balancer is derived in which \ac{PREFLEX} can reap many of the benefits of \ac{MPTCP} by balancing flowlets according to loss, but without the need for application changes.
+Unlike most existing \ac{TE} methods, congestion balancing with \ac{PREFLEX} is designed to minimize the impact of route changes on the transport layer and as such is assessed by its impact on transport metrics rather than traffic aggregates.
+The use of congestion balancing in the network is shown to not only lead to a more efficient use of network capacity, but also a reduction of flow completion times.
 
-\section{Future work}
+Chapter \ref{chapter:inflex} adopted the principles of path re-feedback to provide on-demand path fail-over for \ac{IP} traffic.
+Under the current architecture, path failures are largely a network responsibility: operators are expected to detect, repair and recover from faults which may originate from beyond their network domain.
+Detection often requires scale -- the reliability with which a fault can be identified relies on the proportion of traffic affected -- and in many cases faults affecting individual flows may go undetected.
+Reparation varies according to the nature and origin of the fault, and is often not easily automated and itself error-prone.
+In either case, the amount of time expended in detection and repair can often preclude recovery, since most flows will terminate after successive timeouts.
 
-\section{Closing remarks}
+The presented solution for resilient traffic management, INFLEX, is both unilaterally deployable, providing benefits even when adopted by individual domains, and inherently end-to-end, potentially covering third party failures.
+Since INFLEX operates as an extension to the network abstraction provided by \ac{IP}, it can be used by all transport protocols.
+At the host, the proposed architecture allows transport protocols to switch network paths at a timescale which avoids flow disruption and which can be transparently integrated into existing congestion control mechanisms.
+Within the network, INFLEX provides both greater insight into end-to-end path quality, assisting fault detection, and more control over flow path assignment, enabling more effective fault recovery. 
+INFLEX was implemented and verified experimentally through modifications to both the \ac{TCP}/\ac{IP} network stack and a popular Openflow controller \cite{pox} and made publicly available.
 
-%In deliberating on the success of the latter in \cite{Clark:1988p478}, Clark concludes by identifying shortcomings of the datagram model given requirements which had not originally been contemplated:
-%
-%
-%% INFLEX
-%
 %\subsection{Facilitating resource pooling}
 %
-%\section{Future work}
 %
 %
 %    \textbf{Delay}: The effect of path latency has not been considered in designing \ac{PREFLEX}.
@@ -141,22 +144,36 @@ In many respects, it is a stronger ideological heir to the original design philo
 %Measurement also likely an inflection point in time, where need for new transport requirements collapse on TCP / UDP. The pluralism which first manifested itself as multiple congestion control algorithms moves onto multiple transport paradigms.}
 %
 %
+\section{Future work}
+
+Industry.
+
+
 %\section{Closing remarks}
-%
-%
-%\begin{quote}
-%%\textit{It proved more difficult than first hoped to provide multiple types of service without explicit support from the underlying networks. The most serious problem was that networks designed with one particular type of service in mind were not flexible enough to support other services.}
-%
-%%\textit{While the datagram has served very well in solving the most important goals of the Internet, it has not served so well when we attempt to address some of the goals which were further down the priority list.  For example, the goals of resource management and accountability have proved difficult to achieve in the context of datagrams.  As the previous section discussed, most datagrams are a part of some sequence of packets from source to destination, rather than isolated units at the application level.  However, the gateway cannot directly see the existence of this sequence, because it is forced to deal with each packet in isolation.  Therefore, resource management decisions or accounting must be done on each packet separately.  Imposing the datagram model on the internet layer has deprived that layer of an important source of information which it could use in achieving these goals.}
-%
-%\textit{
-%While the datagram has served very well in solving the most important goals of the Internet, it has not served so well when we attempt to address some of the goals which were further down the priority list.  
-%For example, the goals of resource management and accountability have proved difficult to achieve in the context of datagrams.  
-%(...)
-%It would be necessary for the gateways to have flow state in order to remember the nature of the flows which are passing through them, but the state information would not be critical in maintaining the desired type of service associated with the flow. Instead, that type of service would be enforced by the end points, which would periodically send messages to ensure that the proper type of service was being associated with the flow.
-%(...)
-%I call this concept ``soft state,'' and it may very well permit us to achieve our primary goals of survivability and flexibility, while at the same time doing a better job of dealing with the issue of resource management and accountability.
-%}
-%\end{quote}
-%
-%
+Arguably the single most valuable legacy of this work was in proposing \acl{PREF} to push network state outwards to the end-host, exposing path diversity in the process.
+Compared to both the \ac{ToS} or \ac{DS} fields, it is in many ways a stronger ideological heir to the original design philosophy of the \acs{DARPA} internet protocols.
+In deliberating on the success of the latter in \cite{Clark:1988p478}, Clark concludes by identifying shortcomings of the datagram model given requirements which had not originally been contemplated:
+
+\begin{quote}
+\textit{While the datagram has served very well in solving the most important goals of the Internet, it has not served so well when we attempt to address some of the goals which were further down the priority list. 
+For example, the goals of resource management and accountability have proved difficult to achieve in the context of datagrams.
+As the previous section discussed, most datagrams are a part of some sequence of packets from source to destination, rather than isolated units at the application level.  
+However, the gateway cannot directly see the existence of this sequence, because it is forced to deal with each packet in isolation.  
+Therefore, resource management decisions or accounting must be done on each packet separately.  
+Imposing the datagram model on the internet layer has deprived that layer of an important source of information which it could use in achieving these goals.}
+\end{quote}
+
+In the intervening quarter of a century, progress in resource management and accountability has remained fleeting.
+Driven predominantly by operators, most advances have involved coaxing existing practices from the telephone network, few of which are adequately assessed in terms of their impact on the datagram model.
+Instead, practices such as the maintenance of flow state within the network or the prescription of classes of service are often justified on technical feasibility alone.
+\LOREM
+\LOREM
+
+\begin{quote}
+\textit{
+It would be necessary for the gateways to have flow state in order to remember the nature of the flows which are passing through them, but the state information would not be critical in maintaining the desired type of service associated with the flow. Instead, that type of service would be enforced by the end points, which would periodically send messages to ensure that the proper type of service was being associated with the flow.
+(...)
+I call this concept ``soft state,'' and it may very well permit us to achieve our primary goals of survivability and flexibility, while at the same time doing a better job of dealing with the issue of resource management and accountability.
+}
+\end{quote}
+

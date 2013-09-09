@@ -12,7 +12,7 @@ The difficulty lies in resolving this contention both efficiently and fairly.
 Early work in defining congestion, and forever ingraining the term in networking nomenclature, can be traced to work on queuing systems by Kleinrock \cite{Kleinrock:1975} beginning from 1961. 
 However, it is in the work of Paul Baran at \acs{RAND} \cite{Baran:1964p451} that a deeper concern for the implications of congestion can be found. 
 
-Baran's work on a ``distributed network concept'' \footnote{The term packet switching was yet to be adopted. It would later be imported from similar work by Donald Davies and others at \acs{NPL}.} was intended for military purposes, and as such was required to deal with traffic overload gracefully.
+Baran's work on a ``distributed network concept'' \footnote{The term packet switching was yet to be adopted. It would later be imported from similar work by Donald Davies and others at \ac{NPL}.} was intended for military purposes, and as such was required to deal with traffic overload gracefully.
 Traffic was expected to be marked by users according to a military precedence system. During times of traffic overload, Baran envisioned a priority control console, operated directly by a military officer, which would regulate the allocation of capacity to each traffic class.
 Control was in the network. In part, this reflected military chain of command, but Baran had uncovered an additional cause for concern which would later resurface in the Internet: during times of crisis, users could not be trusted to mark their own traffic:
 
@@ -117,7 +117,7 @@ The resulting changes were quickly deployed as \ac{TCP} Tahoe and proved instrum
     \label{fig:tcpcc}
 \end{figure}
 
-Congestion control would go on to become a staple of networking research. Successive refinements, including the addition of \textit{fast recovery} resulted in \ac{TCP} Reno \cite{Stevens:1997p466} and then \ac{TCP} NewReno \cite{Paxson:1999p467}, which would become the most commonly accepted and widely deployed congestion control algorithm for over a decade. Variants such as Vegas \cite{Brakmo:1994p468} and \ac{FAST} \cite{Wei:2006p469} would complement the use of loss with the estimation of queuing delay, and adjust rates accordingly. \ac{BIC} and \acs{CUBIC} \cite{Xu:2004p470,Ha:2008p471} addressed rate adjustment as a binary search problem and would be adopted by Linux distributions. Finally, \ac{CTCP} \cite{Zhang:2012p472}, deployed from Windows Vista onwards, would use loss and delay as a combined congestion signal, tracking both as separate components before calculating an overall congestion window.
+Congestion control would go on to become a staple of networking research. Successive refinements, including the addition of \textit{fast recovery} resulted in \ac{TCP} Reno \cite{Stevens:1997p466} and then \ac{TCP} NewReno \cite{Paxson:1999p467}, which would become the most commonly accepted and widely deployed congestion control algorithm for over a decade. Variants such as Vegas \cite{Brakmo:1994p468} and \ac{FAST} \cite{Wei:2006p469} would complement the use of loss with the estimation of queuing delay, and adjust rates accordingly. \ac{BIC} and CUBIC \cite{Xu:2004p470,Ha:2008p471} addressed rate adjustment as a binary search problem and would be adopted by Linux distributions. Finally, \ac{CTCP} \cite{Zhang:2012p472}, deployed from Windows Vista onwards, would use loss and delay as a combined congestion signal, tracking both as separate components before calculating an overall congestion window.
 
 In spite of these changes, the core of \ac{TCP} congestion control algorithms can still be directly traced to Van Jacobson's initial proposal. 
 That a stop-gap solution has managed to sustain the growth of the Internet for over two decades is an outcome even Van Jacobson could not have anticipated. 
@@ -264,7 +264,7 @@ Deployment was further hampered by broken \ac{TCP} implementations and routers w
 Despite improvements \cite{Kuzmanovic:2005p118} \ac{ECN} remains poorly used and turned off by default on hosts and routers alike \cite{Bauer:2011p482}.
 
 Ironically for a protocol which has been plagued by deployment issues, the widespread availability of \ac{ECN} in commodity network equipment may yet reassert its relevance. 
-Proposals such as re-ECN \cite{Briscoe:2005p346} leverage \ac{ECN} in order to achieve cost fairness.
+Proposals such as re-\ac{ECN} \cite{Briscoe:2005p346} leverage \ac{ECN} in order to achieve cost fairness.
 \ac{VCP} \cite{YongXia:2008p121} overrides \ac{ECN} semantics to provide an additional bit of congestion information per packet.
 \ac{DCTCP} \cite{Alizadeh:2010p356} repurposes \ac{ECN} to achieve high throughput with low buffer usage within a data centre environment.
 Rather than reacting to each marking as a potential loss event, \ac{DCTCP} sources reduce their window proportionally to the \emph{fraction} of marked packets.
@@ -378,7 +378,7 @@ In addition to information on congestion upstream, provided by \ac{ECN}, re-\ac{
 \begin{figure}
     \centering
     \includegraphics[width=4.0in]{figures/resourcepooling/reecn}
-    \caption{Simplified model of re-ECN}
+    \caption{Simplified model of re-\acp{ECN}}
     \label{fig:reecn}
 \end{figure}
 
@@ -403,6 +403,6 @@ Remarkably for a protocol change affecting both the transport and network layers
 Many providers did not identify congestion as a problem and those that did, such as Comcast, were able to get by developing localized solutions \cite{Bastian:2009p495}.
 Others may have felt uncomfortable in exposing such a sensitive metric to potential competitors.
 Within the transport community there was a natural reluctance to move away from flow-fairness \cite{Floyd:2008p496}.
-Arguably the greatest impediment to deploying congestion exposure is the fact it relies on many small changes which together threaten to radically alter the Internet.
+Arguably the greatest impediment to deploying congestion exposure is the fact it relies on many small changes which together radically alter how resource sharing is performed on the Internet.
 Proving the overall framework is robust and reliable enough to work on a large scale is non trivial, and even minor issues such as the time scale over which a congestion allowance should be replenished have the potential to trigger significant operational ramifications.
 

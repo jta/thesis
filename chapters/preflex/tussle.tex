@@ -6,7 +6,8 @@ The subject is frequently revisited with varying approaches \cite{Sunshine:1977p
 Despite this, multipath routing has remained illusive for end-hosts. 
 The common trait all these proposals share is a failure to identify the tussle over resource control as a significant obstacle in moving towards the use of multiple concurrent paths.
 
-The Internet architecture places resource control at the edges, in what can be viewed as an instantiation of the end-to-end principle \cite{Saltzer:1984p305}. 
+Given an explicit goal of the Internet was to accommodate a variety of networks, very few assumptions could be made on the basic functionality they could support.
+The Internet architecture therefore placed resource control at the edges, in what can be viewed as an instantiation of the end-to-end principle \cite{Saltzer:1984p305}. 
 This represented a fundamental paradigm shift, ultimately conferring the scalability which fuelled the growth of the Internet.  
 While unilateral control of a network resource by hosts was already polemic in an academic research network, with the rise of the commercial Internet this notion has slowly been set aside by stakeholders intent on exerting control over their own networks.
 
@@ -19,12 +20,12 @@ Because this was not contemplated when designing the existing resource sharing m
 %TE, % p2p, overlays - hosts take over.
 Nowhere is this more apparent than in traffic engineering. 
 Network operators rely heavily on \ac{TE} to balance utilisation over long time scales in an attempt to reduce costs by making efficient use of available paths. 
-Since information at the network layer is limited, \ac{TE} optimizes for the wrong metric -- utilization -- in detriment of the congestion it may be causing. 
+Since information at the network layer is limited, \ac{TE} typically optimizes for the wrong metric -- utilization -- in detriment of the congestion it may be causing. 
 Additionally, this optimization is typically executed offline, and re-computed over long time scales to minimize the impact to higher layers and ensure stability. 
 The limiting assumption is that traffic patterns are exogenous. 
 In reality, hosts will often find means of adapting to network conditions, such as establishing overlay networks. 
 This resulting shift in behaviour may in turn conflict with the concurrent traffic engineering process, which will have to readjust to a substantially different traffic matrix in a next iteration. 
-This antagonistic cycle leaves traffic engineering as a whole stuck in a rut, unable to adapt too often, out of fear of disrupting transport protocols, and unable to adapt often enough in order to react to changes in traffic. 
+Traditional traffic engineering mechanisms can therefore neither adapt to often out of fear of disrupting transport protocols, nor adapt often enough in order to adequately react to changes in traffic.
 As a result, there is still considerable space for improvement in existing traffic engineering:
 
 \renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{#1}}
@@ -84,7 +85,8 @@ This alone however is unlikely to overcome significant architectural shortcoming
 \item[Most flows may not benefit from \ac{MPTCP}.]{
     For short flows, the overhead incurred in multiple subflow establishment is excessive.
     Furthermore, for long flows with bursty behaviour, such as rate-limited video streaming \cite{Rao:2011p547}, \ac{MPTCP} may not have sufficient time to pool bandwidth across multiple paths efficiently.
-    The transport layer requires probing the network for every connection and with no prior information or limited time to collect information on network state the full benefits of multiple paths for resilience in particular are unlikely to be harnessed.
+    The transport layer requires probing the network for every connection. 
+    With no prior information or limited time to collect information on network state, the full benefits of multiple paths for resilience in particular are unlikely to be harnessed.
     In such cases, how can the network complement, rather than necessarily override, transport balancing?
 }
 
