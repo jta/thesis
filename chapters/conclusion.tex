@@ -107,59 +107,57 @@ At the host, the proposed architecture allows transport protocols to switch netw
 Within the network, INFLEX provides both greater insight into end-to-end path quality, assisting fault detection, and more control over flow path assignment, enabling more effective fault recovery. 
 INFLEX was implemented and verified experimentally through modifications to both the \ac{TCP}/\ac{IP} network stack and a popular Openflow controller \cite{pox} and made publicly available.
 
-%\subsection{Facilitating resource pooling}
-%
-%
-%
-%    \textbf{Delay}: The effect of path latency has not been considered in designing \ac{PREFLEX}.
-%    In balancing by congestion delay is implicitly taken into account when using a conservative approach, as \ac{TCP} presents a bias towards shorter \acp{RTT}.
-%%    In some cases however the difference in delay between paths may be significant enough to affect overall performance.
-%    In its current guise \ac{PREFLEX} does not discard the usage of paths, even if they present a impractically large end-to-end delay.
-%    The simplest way to avoid their usage would be to render paths unusable through the routing architecture, but this cannot be done in an automated manner taking into account delay.
-%    Work is undergoing in quantifying the differences in delay between paths to a same destination for the \ac{MAWI} dataset, and the repercussions that may have on \ac{PREFLEX}.
-%}
-%\end{itemize}
-%
-%    \textbf{Loss}: The \ac{MAWI} traces demonstrate that outbound loss is receding.
-%    Whether this is due to higher bandwidth, changes in application usage or shift in where traffic flows to is inconsequent: for many network prefixes, the resolution of loss as a signal may be too low to be used effectively by \ac{PREFLEX}.
-%    In part, this is due to the scaling properties of \ac{TCP} which dictate loss events will be increasingly spaced out in time as bandwidth increases.
-%    \ac{PREFLEX} would function best with less conservative forms of congestion control, such as Relentless \ac{TCP} or \ac{DCTCP}.
-%    In the absence of such approaches, it is important to identify under what conditions congestion balancing makes sense, and improve the design of \ac{PREFLEX} accordingly.
-%}
-%
-%\item{
-%    \textbf{Pricing}: Congestion balancing represents a corner case where network and hosts are fully aligned. 
-%    Much of the motivation for this work derived from the discrepancy how network resources are shared and how they are priced.
-%    Whether applied to \acp{ISP} or data centers, an operator should be able to influence how traffic is routed in order to minimize costs.
-%    This requires extending the work in section \ref{chapter:cate} to cover popular pricing models such as the 95th percentile.
-%}
-%\end{itemize}
-%
-%Results from \ac{MALAWI} corroborate the increase in proportion of traffic originating in co-location sites already described in \cite{Labovitz:2010p175}.
-%Data centers provide an ideal setting for \ac{PREFLEX} as a single entity is responsible for managing infrastructure, alleviating the possibility of hosts overriding network preferences.
-%The simplicity of the sender-side changes mean \ac{PREFLEX} can be implemented in the hypervisor and run transparently to hosted virtual machines, an approach already used in \cite{Wu:2010p556}.
-%In comparison to the use of \ac{MPTCP} in data center traffic \cite{Raiciu:2011p539}, \ac{PREFLEX} may be more suitable for \acp{CDN} dominated by short flows such as web traffic, rate-limited flows such as video streaming, or traffic bound for legacy hosts which cannot support changes to the networking stack.
-%
-%\COMMENT{Generality of TCP: initial assertion was that TCP was too general.. must infer everything from the network for each flow. Final conclusion is that ultimately this conservativeness is justified and useful, since lack of assumptions makes it adaptable in ways we still can't foresee.
-%Measurement also likely an inflection point in time, where need for new transport requirements collapse on TCP / UDP. The pluralism which first manifested itself as multiple congestion control algorithms moves onto multiple transport paradigms.}
-%
- 
+
 \section{Future work}
 
-\LOREM
+While chapter \ref{chapter:inflex} ties most of the work of the previous chapters together, some threads remain outstanding.
+The most immediate concern is that the current implementation of INFLEX validated in section \ref{section:inflex:eval} does not yet allow for congestion balancing, described in chapter \ref{chapter:cate}.
+Most of the required changes are accounted for and described in section \ref{section:inflex:discussion}.
 
-\textit{Integration}
-\LOREM
+A significant open issue that remains in this regard is how best to dynamically assign flows to routes according to pre-determined, as Openflow does not support probabilistic behaviour being pushed to the datapath.
+The most obvious approach is to change the mapping between flow and route periodically, in a proportional manner to the desired split.
+This raises two potential concerns.
+Firstly, flow entries have a time granularity of one second.
+While an equal split amongst two paths can be achieved by alternating between flow entries every second, finer flow split ratios over a greater number of paths will incur a much higher periodicity.
+Secondly, the impact of this periodicity on overall system behaviour is not clear.
+A high path switching frequency may degrade the performance of the switch due to rule churn.
+A low frequency on the other hand may induce bursty traffic allocation over short time scales, particularly if flow arrival rates are irregular or the bulk of traffic is composed by short flows.
 
-\textit{\ac{QoS}}
-\LOREM
+This highlights some of the higher-level issues which were raised and remain unresolved by this thesis:
 
-\textit{Evolving \ac{TCP}}
-\LOREM
-\LOREM
+\renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{#1.}}
+\begin{description}
+\item[System stability]{
+The concern over route flapping is also present in chapter \ref{chapter:cate}, where the time period between updates by the congestion balancer is paced according to the sparseness of loss.
+Chapter \ref{chapter:cate} falls short of providing either a formal proof for stability or extensive enough evaluation.
+The changes introduced in chapter \ref{chapter:inflex} however are likely to significantly reduce the likelihood of route flapping, notwithstanding the limitations of Openflow raised previously.
+Since in INFLEX resilience and efficiency are decoupled, an operator can afford to be more conservative in congestion balancing without forsaking responsiveness to failures.
+Lagging system response in this manner does not affect an operator's primary objective in adopting congestion balancing: namely, keeping upstream providers in check over the quality-of-service they provide and distributing traffic accordingly.
+}
+\item[Quality-of-service]{
+Due to its contentious nature, most of the work in this thesis meanders around the subject of \ac{QoS}.
+The INFLEX architecture however provides a clear path of deployment for some degree of service differentiation.
+The policy mechanisms described in section \ref{section:inflex:arch} allow operators to select which forwarding planes are exposed to individual hosts or flows.
+Further integration with existing resource management tools within datacenters would allow such policies to be enforced by tenant.
+Traditional approaches to \ac{QoS} typically rely on operators provisioning their networks according to preordained service types such as those requiring high throughput or low latency.
+Within the design principles enunciated in \ref{chapter:preflex}, a more reasonable solution would be to apply division of labour in providing \ac{QoS}.
+Instead of normalising the expected loss rate over multiple paths as described in chapter \ref{chapter:cate}, an operator could instead adjust congestion balancing to provide differentiated tiers.
+Hosts would then be responsible in assembling higher quality service from essentially parallel, best-effort forwarding planes according to their needs.
+}
 
-\section{Closing remarks}
-Arguably the single most valuable legacy of this work was in proposing \acl{PREF} to push network state outwards to the end-host, exposing path diversity in the process.
+
+\item[Extending transport]{
+A counter-intuitive result from chapter \ref{chapter:rate} is that \ac{TCP} is both becoming both increasingly ossified, with even minor \ac{TCP} extensions taking several years to deploy, and remarkably diverse, with applications asserting their own behaviour on how \ac{TCP} performs.
+The legacy of middlebox support dictates that any new transport protocol will effectively be implemented over \acs{UDP} or as extensions to \ac{TCP} \cite{Honda11}, such as the \ac{MPTCP}.
+Neither of these approaches however tackles how to gain sufficient critical mass to ensure timely deployment.
+A clear line of future work is instead to push the transport stack up to user space, where the functionality provided can be tailored and potentially deployed alongside applications.
+While past work has addressed this challenge \cite{Thekkath93,sctpuser}, there is no practical solution for providing user-level, backward-compatible protocol stacks which can saturate existing line rates. 
+At present however there is both a technical foundation for such a solution, through work in fast packet \acs{I/O} mechanisms such as \emph{netmap} \cite{Rizzo12acmq}, and a practical need, as existing applications such as web caches attempt to scale beyond the performance afforded by general-purpose network stacks.
+}
+\end{description}
+
+In pushing network state outwards to the end-host and exposing path diversity in the process, the \emph{re-feedback} mechanisms explored in this thesis can be re-applied in exploring all of the above.
+The versatility of path re-feedback in particular stands as arguably the single most valuable legacy of this work.
 Compared to both the \ac{ToS} or \ac{DS} fields, it is in many ways a stronger ideological heir to the original design philosophy of the \acs{DARPA} internet protocols.
 In deliberating on the success of the latter in \cite{Clark:1988p478}, Clark concludes by identifying shortcomings of the datagram model given requirements which had not originally been contemplated:
 
@@ -172,13 +170,11 @@ Therefore, resource management decisions or accounting must be done on each pack
 Imposing the datagram model on the internet layer has deprived that layer of an important source of information which it could use in achieving these goals.}
 \end{quote}
 
-In the intervening quarter of a century, progress in resource management and accountability has remained fleeting.
-Driven predominantly by operators, most advances have involved coaxing existing practices from the telephone network, few of which are adequately assessed in terms of their impact on the long term evolution of the datagram model.
-Instead, practices such as the maintenance of flow state within the network or the prescription of classes of service are often justified on technical feasibility alone.
-%The advent of software-defined networking will likely only exacerbate this trend, enabling ideas previously found wanting to emerge.
-%While software-defined networking can enable innovation, the opportunity is currently mostly taken by industry to rebrand ideas previously found wanting.
-\LOREM
-\LOREM
+In the intervening quarter of a century, progress in resource management and accountability has become predominantly driven by operators intent in coaxing existing practices from the telephone network.
+Rather than assessing such mechanisms in terms of their impact on the evolution of the datagram model, practices such as the maintenance of flow state within the network or the prescription of classes of service are instead often justified on technical feasibility alone.
+For this reason, the long term impact of software-defined networking is particularly hard to discern given it offers a cleaner abstraction over which network functionality can be layered and composed, whilst also providing a unique opportunity for rebranding ideas previously found wanting.
+Convincing a wider community that mechanisms such as path re-feedback can simplify traffic management remains entirely unrealized, and is itself as a challenge not entirely new.
+In establishing future research directions in \cite{Clark:1988p478}, Clark concludes:
 
 \begin{quote}
 \textit{
@@ -187,4 +183,6 @@ It would be necessary for the gateways to have flow state in order to remember t
 I call this concept ``soft state,'' and it may very well permit us to achieve our primary goals of survivability and flexibility, while at the same time doing a better job of dealing with the issue of resource management and accountability.
 }
 \end{quote}
+
+Oh well.
 
