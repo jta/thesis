@@ -38,8 +38,17 @@ Since the rule can be wildcarded by network prefix , the number of rules would l
 Interestingly, such marking rules need not be applied by the edge switch, instead being performed at a hardware switch relying on \ac{TCAM}.
 This both allows larger tables and reduces lookup times, while still delegating policy enforcement to edge switches.
 
+A significant open issue that remains in this regard is how best to dynamically assign flows to routes, as Openflow does not support probabilistic behaviour being pushed to the datapath.
+The most obvious approach is to change the mapping between flow and route periodically, in a proportional manner to the desired split.
+This raises two potential concerns.
+Firstly, flow entries have a time granularity of one second.
+While an equal split amongst two paths can be achieved by alternating between flow entries every second, finer flow split ratios over a greater number of paths will incur a much higher periodicity.
+Secondly, the impact of this periodicity on overall system behaviour is not clear.
+A high path switching frequency may degrade the performance of the switch due to rule churn.
+A low frequency on the other hand may induce bursty traffic allocation over short time scales, particularly if flow arrival rates are irregular or the bulk of traffic is composed by short flows.
+
 % how does this compare to per-flowlet?
-As a final resort, an operator also has the means to force a path inflection.
+Interestingly, INFLEX provides operators the means to force a path inflection.
 This can be achieved in two steps.
 The network first clears the INFLEX header for an inbound packet. 
 This signals to the end-host that the network is no longer INFLEX capable, leading the network stack to clear the existing \ac{DS} field, as detailed in figure \ref{fig:tcpcode}.
