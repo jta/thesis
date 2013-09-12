@@ -117,7 +117,7 @@ The resulting changes were quickly deployed as \ac{TCP} Tahoe and proved instrum
     \label{fig:tcpcc}
 \end{figure}
 
-Congestion control would go on to become a staple of networking research. Successive refinements, including the addition of \textit{fast recovery} resulted in \ac{TCP} Reno \cite{Stevens:1997p466} and then \ac{TCP} NewReno \cite{Paxson:1999p467}, which would become the most commonly accepted and widely deployed congestion control algorithm for over a decade. Variants such as Vegas \cite{Brakmo:1994p468} and \ac{FAST} \cite{Wei:2006p469} would complement the use of loss with the estimation of queuing delay, and adjust rates accordingly. \ac{BIC} and CUBIC \cite{Xu:2004p470,Ha:2008p471} addressed rate adjustment as a binary search problem and would be adopted by Linux distributions. Finally, \ac{CTCP} \cite{Zhang:2012p472}, deployed from Windows Vista onwards, would use loss and delay as a combined congestion signal, tracking both as separate components before calculating an overall congestion window.
+Congestion control would go on to become a staple of networking research. Successive refinements, including the addition of \textit{fast recovery} resulted in \ac{TCP} Reno \cite{Stevens:1997p466} and then \ac{TCP} NewReno \cite{Paxson:1999p467}, which would become the most commonly accepted and widely deployed congestion control algorithm for over a decade. Variants such as Vegas \cite{Brakmo:1994p468} and \ac{FAST} \cite{Wei:2006p469} would complement the use of loss with the estimation of queuing delay, and adjust rates accordingly. \ac{BIC} and CUBIC \cite{Xu:2004p470,Ha:2008p471} addressed rate adjustment as a binary search problem and would be adopted by Linux distributions. Finally, \ac{CTCP} \cite{Tan06acompound}, deployed from Windows Vista onwards, would use loss and delay as a combined congestion signal, tracking both as separate components before calculating an overall congestion window.
 
 In spite of these changes, the core of \ac{TCP} congestion control algorithms can still be directly traced to Van Jacobson's initial proposal. 
 That a stop-gap solution has managed to sustain the growth of the Internet for over two decades is an outcome even Van Jacobson could not have anticipated. 
@@ -378,7 +378,7 @@ In addition to information on congestion upstream, provided by \ac{ECN}, re-\ac{
 \begin{figure}
     \centering
     \includegraphics[width=4.0in]{figures/resourcepooling/reecn}
-    \caption{Simplified model of re-\acp{ECN}}
+    \caption{Simplified model of re-\acs{ECN}}
     \label{fig:reecn}
 \end{figure}
 

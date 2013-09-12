@@ -36,7 +36,7 @@ Within the context of \ac{TCP}, flows are classified as being artificially const
 
 A flow whose throughput decreases because it has no outstanding data to send is temporarily limited by the application. 
 Flights can be identified as being \emph{application limited} if terminated with a packet smaller than the \ac{MSS} and followed by an inter-arrival time greater than the \ac{RTT}, as consistent with \cite{Zhang:2002p85}. 
-The underlying reason for this defintion is that most \ac{TCP} implementations will wait some time for subsequent bytes to be written to the socket if the next packet to be sent is smaller than the \ac{MSS}, unless the \ac{TCP}\_NODELAY option is set \cite{nagle1984rfc}.
+The underlying reason for this defintion is that most \ac{TCP} implementations will wait some time for subsequent bytes to be written to the socket if the next packet to be sent is smaller than the \ac{MSS}, unless the \ac{TCP}\_NODELAY option is set \cite{Nagle:1984p458}.
 
 A flow with \emph{application limited} flights however is not necessarily \emph{application paced}. 
 In practice, all flows for which the final packet is observed contain at least one such flight.

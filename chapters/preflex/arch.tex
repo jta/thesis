@@ -43,9 +43,11 @@ If run as a complement of re-\ac{ECN}, three of the four code points in table~\r
 
 For networks, the most significant hurdle in adopting multiple paths for a single destination is not the path selection process, but rather the difficulty in assigning packets to paths. Since balancing traffic at a packet granularity has severe repercussions for the transport layer, network operators have typically resorted to splitting traffic by destination prefix. Increasingly, networks have also been able to afford the cost of keeping flow state in an attempt to balance traffic at a finer granularity. 
 
-Neither of these approaches are strictly necessary in a mutualistic architecture. 
+Neither of these approaches are strictly necessary in a mutualistic architecture -- one in which a division of responsibility between host and network is performed for the benefit of both.
 Since hosts are made aware of the path packets take, flow state can be pushed outwards, placing the responsibility for assigning packets to paths at the endpoints. 
-In such a case, a network only needs to perform path selection according to local policy and pass the information onto the end-host.
+This enables hosts to benefit from existing path diversity.
+Networks then only need to perform path selection according to local policy and pass the information onto the end-host.
+This allows finer control over traffic in a scalable manner.
 
 For this purpose, \ac{FNE} packets, as defined in \ac{LEX}, are used to act as network triggers for path selection. 
 An \ac{ISP} or stub domain, upon detecting an incoming \ac{FNE} packet, selects a preferred outgoing path based on the reverse lookup of the source address, and marks the packet with a path identifier. 
