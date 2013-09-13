@@ -4,12 +4,9 @@
 - frto, proper cwnd
 - tcp options
 - redo stacked preflex results
-- fix dedication
-- acknowledgements
-
-- close loop on inflex
 
 - diffserv, intserv, qos??
 
-- figure 5.3b) time markers.
 - adjust figure 7.5
+- flow tables in fig 7.12
+

@@ -11,11 +11,11 @@ Let $T_i$ be the number of bytes sent down path $i$ for the previous time period
 Let $R_i$ be the number of bytes marked as retransmissions down path $i$ for the previous time period.  
 Let $R=\sum_i R_i$ and $T=\sum_i T_i$.
 While $R_i$ does not strictly represent the number of lost bytes, the ratio of $R_i/T_i$ should be a good approximation of the loss rate within period $i$.
-A starting assumption is that it is desirable to equalise the proportion of lost bytes on all interfaces -- that is make $R_i/T_i$ equal for all $i$ -- and by doing so loss is balanced.
+A starting assumption is that it is desirable to equalise the proportion of lost bytes on all paths -- that is make $R_i/T_i$ equal for all $i$ -- since doing so maximizes social welfare and mimics the behaviour of existing end-host only resource pooling solutions such as \ac{MPTCP}.
 
-The loss rate $\rho_i = R_i/T_i$ is an unknown function of $T_i$ and $B_i$ the bandwidth of the link.  
-It is, however, likely that the loss rate is increasing (or at least non-decreasing) with $T_i$.
-Similarly, the loss rate is decreasing (or at least non-increasing) with the unknown $B_i$.
+The loss rate $\rho_i = R_i/T_i$ to be balanced is an unknown function of $T_i$ and $B_i$ the bandwidth of the link.
+It is, however, likely that the loss rate is increasing or at least non-decreasing with $T_i$.
+Similarly, the loss rate is decreasing or at least non-increasing with the unknown $B_i$.
 Assume then that whatever the true function, for a small region around the current values of $T_i$ and $B_i$ then it is locally linear $\rho_i = k_i T_i/B_i$ where $k_i$ is an unknown constant.
 Substituting gives
 \begin{equation}
@@ -25,13 +25,15 @@ B_i/k_i = T_i^2/R_i.
 
 Now consider the next time period.  
 Use the dash notation for the same quantities in the next time period.  
-In typical time periods $\E{T'} = \E{T}$ (since, for example, if the next time period on average had more traffic, the overall amount of traffic would be growing -- while this is true in the year-on-year setting, this effect is negligible in the time scale discussed here). 
+In typical time periods $\E{T'} = \E{T}$ since, for example, if the next time period on average had more traffic, the overall amount of traffic would be growing. 
+While this is true in the year-on-year setting, this effect is negligible in the time scale discussed here.
 Now $\rho'_i = R'_i/T'_i = k T'_i/B'_i$.  
 Choose the $T'_i$ to make all $R'_i/T'_i = C$ (hence all equal) where $C$ is some unknown constant.  
 Therefore $T'_i = C B'_i/k'_i$ but if this is still near the locally linear region then $B'_i/k'_i \simeq B_i/k_i$ and $B_i/k_i$ is determined by \eqref{eqn:bik} hence the predicted distribution is $ T'_i = C T_i^2/R_i$.  
 Now it is necessary to calculate $C$ by summing over $i$.  
 $T = C \sum_i T_i^2/R_i$ and hence $C = T/\sum_i T_i^2/R_i$.
-This gives the final answer:
+This results in a usable loss balancing equation given the available system inputs:
+
 \begin{equation}
 T'_i = \frac{T T_i^2}{R_i \sum_j (T_j^2/R_j)}.
 \label{eqn:routesplitloss}
@@ -48,12 +50,12 @@ This problem is further explored in subsequent sections.
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/cate/two/equal}
-        \caption{Equalisation}\label{fig:twoequal}
+        \caption{Equalisation.}\label{fig:twoequal}
     \end{subfigure}%
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/cate/two/cons}
-        \caption{Conservative}\label{fig:twocons}
+        \caption{Conservative.}\label{fig:twocons}
     \end{subfigure}%
 
     \vspace{10mm}
@@ -61,12 +63,12 @@ This problem is further explored in subsequent sections.
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/cate/two/loss}
-        \caption{Loss-driven}\label{fig:twoloss}
+        \caption{Loss-driven.}\label{fig:twoloss}
     \end{subfigure}%
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/cate/two/correct}
-        \caption{Balanced}\label{fig:twopreflex}
+        \caption{Balanced.}\label{fig:twopreflex}
     \end{subfigure}%
 
     \caption[Simulation using \acs{PREFLEX} to balance traffic over two paths.]
@@ -75,11 +77,12 @@ This problem is further explored in subsequent sections.
         (\subref{fig:twopreflex}) which balances between conservative and loss-driven components.  }
 \end{figure}
 
-
 Given local linearity is assumed, large adjustments to the traffic split are a potential cause for concern.
-A small amount of traffic must also be assigned to each route independently of the loss rate, in order to probe whether the path is available.
+Some traffic must also be assigned to each route independently of the loss rate, in order to probe whether the path is available.
+This leads to a small component of equalisation being used to ascertain that paths are continually used.
 Finally, in the absence of loss, it is practical to assign traffic according to the current traffic throughput split.  
-Therefore there are three tendencies to be accounted for: the loss-equalisation tendency from \eqref{eqn:routesplitloss}, the conservative tendency to keep the traffic split the same as the throughput split in the previous period and the equalisation tendency to keep the traffic equally split on all interfaces.  
+This denotes a conservative approach to splitting traffic.
+Therefore, there are three tendencies which must be accounted for: the loss-equalisation tendency from \eqref{eqn:routesplitloss}, the equalisation tendency to ensure some degree of utilization across all paths, and a conservative tendency to keep the traffic split the same as the throughput split in the previous period.
 Call the traffic split assigned to path $i$  by each of these schemes $T(E)_i$, $T(C)_i$ and $T(L)_i$ where $E$, $C$ and $L$ stand for ``equal", ``conservative" and ``loss-driven".
 
 The final distribution of traffic across all links is then:
@@ -97,10 +100,11 @@ f'_i = \frac{T'_i}{T} =  \beta_E \frac{1}{N} + \beta_C \frac{T_i}{T} +
 
 While \eqref{eqn:Tdashi} describes a very broad design space, intuition on how each component performs is provided through a simple example, which is described in full in section \ref{section:methodology}. 
 Consider a network balancing traffic to a given prefix between two paths with equal bottleneck capacity $L_1=L_2=120$Mbps.
-For the duration of the experiment, a source sends traffic according to the same distribution.
-At $t=300$s, cross-traffic is generated towards client $C$ through $L_1$.
-At $t=600$s, a greater quantity cross-traffic is generated towards client $C$ through $L_2$.
-The respective throughput, loss rate and the proportion of flows assigned to each path as computed by the \ac{PREFLEX} balancer are shown in figure \ref{fig:two} for each of the four variants.
+For reference, this topology is illustrated in figure \ref{fig:topo}.
+For the duration of the experiment, a source balances traffic to $C$ through either link.
+At $t=300$s, cross-traffic is generated from server $D_1$ towards client $C$ through $L_1$.
+At $t=600$s, a greater quantity cross-traffic is generated from server $D_2$ towards client $C$ through $L_2$.
+The respective throughput, loss rate and the proportion of flows assigned to each path are shown in figure \ref{fig:two} for cases where each component is used in isolation, and a final case in which all three components are balanced.
 
 The effect of equalisation is the first to be considered, given it is necessary to ensure all paths are continually probed. 
 Equalisation alone however leads to an inefficient use of the network if there is a mismatch in path capacity, as made apparent in figure \ref{fig:twoequal} as congestion occurs on either link. 
@@ -148,12 +152,12 @@ The value of $\mu_{min}$ was set to $0.005$.
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/cate/gamma}
-        \caption{$\gamma$ \label{fig:gamma}}
+        \caption{$\gamma$ \label{fig:gamma}.}
     \end{subfigure}
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/cate/tau}
-        \caption{$\tau'$ \label{fig:tau}}
+        \caption{$\tau'$ \label{fig:tau}.}
     \end{subfigure}
     \caption[Parameters $\gamma$ and $\tau'$]{Self-tuning parameters for example in figure \ref{fig:twopreflex}.}
     \label{fig:tune}
@@ -177,15 +181,16 @@ For example, the overall system should not be held up by a single route with ins
 This will be achieved with the concept of a weighted coefficient of variation.
 
 Let $t_i$ be the number of packets transmitted down path $i$ in the time period $\tau$ and let $l_i$ be the number of packets which were lost in this time period.
-To prevent the aforementioned divide by zero issue, $l_i = 1$ if no packets are lost.
+To prevent the aforementioned divide by zero issue, $l_i = 1\ac{MSS}$ if no packets are lost.
 
 Let $p_i$ be the probability that a given packet is lost on path $i$ and assume that packet loss is a Bernoulli process.  
-An unbiased estimate of $p_i$ is $\hat{p_i} = l_i/t_i$ (it is important to what follows that $\hat{p_i}$ is only an estimate of $p_i$ by ``chance" more or fewer packets may have been lost).  
-If packet loss is Bernoulli then $l_i$ has a binomial distribution and its variance $\sigma^2$ is given by $t_i p(1-p)$.  
+An unbiased estimate of $p_i$ is $\hat{p_i} = l_i/t_i$.
+It is important to what follows that $\hat{p_i}$ is only an estimate of $p_i$ by ``chance" more or fewer packets may have been lost.
+Given packet loss is Bernoulli then $l_i$ has a binomial distribution and its variance $\sigma^2$ is given by $t_i p(1-p)$.  
 The \ac{CV}, is a dimensionless measure given by the standard deviation over the mean $c_v= \sigma/\mu$.  
-Keeping the coefficient of variation within some bound $\delta$ is a measure of the amount by which an estimate is likely to vary from the true mean \footnote{note, however, that this is not technically a confidence interval.}.
+Keeping the coefficient of variation within some bound $\delta$ is a measure of the amount by which an estimate is likely to vary from the true mean.
 
-For the number of lost packets on a given prefix $i$ the estimated \ac{CV} is $\hat{c_v(i)} = \sqrt{t_i \hat{p_i}(1- \hat{p_i})}/t_i\hat{p_i}$.
+From trivial definitions of $\sigma$ and $\mu$, for the number of lost packets on a given prefix $i$ the estimated \ac{CV} is $\hat{c_v(i)} = \sqrt{t_i \hat{p_i}(1- \hat{p_i})}/t_i\hat{p_i}$.
 Let $r_i$ be the rate of packet arrival per unit time on $i$ giving $t_i= r_i \tau$.  
 Define $W$ the \ac{CV} weighted by transmitted packets over the prefix as $W= \sum_i t_i/t \hat{c_v(i)}$ where $t= \sum_i t_i$ and this expands as $$W =  \sum_i \frac{t_i}{t} \sqrt{\frac{ (1- \hat{p_i})} {r_i \tau }}.$$
 
@@ -199,7 +204,7 @@ $$
 \tau' \geq \tau \left( \frac{1}{\delta t}\sum_i
 \sqrt{t_i- l_i} \right)^2.
 $$
-This equation gives the smallest value to set the time period of measurement to in order that the weighted coefficient of variation of the loss measurement is a given $\delta$.
+This equation gives the smallest value to set the time period of measurement to in order that the weighted coefficient of variation of the loss measurement is a given $\delta$. An upper bound for this value should be set by operators to ensure that the system periodically updates flow splits when operating under extremely low loss rates.
     
 While a number of simplifying assumptions have been made, such as modelling loss as Bernoulli, the time scale choice is not a critical system parameter so long as it provides ``good enough" estimates of loss. 
 The evolution of $\tau'$ for the example in figure \ref{fig:twopreflex} is plotted in figure \ref{fig:tune}. 

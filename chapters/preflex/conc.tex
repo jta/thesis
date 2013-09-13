@@ -34,7 +34,7 @@ While this necessarily reduces the amount of path diversity which can be explore
 The resulting architecture provides many benefits. 
 Balancing is both transport agnostic and allows flow state to be kept to a minimum, requiring policing at the edges only if congestion accountability is required. 
 Additionally, path selection is receiver driven, aligning the stakeholder who can decide when to issue \ac{FNE} packets with the stakeholder who benefits the most. 
-The key to path selection is the information provided by the sender (point 7 in figure \ref{fig:preflexout} ), which allows the network to estimate path loss on the same timescale as hosts. 
+The key to path selection is the information provided by the sender (point 7 in figure \ref{fig:preflexout}), which allows the network to estimate path loss on the same timescale as hosts. 
 By pooling loss information from multiple hosts, the network may additionally be made aware of path failures sooner than hosts using \ac{TCP} inference.
 
 %We assume for the entirety of this section that each flow follows a single path and that a host does not override the path selected by its network, although neither is strictly necessary. 

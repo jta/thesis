@@ -9,9 +9,9 @@ figuredir <- paste0(figuredir, 'cate/')
 data <- data.table(read.table('dummy2.csv'))
 setnames(data, c("t", "d1", "d2"))
 data <- melt(data, id.vars=c("t"), variable_name="Server")
-g <- ggplot(data, aes(x=t, y=value)) + geom_step(aes(group=Server, colour=Server)) + coord_cartesian(xlim=c(0,4), ylim=c(0,1))
+g <- ggplot(data, aes(x=t, y=value)) + geom_step(aes(group=Server, colour=Server), size=1) + coord_cartesian(xlim=c(0,4), ylim=c(0,1))
 g <- g + ylab("Number of requests") + xlab("Time")
-g <- g + scale_colour_discrete(breaks=levels(data$Server), labels=c(expression(D[1]), expression(D[2])))
+g <- g + scale_colour_grey(breaks=levels(data$Server), labels=c(expression(D[1]), expression(D[2])))
 g <- g + scale_y_continuous(breaks=c(0, 0.5, 1.0), labels=c(0, expression(frac(G,2)), "G"))
 g <- g + scale_x_continuous(breaks=c(0, 1, 2, 3, 4), labels=c(0, expression(frac(T,4)), expression(frac(T,2)), expression(frac(3*T,4)), "T"))
 g <- g + theme_bw()
@@ -28,9 +28,9 @@ g
 data <- data.table(read.table('dummy4.csv'))
 setnames(data, c("t", "d1", "d2", "d3", "d4"))
 data <- melt(data, id.vars=c("t"), variable_name="Server")
-g <- ggplot(data, aes(x=t, y=value)) + geom_step(aes(group=Server, colour=Server)) + coord_cartesian(xlim=c(0,6), ylim=c(0,1))
+g <- ggplot(data, aes(x=t, y=value)) + geom_step(aes(group=Server, colour=Server), size=1) + coord_cartesian(xlim=c(0,6), ylim=c(0,1))
 g <- g + ylab("Number of requests") + xlab("Time")
-g <- g + scale_colour_discrete(breaks=levels(data$Server), labels=c(expression(D[1]), expression(D[2]), expression(D[3]), expression(D[4])))
+g <- g + scale_colour_grey(breaks=levels(data$Server), labels=c(expression(D[1]), expression(D[2]), expression(D[3]), expression(D[4])))
 g <- g + scale_y_continuous(breaks=c(0, 0.5, 1.0), labels=c(0, expression(frac(G,2)), "G"))
 g <- g + scale_x_continuous(breaks=seq(0, 6), labels=c(0, expression(frac(T,6)), expression(frac(T,3)), expression(frac(T,2)), expression(frac(2*T,3)), expression(frac(5*T,6)), "T"))
 g <- g + theme_bw()
@@ -99,5 +99,36 @@ g <- g + ylab("Mean flow completion time (s)")
 g <- g + scale_y_continuous(limits=c(10, 30))
 
 write.to.pdf('duration.pdf', g, 6, 3)
+```
+
+```{r}
+plot_exp <- function(data, ymin=50, pal=6) {
+  g <- ggplot(data, aes(V2, fill=Server, y=value)) + geom_bar(stat="identity", width=0.7, colour="black")
+  g <- g + theme_bw() 
+  g <- g + scale_fill_brewer(breaks=rev(levels(data$Server)), labels=c(expression(D[6]), expression(D[5]), expression(D[4]), expression(D[3]), expression(D[2]), expression(D[1]), expression(S)), type="div", palette=pal)
+  g <- g + labs(x="Number of paths", y="Goodput (%)") + ylim(c(0, 100))
+  g <- g + theme(legend.key = element_blank(),
+               panel.border = element_blank(),
+               panel.grid.minor = element_blank(), 
+               axis.ticks.margin = unit(2/11, "lines"),
+               axis.line = element_line())
+  g + coord_cartesian(y=c(ymin, 100))
+}
+
+read.table('~/Dropbox/newthesis/data/cate/stacked/diffbw') -> diff
+data.table(melt(diff, id.vars=c('V1', 'V2'), measure.vars=c("V3", "V4", "V5", "V6", "V7", "V8", "V9"), variable_name="Server")) -> diff
+
+read.table('~/Dropbox/newthesis/data/cate/stacked/eqbw') -> equal
+data.table(melt(equal, id.vars=c('V1', 'V2'), measure.vars=c("V3", "V4", "V5", "V6", "V7", "V8", "V9"), variable_name="Server")) -> equal
+
+
+dev.off()
+write.to.pdf('preflex-equal.pdf', plot_exp(equal[V1=="Preflex"], 30), 5, 4)
+dev.off()
+write.to.pdf('equal-equal.pdf', plot_exp(equal[V1=="Equal"], 30), 5, 4)
+dev.off()
+write.to.pdf('preflex-diff.pdf', plot_exp(diff[V1=="Preflex"], 30), 5, 4)
+dev.off()
+write.to.pdf('equal-diff.pdf', plot_exp(diff[V1=="Equal"], 30), 5, 4)
 ```
 

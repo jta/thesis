@@ -19,15 +19,16 @@ As such, evaluating the proposed congestion balancer requires simulating end-to-
 \label{section:methodology}
 
 Experimental validation is performed using the network topology displayed in figure \ref{fig:topo}. 
-The topology links a client domain $C$ to a server domain $S$ through $N$ paths with equal bottlenecks $L_i$, and total bandwidth $B=\sum{L_i}$. 
-While a domain is represented as a single entity in figure \ref{fig:topo}, each domain is composed by a traffic generator connected to a router. 
+The topology links a client domain $C$ to a server domain $S$ through $N$ paths with bottlenecks $L_i$, and total bandwidth $B=\sum{L_i}$. 
 Client $C$ generates $G$ simultaneous \ac{HTTP}-like requests (or ``gets") from $S$ according to a specified distribution, described at the end of this section. 
 As traffic flows from $S$ to $C$, the router within $S$ is responsible for balancing traffic over all available paths.
+This topology is chosen since it provides multiple independent bottlenecks over which domain $S$ must balance elastic \ac{TCP} traffic without any explicit knowledge of the conditions over links $L_i$.
+Under such conditions traditional traffic engineering methods may perform poorly since they resort to local information only.
 
 \begin{figure}
     \centering
     \includegraphics[width=2.5in]{figures/cate/topo}
-    \caption{Simulation topology}
+    \caption{Simulation topology.}
     \label{fig:topo}
 \end{figure}
 
@@ -48,24 +49,24 @@ s_i = T\frac{i}{N+2}
 \label{eq:gi}
 \end{equation}
 
-Figure \ref{fig:demand} illustrates the number of simultaneous gets from $C$ to $D_i$ for $N=2$ (used in the example shown in figure \ref{fig:two}) and $N=4$. 
+Figure \ref{fig:demand} illustrates the number of simultaneous gets from $C$ to $D_i$ for $N=2$ (used in the example shown in figure \ref{fig:two}) and $N=4$.
 Generating cross-traffic in this manner serves two purposes. 
 Firstly, $\sum{g_i}=G$, so independently of the number of concurrent paths, the maximum load in the system is $2G$. 
 However, as the number of paths increases, the fluctuation in load for each path becomes smaller, stressing the sensitivity with which \ac{PREFLEX} must balance traffic. 
 Secondly, the number of requests for each $D_i$ over time is the same. 
 Over timescale $T$, equalisation appears to be an acceptable strategy but will however be shown to fail to make efficient use of available capacity. 
-This is a fundamental limitation of offline traffic engineering, which is calculated over very long time scales and is unable to adapt as traffic routinely shifts.
+This is a fundamental limitation of offline traffic engineering, which is calculated over long time scales and is unable to adapt as traffic routinely shifts.
 
 \begin{figure}
     \begin{subfigure}[b]{.5\linewidth}
         \centering
-        \includegraphics[width=2.25in]{figures/cate/dummy2}
-        \caption{$N=2$}\label{fig:1a}
+        \includegraphics[width=2.5in]{figures/cate/dummy2}
+        \caption{$N=2$.}\label{fig:1a}
     \end{subfigure}%
     \begin{subfigure}[b]{.5\linewidth}
         \centering
-        \includegraphics[width=2.25in]{figures/cate/dummy4}
-        \caption{$N=4$}\label{fig:1b}
+        \includegraphics[width=2.5in]{figures/cate/dummy4}
+        \caption{$N=4$.}\label{fig:1b}
     \end{subfigure}
     \caption[Number of requests to cross traffic servers.]{Number of requests from $C$ to cross traffic servers $D_i$ for different values of $N$}
     \label{fig:demand}
@@ -76,7 +77,7 @@ Total simulation time $T$ is set to $1200$ seconds, while total bandwidth $B$ is
 The number of requests $G$ sent from $C$ to $S$ is set to 240. 
 Upon completing, a request is respawned after an idle period following an exponential distribution with a $15$s mean. 
 Transfer size follows a Weibull distribution with an average value of $2$MB. 
-While artificial, these values attempt to represent traffic to a single prefix with a file size that mimics the small but bursty nature of web traffic, which does not lend itself to being balanced by the end-host. 
+While artificial, these values attempt to represent traffic to a single prefix with a file size that mimics the small but bursty nature of web traffic, which does not lend itself to being balanced by the end-host, since flows are too short to individually collect reliable information on network conditions.
 \ac{PREFLEX} is configured with $\beta_E = 0.05$, $\mu_{min}=0.01/N$ and $\delta=0.005$.
 
 \subsection{Varying bottleneck distribution}
@@ -84,25 +85,43 @@ While artificial, these values attempt to represent traffic to a single prefix w
 For the remainder of this section, congestion balancing using \ac{PREFLEX} will be directly compared to equalisation, which mimics existing traffic engineering techniques based on hashing flow tuples for path assignment.
 A useful reference point in interpreting results is to examine the case where all bottlenecks share the same bandwidth, $L_i=B/N$.
 Under such conditions, figure \ref{fig:goodputeq} shows the goodput, calculated as the total data transferred to client $C$ by flows completed within $T$, as a proportion of total link bandwidth.
+Goodput is selected to compare between balancing mechanisms since it is a transport metric and therefore a more accurate representation of the throughput attained by applications.
 The bulk of goodput originates from server $S$, which is the only multi-homed domain.
 If traffic is correctly balanced, servers $D_{1-N}$ should generate the same amount of goodput.
 While both equalisation and congestion balancing saturate most available bandwidth, the former leads to disproportionate distribution of goodput amongst competing traffic. 
-As loss is not equalised over all paths, the amount of goodput achieved by servers $D_i$ differs despite demand being similar.
+When loss is not equalised over all paths, the amount of goodput achieved by servers $D_i$ differs despite demand being similar.
+
 \begin{figure}
     \centering
-    \includegraphics[width=4in]{figures/cate/eqbw}
-    \caption[Goodput achieved over equal capacity links.]{Goodput relative to $B$ achieved by each server over equal capacity links.}
-    \label{fig:goodputeq}
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=3.0in]{figures/cate/equal-equal}
+        \caption{\label{eqeq}Equalisation.}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=3.0in]{figures/cate/preflex-equal}
+        \caption{\label{preflexeq}PREFLEX.}
+    \end{subfigure}
+    \caption[Goodput achieved over equal capacity links.]{Goodput relative to $B$ achieved by each server over equal capacity links according to different balancing strategies.\label{fig:goodputeq}}
 \end{figure}
 
-In this scenario, equalisation can be seen as the optimal static TE solution, yet both approaches bear similar performance. 
+For the case where all bottlenecks are equal, equalisation can be seen as the optimal static TE solution, yet both approaches bear similar performance. 
 With no knowledge of topology, link bandwidth or expected traffic matrices, \ac{PREFLEX} is able to adequately mimic the performance of the static TE solution for the case where such an approach is best suited.
 
 \begin{figure}
     \centering
-    \includegraphics[width=4in]{figures/cate/diffbw}
-    \caption[Goodput achieved over unequal capacity links.]{Goodput relative to $B$ achieved by each server over unequal capacity links.}
-    \label{fig:goodputdiff}
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=3.0in]{figures/cate/equal-diff}
+        \caption{\label{eqdiff}Equalisation.}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+        \includegraphics[width=3.0in]{figures/cate/preflex-diff}
+        \caption{\label{preflexdiff}PREFLEX.}
+    \end{subfigure}
+    \caption[Goodput achieved over unequal capacity links.]{Goodput relative to $B$ achieved by each server over unequal capacity links according to different balancing strategies.\label{fig:goodputdiff}}
 \end{figure}
 
 Where bottleneck bandwidth is unequal however equalisation is shown to be severely lacking.

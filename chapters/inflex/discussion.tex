@@ -8,7 +8,7 @@ In this chapter, the opposite approach was taken: deriving a traffic management 
 INFLEX corrected two potential shortcomings in PREFLEX.
 Firstly, by eschewing the need for receiver collaboration, INFLEX is unilaterally deployable by edge domains.
 Secondly, path acquisition was decoupled from whether a host had timely information on path quality, removing the requirement for flows to incur additional delay on flow start.
-As a side-effect, by not tying network processing to SYN packets, INFLEX is also less susceptible to \ac{DOS} attacks.
+As a side-effect, by not tying network processing to SYN packets, INFLEX is also less susceptible to \ac{DoS} attacks.
 Nonetheless, INFLEX as presented thus far is geared solely towards resilience.
 The remainder of this section details how it can be extended to provide the benefits offered by \ac{PREFLEX}, which are typically of direct interest to operators in particular.
 
@@ -21,20 +21,21 @@ The host modifications introduced in section \ref{section:inflex:host} however m
 
 % how
 Operators can therefore assign flows to specific paths by marking inbound packets with the appropriate label.
-Clearly, only the first packet of a flow will take effect.
+Clearly, only the first packet of a flow will take effect -- once a flow has acquired an \ac{INF} label, it will no longer inspect subsequent INFLEX headers unless an inflection request is pending.
 As such, one possibility for operators is to intercept the inbound SYN packet and tag it with the appropriate label, in much the same manner as \ac{PREFLEX}.
 This presents two challenges.
-Firstly, it introduces a \ac{DOS} vulnerability as the amount of network processing is tied to the volume of inbound SYN packets, which can greatly exceed the number of actual flows as shown in figure \ref{fig:flow}.
+Firstly, it introduces a \ac{DoS} vulnerability as the amount of network processing is tied to the volume of inbound SYN packets, which can greatly exceed the number of actual flows as shown in figure \ref{fig:flow}.
 Secondly, there is no obvious manner of intercepting SYN packets using Openflow as \ac{TCP} flags are not actionable packet header fields.
 This means that such functionality would either have to be implemented by specific middleboxes, adding complexity to the proposed architecture, or flow table entries would have to span the entirety of a flow, increasing table size significantly.
 In either case, pushing packets to the controller on flow start would necessarily incur a performance penalty for all flows.
 
 A faster, more scalable approach relies on the fact that hosts will ignore the INFLEX header once a label has been acquired.
 As such, marking a stream of packets within a flow will have no negative repercussions.
-This means that rather than redirecting specific packets to the controller for marking, a rule can be installed a priori to the datapath.
+This means that rather than redirecting specific packets to the controller for marking, a rule for marking the inflection label can be installed a priori to the datapath.
 Within the flowchart presented in figure \ref{fig:pipeline}, this corresponds to installing a wildcarded entry on the inbound inflection table.
 Since such an entry would have a lower priority than pending inflection requests, the basic INFLEX mechanism described in section \ref{section:inflex:arch} remains unaffected.
-Since the rule can be wildcarded by network prefix , the number of rules would likely be much small. Figure \ref{fig:prefix} suggests that over 50\% of traffic is destined to as few as 100 prefixes.
+Since the rule can be wildcarded by network prefix , the number of rules would likely be small. 
+Figure \ref{fig:prefix} suggests that over 50\% of traffic is destined to as few as 100 prefixes.
 Interestingly, such marking rules need not be applied by the edge switch, instead being performed at a hardware switch relying on \ac{TCAM}.
 This both allows larger tables and reduces lookup times, while still delegating policy enforcement to edge switches.
 
@@ -47,15 +48,15 @@ Secondly, the impact of this periodicity on overall system behaviour is not clea
 A high path switching frequency may degrade the performance of the switch due to rule churn.
 A low frequency on the other hand may induce bursty traffic allocation over short time scales, particularly if flow arrival rates are irregular or the bulk of traffic is composed by short flows.
 
-% how does this compare to per-flowlet?
-Interestingly, INFLEX provides operators the means to force a path inflection.
+Under some conditions, a network may need to reassign a flow to another path proactively.
+Operators may desire to assign particularly large flows to specific links, clear a link for programmed downtime or allow routing changes to converge before actually using new routes.
+In any case, INFLEX provides operators the means to force a path inflection.
 This can be achieved in two steps.
 The network first clears the INFLEX header for an inbound packet. 
 This signals to the end-host that the network is no longer INFLEX capable, leading the network stack to clear the existing \ac{DS} field, as detailed in figure \ref{fig:tcpcode}.
 Next, a network sets the INFLEX header for the subsequent packet in the flow.
 This leads the receiver to once more adopt INFLEX and acquire the label.
-While such forceful behaviour can disrupt transport, it can prove valuable, particularly in switching elephants from one path to another.
-Networks already have the means to achieve such goals through the manipulation of routing.
+While such forceful behaviour can disrupt transport, it can prove valuable, and networks already have the means to achieve such goals through the cumbersome manipulation of routing.
 In this case, INFLEX merely provides existing functionality more flexibly for the network and more transparently for the end-host.
 
 \subsection{Congestion management}

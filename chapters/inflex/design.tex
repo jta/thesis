@@ -27,9 +27,9 @@ The original design of \ac{PREFLEX} imposes a potentially significant burden on 
 While such network processing is small, and will necessarily improve over time, in hindsight tying together path selection and flowlet start does not feel entirely justified.
 Chapter \ref{chapter:rate} demonstrated that over 40\% of all traffic is regularly application paced, and so the prevalence of opportunities for balancing at the flowlet level is unquestionable.
 However, imposing network intervention on each flowlet start is excessive for short, delay-sensitive traffic, particularly since the benefit such small-grained balancing provides the network is negligible.
-Requiring every \ac{PREFLEX} router to inspect packets on the basis of packet markings made by external entities was also a potential source of \acf{DOS}.
+Requiring every \ac{PREFLEX} router to inspect packets on the basis of packet markings made by external entities was also a potential source of \acf{DoS}.
 While such attacks are easily dismantled by rate limiting the number of \ac{FNE} packets received across network boundaries, at the very least this represents additional overhead for the operator, who must adequately configure and manage such a service.
-As such, in considering an architecture for resilience, it would be beneficial to both instantiate network processing only when required and be robust to \ac{DOS} attacks by design.
+As such, in considering an architecture for resilience, it would be beneficial to both instantiate network processing only when required and be robust to \ac{DoS} attacks by design.
 
 \subsection{Deployment}
 
@@ -42,13 +42,13 @@ Despite this, widespread deployment is far from guaranteed, and is largely tied 
 \begin{figure}[t]
     \centering
     \includegraphics[width=4.0in]{figures/inflex/options}
-    \caption{\acs{TCP} option usage \label{fig:wscale}}
+    \caption{\acs{TCP} option usage.\label{fig:wscale}}
     \hfill
 \end{figure}
 
 As a reference point, figure \ref{fig:wscale} tracks the use of three \ac{TCP} options by overall volume in flows across both directions in the \ac{MAWI} dataset.
 While \ac{SACK} is successfully negotiated for most connections, the deployment of the timestamp and windowscale options has lagged.
-The former primarily assists in provide more accurate \ac{RTT} estimates and is therefore largely auxiliary.
+The former primarily assists in providing more accurate \ac{RTT} estimates and is therefore largely auxiliary.
 The latter however is critical for performance: without windowscale negotiation, a sender's congestion window cannot exceed 65KB.
 Despite offering a clear benefit to both endpoints, being simple to implement and incurring a low overhead, windowscale deployment has only recently picked up momentum, two decades since standardization.
 Expecting substantial deployment of a more complex and costly extension such as \ac{MPTCP} over the near future is likely optimistic.

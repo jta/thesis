@@ -135,7 +135,7 @@ Remarkably, INFLEX incurs no additional memory costs at the host, operating as a
         \centering
         \includegraphics[width=5.0in]{figures/inflex/flow.eps}
     \end{subfigure}%
-    \caption{Mean flow state for outbound traffic\label{fig:flow}}
+    \caption{Mean flow state for outbound traffic\label{fig:flow}.}
 \end{figure}
 
 The granularity at which an \ac{SDN} deployment should manage traffic is often subject to debate.
@@ -160,7 +160,7 @@ One practical reference point is to investigate the resulting overhead if paths 
 This is further illustrated in figure \ref{fig:flow}, which also tracks flow table size if each unique five tuple were to only generate a flow entry for 1 second, the minimum expiry time for Openflow.
 This is functionally equivalent to the flow arrival rate, and determines the expected number of requests per second sent to the controller.
 The resulting flow table size is reduced dramatically in comparison to the traditional case where state is allocated for the duration of the flow, and the order of magnitude difference is crucial for software switches in particular.
-However, under such conditions state becomes more strained by the large fluctuations imposed by \ac{DOS} attacks, suggesting that inflection requests should only be used after connection establishment; this corresponds to the grey dotted line in figure \ref{fig:flow}. Importantly, such an approach also opens the possibility of using inflection requests for assisting traffic management in addition to enabling improved resilience.
+However, under such conditions state becomes more strained by the large fluctuations imposed by \ac{DoS} attacks, suggesting that inflection requests should only be used after connection establishment; this corresponds to the grey dotted line in figure \ref{fig:flow}. Importantly, such an approach also opens the possibility of using inflection requests for assisting traffic management in addition to enabling improved resilience.
 
 %However, a host might wish to issue an inflection request for purposes other than resilience.
 %In most cases flow entries are only issued to enforce a decision by the local controller. 

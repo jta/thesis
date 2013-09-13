@@ -11,7 +11,7 @@ Revealing information currently confined to the transport layer down to the netw
 
 The first change proposed for \ac{LEX} is to have end-hosts mark, at the network layer, packets belonging to flows where feedback has not been established. 
 This typically corresponds to the first packet exchange in a flow, such as SYN packets in \ac{TCP}, but may also include the first packet after a significant idle period, a keep-alive packet or a renewed attempt at a retransmission after successive timeouts in the case of network failure. 
-Within \ac{LEX}, as with re-\ac{ECN}, such packets are labelled \ac{FNE}, with the \ac{IP} header being marked accordingly.
+Within \ac{LEX}, as with re-\ac{ECN}, all such packets where a flow does not have accurate and timely information on network conditions should be labelled as \ac{FNE}, with the \ac{IP} header being marked accordingly.
 
 %re-ecn uses only for policing
 The signalling of such packets has many practical implications. 

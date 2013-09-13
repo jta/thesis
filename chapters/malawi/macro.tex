@@ -6,12 +6,12 @@
   \begin{subfigure}[b]{1.0\linewidth}
   \includegraphics[width=0.9\textwidth]{figures/malawi/tputin}\\
   \includegraphics[width=0.9\textwidth]{figures/malawi/lossesin}
-  \caption{Inbound traffic\label{fig:MAWIin}}
+  \caption{Inbound traffic.\label{fig:MAWIin}}
   \end{subfigure}
   \begin{subfigure}[b]{1.0\linewidth}
   \includegraphics[width=0.9\textwidth]{figures/malawi/tputout}\\
   \includegraphics[width=0.9\textwidth]{figures/malawi/lossesout}
-  \caption{Outbound traffic\label{fig:MAWIout}}
+  \caption{Outbound traffic.\label{fig:MAWIout}}
   \end{subfigure}
   \caption{Longitudinal evolution of average throughput and loss for the \acs{MAWI} dataset.}\label{fig:MAWI}
 \end{figure}
@@ -56,7 +56,7 @@ In its place, a larger set of states have emerged as content providers, with New
         \input{data/malawi/country.tex}\\
     \bottomrule
     \end{tabular}
-  \caption{Percentage of inbound and outbound traffic by country\label{table:dest}. U.S. state values are relative to total national traffic.}
+  \caption[Percentage of inbound and outbound traffic by country.]{Percentage of inbound and outbound traffic by country\label{table:dest}. U.S. state values are relative to total national traffic.}
 \end{table}
 %tip
 
@@ -82,7 +82,7 @@ This is further corroborated by the rise of hosting solutions which facilitate f
         \includegraphics{figures/malawi/asn_cdf_out}
         \caption{\label{fig:asn_cdf_out}}
     \end{subfigure}%
-    \caption[\acs{CDF} of traffic by \acs{AS}]{\acs{CDF} of (\subref{fig:asn_cdf_in}) inbound and (\subref{fig:asn_cdf_out}) outbound traffic by \acs{AS}.\label{fig:asn_cdf}}
+    \caption[\acs{CDF} of traffic by \acs{AS}.]{\acs{CDF} of (\subref{fig:asn_cdf_in}) inbound and (\subref{fig:asn_cdf_out}) outbound traffic by \acs{AS}.\label{fig:asn_cdf}}
 \end{figure}
 
 \begin{table}\scriptsize\centering
@@ -91,23 +91,23 @@ This is further corroborated by the rise of hosting solutions which facilitate f
     \input{data/malawi/asn2007.in.tex}
     \bottomrule
     \end{tabular}
-    \caption{2007}
+    \caption{2007.}
     \end{subtable}%
     \begin{subtable}[b]{.33\linewidth}
     \input{data/malawi/asnheader.tex}
     \input{data/malawi/asn2009.in.tex}
     \bottomrule
     \end{tabular}
-    \caption{2009}
+    \caption{2009.}
     \end{subtable}
     \begin{subtable}[b]{.33\linewidth}
     \input{data/malawi/asnheader.tex}
     \input{data/malawi/asn2011.in.tex}
     \bottomrule
     \end{tabular}
-    \caption{2011}
+    \caption{2011.}
     \end{subtable}
-  \caption[Top 10 \acp{AS} for inbound traffic by year.]{Top 10 \acp{AS} for inbound traffic by year.\label{table:topASin}}
+  \caption[Top 10 \acsp{AS} for inbound traffic by year.]{Top 10 \acp{AS} for inbound traffic by year.\label{table:topASin}}
 \end{table}
 
 \begin{table}\scriptsize\centering
@@ -116,23 +116,23 @@ This is further corroborated by the rise of hosting solutions which facilitate f
     \input{data/malawi/asn2007.out.tex}
     \bottomrule
     \end{tabular}
-    \caption{2007}
+    \caption{2007.}
     \end{subtable}%
     \begin{subtable}[b]{.33\linewidth}
     \input{data/malawi/asnheader.tex}
     \input{data/malawi/asn2009.out.tex}
     \bottomrule
     \end{tabular}
-    \caption{2009}
+    \caption{2009.}
     \end{subtable}
     \begin{subtable}[b]{.33\linewidth}
     \input{data/malawi/asnheader.tex}
     \input{data/malawi/asn2011.out.tex}
     \bottomrule
     \end{tabular}
-    \caption{2011}
+    \caption{2011.}
     \end{subtable}
-  \caption[Top 10 \acp{AS} for outbound traffic by year.]{Top 10 \acp{AS} for outbound traffic by year.\label{table:topASout}}
+  \caption[Top 10 \acsp{AS} for outbound traffic by year.]{Top 10 \acp{AS} for outbound traffic by year.\label{table:topASout}}
 \end{table}
 
 %tip
@@ -173,7 +173,7 @@ For end-users it is of less concern where content is being retrieved from or rou
         \includegraphics{figures/malawi/rtt_cdf_out}
         \caption{\label{fig:rtt_cdf_out}}
     \end{subfigure}%
-    \caption[\acs{CDF} of mean \acs{RTT} by \acs{AS}]{\acs{CDF} of mean \acs{RTT} by \acs{AS} for (\subref{fig:rtt_cdf_in}) inbound and (\subref{fig:rtt_cdf_out}) outbound traffic. \label{fig:rtt_cdf}}
+    \caption[\acs{CDF} of mean \acs{RTT} by \acs{AS}.]{\acs{CDF} of mean \acs{RTT} by \acs{AS} for (\subref{fig:rtt_cdf_in}) inbound and (\subref{fig:rtt_cdf_out}) outbound traffic. \label{fig:rtt_cdf}}
 \end{figure}
 
 Intuitively delay should decrease over time as the Internet becomes more interconnected, resulting in less path stretch, and access technology improves, cutting down queuing delay in particular.
@@ -238,11 +238,11 @@ By 2011, latency to most countries had been reduced below 500$ms$.
     \centering
     \begin{subfigure}[b]{0.5\linewidth}
         \includegraphics{figures/malawi/rtt_comp_07_09}
-        \caption{2007/2009}
+        \caption{2007/2009.}
     \end{subfigure}%
     \begin{subfigure}[b]{0.5\linewidth}
         \includegraphics{figures/malawi/rtt_comp_09_11}
-        \caption{2009/2011}
+        \caption{2009/2011.}
     \end{subfigure}%
     \caption{Scatter plot of mean RTT by country grouped by continent.\label{fig:rtt_comp}}
 \end{figure}

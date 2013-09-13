@@ -20,12 +20,12 @@ Because this was not contemplated when designing the existing resource sharing m
 %TE, % p2p, overlays - hosts take over.
 Nowhere is this more apparent than in traffic engineering. 
 Network operators rely heavily on \ac{TE} to balance utilisation over long time scales in an attempt to reduce costs by making efficient use of available paths. 
-Since information at the network layer is limited, \ac{TE} typically optimizes for the wrong metric -- utilization -- in detriment of the congestion it may be causing. 
+Since information at the network layer is limited, \ac{TE} typically optimizes locally for the wrong metric -- utilization -- in detriment of the congestion it may be causing elsewhere. 
 Additionally, this optimization is typically executed offline, and re-computed over long time scales to minimize the impact to higher layers and ensure stability. 
 The limiting assumption is that traffic patterns are exogenous. 
 In reality, hosts will often find means of adapting to network conditions, such as establishing overlay networks. 
 This resulting shift in behaviour may in turn conflict with the concurrent traffic engineering process, which will have to readjust to a substantially different traffic matrix in a next iteration. 
-Traditional traffic engineering mechanisms can therefore neither adapt to often out of fear of disrupting transport protocols, nor adapt often enough in order to adequately react to changes in traffic.
+Traditional traffic engineering mechanisms can therefore neither adapt too often out of fear of disrupting transport protocols, nor adapt often enough in order to adequately react to changes in traffic.
 As a result, there is still considerable space for improvement in existing traffic engineering:
 
 \renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{#1}}
@@ -39,7 +39,7 @@ As a result, there is still considerable space for improvement in existing traff
 
 \item[At a small enough timescale, traffic engineering can replace resilient routing entirely.]{
     For any sufficiently reactive \ac{TE} process, a path failure will lead to a shift of traffic onto alternate paths. 
-    Even online approaches such as \ac{MATE} and \ac{TeXCP} have hesitated to be computed at a sub-minute granularity however, and in many cases hosts are more capable of shifting traffic robustly given access to underlying path diversity.
+    Even online approaches such as \ac{MATE} \cite{Elwalid:2002p153} and \ac{TeXCP} \cite{Kandula:2005p90} have hesitated to be computed at a sub-minute granularity however, and in many cases hosts are more capable of shifting traffic robustly given access to underlying path diversity.
     How can traffic engineering be designed to offer better resilience than routing protocols, and in what cases can it delegate such functionality to hosts?
 }
 
@@ -103,7 +103,7 @@ Traffic engineering and congestion control represent an explicit duality -- unde
 
 % conflict between perceived cost for ISP and transport?
 %\cite{Arkko:2009p122}
-Recent research in resource sharing has suggested that much of the misalignment between network and transport derives from the lack of accountability for congestion.
+Recent research in resource sharing has suggested that much of the misalignment between network and transport derives from the lack of accountability for congestion \cite{Briscoe:2007p261}.
 While previous work had modelled and analysed the broken incentive structure subjacent to forwarding traffic from an economic perspective, work on re-feedback and congestion exposure \cite{Briscoe:2005p346} pioneered a practical means of alleviating the tussle surrounding resource sharing.  
 In particular, congestion exposure advocates the use of congestion volume, rather than throughput or traffic volume, as the by-product by which the impact of traffic should be assessed.  
 Building upon this approach, the next section presents PREFLEX, a joint, mutualistic architecture for congestion control and traffic engineering. 

@@ -12,7 +12,7 @@ This section reviews how different entities attempt to explore path diversity in
 
 Providers routinely attempt to balance traffic across available network resources.
 On each provisioning cycle, operators try to adjust their infrastructure to cope with expected demand.
-Between cycles however demand my fluctuate considerably, either due to variations in traffic patterns or alterations in the customer base.
+Between cycles however demand may fluctuate considerably, either due to variations in traffic patterns or alterations in the customer base.
 Given the static nature of physical infrastructure, between provisioning cycles traffic can be \emph{shaped} to avoid overloading the current path, \emph{assigned} to alternate paths, or the path itself may be \emph{reconfigured}.
 The set of tools by which an operator can optimize routing and balance traffic to achieve a desired allocation of traffic across a network is commonly referred to as \ac{TE}.
 % TE taxonomy
@@ -86,7 +86,8 @@ That traffic engineering is widely used in spite of being poorly understood only
 
 \subsection{Resilient routing}
 
-A further concern of the routing architecture is in providing resilience.
+The previous section detailed how routing is burdened with the responsibility for balancing traffic efficiently through the use of traffic engineering. 
+A further concern often placed on the routing architecture is in providing resilience.
 A routing protocol should by design reliably recover from failures, but the degree to which such reliability can be assured depends on the time taken to \emph{detect} a failure and then reach a consensus and \emph{converge} towards a new operating state which bypasses the failure.
 
 Failure detection in link state protocols depends on the frequency of probes confirming network adjacency, typically referred to as Hello packets.
@@ -124,7 +125,7 @@ cost \left (n_b, d \right) < cost \left(s, d \right)
 \ac{LFA} incurs low computational and memory overhead and requires no changes to the forwarding plane, making it a practical choice for bypassing most failures.
 Further proposals \cite{Atlas:2006p520,Bryant:2007p522,Shand:2011p521} would provide coverage for increasingly complex failure scenarios at higher implementation cost.
 
-A longstanding concern with resilient routing is the potential for cascading failures, in which detouring leads to overload at a separate point in the network and potentially triggers more failures.
+A long-standing concern with resilient routing is the potential for cascading failures, in which detouring leads to overload at a separate point in the network and potentially triggers more failures.
 As with traffic engineering the use of multi-topology routing can assist in distributing load through the availability of different routing planes.
 This concept is explored in \ac{MRC} in which successive routing configurations are pre-computed by isolating nodes and links, thereby covering all single failure scenarios.
 Upon detecting a failure, the plane on which a packet is forwarded is switched to the configuration where the failing resource is isolated.
@@ -132,7 +133,7 @@ Overall load distribution is improved through the offline calculation of alterna
 
 Most research in network resilience has been limited to within a single domain.
 In part, this is due to the perception that upon leaving a domain an operator is no longer responsible for verifying traffic is delivered.
-Unfortunately the end-to-end nature traffic often leads to misattribution of blame upon \acp{ISP} in particular, who share the burden of third-party failings through customer support.
+Unfortunately the end-to-end nature of traffic often leads to misattribution of blame upon \acp{ISP} in particular, who share the burden of third-party failings through customer support.
 More importantly however, the lack of deployed multipath alternatives for \ac{BGP} reduces the flexibility with which detouring can be performed.
 A practical solution in this space seems inevitable however: in addition to many proposals enabling multipath interdomain routing \cite{Yang:2003p136,Xu:2006p249,Motiwala:2008p107,Godfrey:2009p36}, the emergence of alternate, deployable routing architectures to address scalability concerns such as \ac{ILNP} \cite{Atkinson:2009p525} and \ac{LISP} \cite{Lewis:2012p523} are undergoing standardization.  
 Whether \ac{BGP} is extended or locator and identifier functions become decoupled from existing addressing, the ability to manage interdomain traffic resiliently is likely to improve.
@@ -182,7 +183,7 @@ Hosts are then responsible for setting this tag and may modify it at any time.
 The resulting scheme can offer much of the potential hinted in \ac{SOSR}, but without the requirement for networks to reveal operational information.
 Hosts merely manipulate their tag until they achieve a desired outcome.
 
-The fundamental tussle between end user intentions and \ac{ISP} control would further be investigated in \cite{Laskowski:2008p244}.
+The fundamental tussle between end-user intentions and \ac{ISP} control would further be investigated in \cite{Laskowski:2008p244}.
 In analysing ``user-directed'' routing Laskowski et al.\ claim that such a tussle can be resolved given a flexible enough payment system.
 While no suggestion is made on what form such a payment system would take, a market-based approach is shown to allow \acp{ISP} to induce any feasible traffic pattern.
 % overlay, flow fairness, etc

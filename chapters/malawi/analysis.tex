@@ -28,8 +28,7 @@ For one, there is an implicit assumption that the network is the bottleneck. Und
      \input{data/malawi/full.tex}
      \bottomrule
      \end{tabular}
-     \caption{
-     Percentage of traffic bytes affected by each constraint by year.\label{table:limits}}
+     \caption{Percentage of traffic bytes affected by each constraint by year.\label{table:limits}}
 \end{table}
 
 Table \ref{table:limits} displays the extent to which each of these limitations affects inbound traffic in the \acs{MAWI} dataset over time. 
@@ -85,7 +84,7 @@ By 2011, successive capacity upgrades have lead to a less congested network, but
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/malawi/hostwindow}
-        \caption{CDF of window sizes for host limited flows.\label{fig:hostwindow}}
+        \caption{\acs{CDF} of window sizes for host limited flows.\label{fig:hostwindow}}
     \end{subfigure}%
     \caption{Longitudinal evolution of \acs{TCP} window parameters. \label{fig:tcpWindowParams}}
 \end{figure}
@@ -144,7 +143,7 @@ The influx of Asian traffic in 2009 led to an increase in observed host windows 
     \end{tabular}
     \caption{Outbound traffic.}
   \end{subtable}
-  \caption[Percentage of host limited traffic over time by total number of flows and bytes.]{\label{table:hostlimited}Percentage of host limited traffic over time by total number of flows and bytes. The proportion for which the receiver side was the bottleneck is also shown.}
+  \caption[Percentage of host limited traffic over time.]{\label{table:hostlimited}Percentage of host limited traffic over time by total number of flows and bytes. The proportion for which the receiver side was the bottleneck is also shown.}
 \end{table}
 
 While figure \ref{fig:hostwindow} demonstrates that host limitations for inbound traffic have been lifted over time, it still does not adequately answer on what side of the connection they are imposed.
@@ -197,14 +196,14 @@ For both plots, a clear disparity is visible across flows sizes: for flows in th
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/malawi/windowsize2007}
-        \caption{2007}
+        \caption{2007.}
     \end{subfigure}%
     \begin{subfigure}[b]{.5\linewidth}
         \centering
         \includegraphics[width=2.5in]{figures/malawi/windowsize2011}
-        \caption{2011}
+        \caption{2011.}
     \end{subfigure}%
-    \caption{CDF of the average window size by flow size by year. \label{fig:windowsize}}
+    \caption{\acs{CDF} of the average window size by flow size by year. \label{fig:windowsize}}
 \end{figure}
  
 These results confirm the notion that the highest throughputs are attained by the largest flows, but they also show that improvements in throughput do not apply equally to all flow sizes. 
@@ -237,8 +236,7 @@ By 2011, this clustering is less pronounced, with window sizes increasing across
     \end{tabular}
   \caption{Flows over 10MB.}
   \end{subtable}
-\caption{
-Percentage of traffic in bytes affected by each constraint by year, along with aggregate retransmission ratio.}
+\caption[Percentage of traffic in bytes affected by each constraint by year according to flow size.]{Percentage of traffic in bytes affected by each constraint by year according to flow size, along with aggregate retransmission ratio.}
 \label{table:full}
 \end{table}
 
@@ -280,7 +278,7 @@ A breakdown of receiver shaping by traffic source is provided in table \ref{tabl
 \input{data/malawi/recv2011.tex}
 \bottomrule
 \end{tabular}
-\caption[AS-level analysis of receiver shaping.]{\acs{AS}-level analysis of receiver shaping. For each year, the five most affected \acp{AS} are listed with the total proportion of traffic which was receiver shaped as well as the overall contribution of the \ac{AS} to the total volume of bytes and retransmissions for that year.\label{table:toprecvlim}}
+\caption[\acs{AS}-level analysis of receiver shaping.]{\acs{AS}-level analysis of receiver shaping. For each year, the five most affected \acp{AS} are listed with the total proportion of traffic which was receiver shaped as well as the overall contribution of the \ac{AS} to the total volume of bytes and retransmissions for that year.\label{table:toprecvlim}}
 \end{table}
 
 Prior to 2009, receiver shaping mostly targeted flows which attained the highest throughput, and may have in part been performed by hosts. 

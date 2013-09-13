@@ -11,10 +11,10 @@ This work explores how the current architecture can be realigned to facilitate r
 The central theme of this thesis is that \emph{traffic engineering} can be performed more efficiently, flexibly and robustly through the use of \emph{re-feedback}.
 A cross-layer architecture is proposed for sharing the responsibility for resource pooling across both hosts and network.
 Building on this framework, two novel forms of traffic management are evaluated.
-Efficient pooling of traffic across paths is achieved through the development of an in-network congestion balancer, which works even in the absence of multipath transport.
-Network and transport mechanisms are then designed and implemented to facilitate path fail-over, greatly improving resilience even in the absence of receiver side cooperation.
+Efficient pooling of traffic across paths is achieved through the development of an in-network congestion balancer, which can function in the absence of multipath transport.
+Network and transport mechanisms are then designed and implemented to facilitate path fail-over, greatly improving resilience without requiring receiver side cooperation.
 These contributions are framed by a longitudinal measurement study which provides evidence for many of the design choices taken.
-A methodology for scalably recovering flow metrics from passive traces is developed and systematically applied to over five years of interdomain traffic data.
+A methodology for scalably recovering flow metrics from passive traces is developed which in turn is systematically applied to over five years of interdomain traffic data.
 The resulting findings challenge traditional assumptions on the preponderance of congestion control on resource sharing, with over half of all traffic being constrained by limits other than network capacity.
 
 All of the above represent concerted attempts to rethink and reassert traffic engineering in an Internet where competing solutions for resource pooling proliferate.
