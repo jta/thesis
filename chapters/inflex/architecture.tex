@@ -31,7 +31,7 @@ The remainder of the description of INFLEX is split across its main components: 
     \end{subfigure}
     \begin{subfigure}[b]{1.0\linewidth}
     \centering
-    \includegraphics[width=0.5\linewidth]{figures/inflex/header}
+    \includegraphics[width=0.7\linewidth]{figures/inflex/header}
     %\caption{\label{fig:inflexheader}}
     \end{subfigure}
     \caption[INFLEX architecture and header.]{INFLEX architecture (above) and header (below). The edge switch forwards traffic across virtual planes set up by a centralized routing service.
@@ -66,11 +66,12 @@ These changes are all applied at the \ac{IP} layer -- transport protocols need o
 
 \begin{figure}
     \begin{subfigure}[b]{0.4\linewidth}
+        \centering
         \includegraphics[width=0.9\linewidth]{figures/inflex/stack}
         \caption{\label{fig:stack}}
     \end{subfigure}%
     \begin{subfigure}[b]{0.6\linewidth}
-        \vspace*{1.0in}
+        \centering
         \lstset{
         language=C,                % choose the language of the code
         basicstyle=\footnotesize\ttfamily,
