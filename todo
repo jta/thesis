@@ -10,3 +10,33 @@
 - adjust figure 7.5
 - flow tables in fig 7.12
 
+Ioannis
+
+
+- INFLEX missing from abstract.
+    - SDN / Openflow 
+
+- italics too much emphasis? uncessary?
+- NPL
+
+- state of art
+    - hop to hop (?)
+    - timer / timeout backoff influence
+    - step-by-step summary 
+
+    - definition of conex ?
+
+    - resilient routing, weak link,
+
+    - why measurements -> why inflex
+    - deployment, ossified, SDN
+
+- preflex
+    - connect to state of art, cross referencing
+    - conclusions change to past tense
+    - summary of drawbacks (?)
+
+- chapter 5
+    - highlight the need for the analysis in intro.
+    - cross-reference
+    - 5.4.2 references
