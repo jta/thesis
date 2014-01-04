@@ -98,12 +98,21 @@ f'_i = \frac{T'_i}{T} =  \beta_E \frac{1}{N} + \beta_C \frac{T_i}{T} +
 \end{equation}
 
 
-While \eqref{eqn:Tdashi} describes a very broad design space, intuition on how each component performs is provided through a simple example, which is described in full in section \ref{section:methodology}. 
-Consider a network balancing traffic to a given prefix between two paths with equal bottleneck capacity $L_1=L_2=120$Mbps.
-For reference, this topology is illustrated in figure \ref{fig:topo}.
+While \eqref{eqn:Tdashi} describes a very broad design space, intuition on how each component performs is provided through a simple example.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=2.5in]{figures/cate/topo}
+    \caption{Simulation topology.}
+    \label{fig:topo}
+\end{figure}
+
+Consider a network balancing traffic from a source $S$ to a given prefix as shown in figure \ref{fig:topo}.
+For the current example, only two paths are available with equal bottleneck capacity $L_1=L_2=120$Mbps,
 For the duration of the experiment, a source balances traffic to $C$ through either link.
 At $t=300$s, cross-traffic is generated from server $D_1$ towards client $C$ through $L_1$.
 At $t=600$s, a greater quantity cross-traffic is generated from server $D_2$ towards client $C$ through $L_2$.
+This topology is later revisited with a greater number of paths in section \ref{section:cateanalysis}, where more details are provided on the simulation parameters.
 The respective throughput, loss rate and the proportion of flows assigned to each path are shown in figure \ref{fig:two} for cases where each component is used in isolation, and a final case in which all three components are balanced.
 
 The effect of equalisation is the first to be considered, given it is necessary to ensure all paths are continually probed. 

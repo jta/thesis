@@ -1,4 +1,5 @@
 \section{Performance Analysis}
+\label{section:cateanalysis}
 %4.1) Balancing between two paths with high loss using fixed time unit
 % using only loss-based balance in a simple regime where that works.
 % Show how this converges quickly when one path suddenly gains
@@ -18,19 +19,12 @@ As such, evaluating the proposed congestion balancer requires simulating end-to-
 \subsection{Methodology}
 \label{section:methodology}
 
-Experimental validation is performed using the network topology displayed in figure \ref{fig:topo}. 
+Experimental validation is performed using the network topology previously displayed in figure \ref{fig:topo}. 
 The topology links a client domain $C$ to a server domain $S$ through $N$ paths with bottlenecks $L_i$, and total bandwidth $B=\sum{L_i}$. 
-Client $C$ generates $G$ simultaneous \ac{HTTP}-like requests (or ``gets") from $S$ according to a specified distribution, described at the end of this section. 
+Client $C$ generates $G$ simultaneous \ac{HTTP}-like requests (or ``GETs") from $S$ according to a specified distribution, described at the end of this section. 
 As traffic flows from $S$ to $C$, the router within $S$ is responsible for balancing traffic over all available paths.
 This topology is chosen since it provides multiple independent bottlenecks over which domain $S$ must balance elastic \ac{TCP} traffic without any explicit knowledge of the conditions over links $L_i$.
 Under such conditions traditional traffic engineering methods may perform poorly since they resort to local information only.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=2.5in]{figures/cate/topo}
-    \caption{Simulation topology.}
-    \label{fig:topo}
-\end{figure}
 
 Across simulations, as the number of paths increases, total bandwidth $B$ and the number of simultaneous requests $G$ is fixed, providing insight into how efficiently \ac{PREFLEX} balances traffic as the granularity with which it can split traffic becomes coarser.
 
