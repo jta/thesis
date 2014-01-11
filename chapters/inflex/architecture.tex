@@ -8,7 +8,7 @@ This provides far greater scalability in terms of the proportion of traffic and 
 INFLEX is therefore particularly suited for managed environments, such as datacenters or enterprise networks, which not only have greater control over the end-host operating system, but also generate large volumes of traffic towards destinations which cannot be readily upgraded.
 
 An overview of the proposed architecture as applied to a single domain is shown in figure \ref{fig:inflexarch}.
-Hosts are connected to the local network through an Openflow-enabled \emph{edge switch}.
+Hosts are connected to the local network through an OpenFlow-enabled \emph{edge switch}.
 While edge switches typically reside within each physical machine, alternative aggregation levels such as the top of rack or end of row may also be used.
 Each switch is configured by a specialized controller which resides locally, referred to as an \emph{inflector}.
 The local network is configured by a centralized routing controller to provide multiple \emph{virtual routing planes}.
@@ -159,7 +159,7 @@ In the inbound direction, all packets matching the reverse flow are set to be ma
 This conveys the selected forwarding plane back to the host.
 In the outbound direction, all packets matching the flow are to be processed according to the $label$.
 This guarantees that any packet sent between the inflection request and its response are forwarded in a consistent manner.
-Rules installed to the inflection tables are ephemeral by nature, with a hard timeout of 1 second (the minimum permitted in the Openflow standard).
+Rules installed to the inflection tables are ephemeral by nature, with a hard timeout of 1 second (the minimum permitted in the OpenFlow standard).
 This enables per-flow granularity with minimum flow state while also rate limiting inflection requests.
 Furthermore, flow entries can be configured to be sent to the controller upon expiry.
 This potentially allows the inflector to collect realtime information on the availability of each forwarding plane, allowing for further refinement of the plane selection algorithm.

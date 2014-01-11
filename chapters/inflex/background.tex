@@ -1,13 +1,13 @@
-\section{Openflow background}
+\section{OpenFlow background}
 \label{section:inflex:background}
 
 A valuable development in assisting traffic management has been the emergence of \ac{SDN}, which can facilitate vastly improved flexibility for scalable, policy-based network control.
 Software defined networks decouple the data plane and control plane, allowing both to evolve independently.
 A traditional instantiation of a software defined network for data centres is shown in figure \ref{fig:ofparch}.
-Each physical host runs a number of virtual machines, each connected locally through a edge, software-based switch (such as OpenVSwitch \cite{openvswitch}) running on the underlying physical host operating system, which will be denoted as \emph{dom0}.
+Each physical host runs a number of virtual machines, each connected locally through a edge, software-based switch (such as Open vSwitch \cite{openvswitch}) running on the underlying physical host operating system, which will be denoted as \emph{dom0}.
 This switch is in turn connected to further forwarding devices, ensuring access to a wider network.
-The forwarding logic of each device can be accessed and configured by a controller through the establishment of a control channel through a common protocol, of which Openflow is the most widely used \cite{McKeown:2008:OEI:1355734.1355746}.
-Both software and physical switches are indistinguishable from a controller's perspective: \emph{how} a device implements Openflow is immaterial, so long as a forwarding device conforms to the given \ac{API}.
+The forwarding logic of each device can be accessed and configured by a controller through the establishment of a control channel through a common protocol, of which OpenFlow is the most widely used \cite{McKeown:2008:OEI:1355734.1355746}.
+Both software and physical switches are indistinguishable from a controller's perspective: \emph{how} a device implements OpenFlow is immaterial, so long as a forwarding device conforms to the given \ac{API}.
 
 \begin{figure}
     \centering
@@ -21,11 +21,11 @@ Both software and physical switches are indistinguishable from a controller's pe
         \includegraphics[height=1.9in]{figures/inflex/ofptable}
         \caption{\label{fig:ofptable}}
     \end{subfigure}
-    \caption[Openflow architecture and flow entry structure.]{Openflow (\subref{fig:ofparch}) architecture and (\subref{fig:ofptable}) flow entry structure.}
+    \caption[OpenFlow architecture and flow entry structure.]{OpenFlow (\subref{fig:ofparch}) architecture and (\subref{fig:ofptable}) flow entry structure.}
 \end{figure}
 
 % flow table / entry
-An Openflow flow table is composed of multiple flow entries, shown in figure \ref{fig:ofptable}.
+An OpenFlow flow table is composed of multiple flow entries, shown in figure \ref{fig:ofptable}.
 Each flow entry is comprised of a pattern to be matched, and the corresponding \emph{instructions} to be executed. 
 The \emph{match fields} over which an entry can be compared span from data link to transport layers, covering not only source and destination addresses at each protocol header, but also traffic classes and labels for \ac{VLAN}, \ac{MPLS} and \ac{IPv4} headers.
 % instructions?
@@ -35,8 +35,8 @@ Finally, each entry has a pair of associated \emph{timeout} values: a soft timeo
 If neither timeout is set, a flow entry persists indefinitely.
 
 % processing pipeline
-An Openflow switch in turn maintains multiple flow tables.
-Every packet received at an Openflow compliant switch is processed along a pipeline which starts by matching the packet against \emph{table 0}.
+An OpenFlow switch in turn maintains multiple flow tables.
+Every packet received at an OpenFlow compliant switch is processed along a pipeline which starts by matching the packet against \emph{table 0}.
 From this first, default table, corresponding \emph{instructions} may redirect the packet for further matching against another table, thereby chaining processing.
 This pipeline processing ceases once a matching entry fails to include a redirection request, with the accumulated instruction set being executed.
 In addition to redirections, valid instructions include modifying packet fields, pushing and popping packet tags, and defining through which ports a packet should be forwarded.

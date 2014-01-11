@@ -5,7 +5,7 @@ This chapter is organized as follows:
 \renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{Section #1}}
 \begin{description}
 \item[\ref{section:inflex:design}] reviews results from the \ac{MAWI} dataset and their implications for the design of a resource pooling architecture.
-\item[\ref{section:inflex:background}] provides an overview of \ac{SDN} and Openflow, a standardized protocol for interfacing between control and data plane.
+\item[\ref{section:inflex:background}] provides an overview of \ac{SDN} and OpenFlow, a standardized protocol for interfacing between control and data plane.
 \item[\ref{section:inflex:arch}] describes the design of INFLEX, a cross-layer architecture for network resilience.
 \item[\ref{section:inflex:eval}] evaluates path fail-over and network overhead of the proposed solution
 \item[\ref{section:inflex:discussion}] discusses how INFLEX can be extended from providing resilience alone into a unifying traffic management solution, encompassing most of the benefits put forward in chapters \ref{chapter:preflex} and \ref{chapter:cate}.
@@ -21,5 +21,5 @@ This chapter is organized as follows:
 %Since INFLEX operates as an extension to the network abstraction provided by \ac{IP}, it can be used by all transport protocols.
 %At the host, the proposed architecture allows transport protocols to switch network paths at a timescale which avoids flow disruption and which can be transparently integrated into existing congestion control mechanisms.
 %Within the network, INFLEX provides both greater insight into end-to-end path quality, assisting fault detection, and more control over flow path assignment, enabling more effective fault recovery. 
-%Modifications to both the \ac{TCP}/\ac{IP} network stack and a popular Openflow controller \cite{pox} are made publicly available.
+%Modifications to both the \ac{TCP}/\ac{IP} network stack and a popular OpenFlow controller \cite{pox} are made publicly available.
 

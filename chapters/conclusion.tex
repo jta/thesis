@@ -113,7 +113,7 @@ The presented solution for resilient traffic management, INFLEX, is both unilate
 Since INFLEX operates as an extension to the network abstraction provided by \ac{IP}, it can be used by all transport protocols.
 At the host, the proposed architecture allows transport protocols to switch network paths at a timescale which avoids flow disruption and which can be transparently integrated into existing congestion control mechanisms.
 Within the network, INFLEX provides both greater insight into end-to-end path quality, assisting fault detection, and more control over flow path assignment, enabling more effective fault recovery. 
-INFLEX was implemented and verified experimentally through modifications to both the \ac{TCP}/\ac{IP} network stack and a popular Openflow controller \cite{pox} and made publicly available.
+INFLEX was implemented and verified experimentally through modifications to both the \ac{TCP}/\ac{IP} network stack and a popular OpenFlow controller \cite{pox} and made publicly available.
 
 
 
@@ -129,7 +129,7 @@ In the longer term, this work has raised several higher-level issues which are o
 \item[System stability]{
 Concerns over route flapping were raised both in chapter \ref{chapter:cate} and \ref{chapter:inflex}.
 With congestion balancing the time period between updates of the flow split ratio is paced according to the sparseness of loss, but chapter \ref{chapter:cate} falls short of providing either a formal proof for stability or extensive enough evaluation.
-The changes introduced in chapter \ref{chapter:inflex} however are likely to significantly reduce the likelihood of route flapping, notwithstanding the limitations of Openflow raised in section \ref{section:inflex:discussion}.
+The changes introduced in chapter \ref{chapter:inflex} however are likely to significantly reduce the likelihood of route flapping, notwithstanding the limitations of OpenFlow raised in section \ref{section:inflex:discussion}.
 Since in INFLEX resilience and efficiency are decoupled, an operator can afford to be more conservative in congestion balancing without forsaking responsiveness to failures.
 Lagging system response in this manner does not affect an operator's primary objective in adopting congestion balancing: namely, keeping upstream providers in check over the quality-of-service they provide and distributing traffic accordingly.
 }

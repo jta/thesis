@@ -25,7 +25,7 @@ Clearly, only the first packet of a flow will take effect -- once a flow has acq
 As such, one possibility for operators is to intercept the inbound SYN packet and tag it with the appropriate label, in much the same manner as \ac{PREFLEX}.
 This presents two challenges.
 Firstly, it introduces a \ac{DoS} vulnerability as the amount of network processing is tied to the volume of inbound SYN packets, which can greatly exceed the number of actual flows as shown in figure \ref{fig:flow}.
-Secondly, there is no obvious manner of intercepting SYN packets using Openflow as \ac{TCP} flags are not actionable packet header fields.
+Secondly, there is no obvious manner of intercepting SYN packets using OpenFlow as \ac{TCP} flags are not actionable packet header fields.
 This means that such functionality would either have to be implemented by specific middleboxes, adding complexity to the proposed architecture, or flow table entries would have to span the entirety of a flow, increasing table size significantly.
 In either case, pushing packets to the controller on flow start would necessarily incur a performance penalty for all flows.
 
@@ -39,7 +39,7 @@ Figure \ref{fig:prefix} suggests that over 50\% of traffic is destined to as few
 Interestingly, such marking rules need not be applied by the edge switch, instead being performed at a hardware switch relying on \ac{TCAM}.
 This both allows larger tables and reduces lookup times, while still delegating policy enforcement to edge switches.
 
-A significant open issue that remains in this regard is how best to dynamically assign flows to routes, as Openflow does not support probabilistic behaviour being pushed to the datapath.
+A significant open issue that remains in this regard is how best to dynamically assign flows to routes, as OpenFlow does not support probabilistic behaviour being pushed to the datapath.
 The most obvious approach is to change the mapping between flow and route periodically, in a proportional manner to the desired split.
 This raises two potential concerns.
 Firstly, flow entries have a time granularity of one second.
@@ -80,12 +80,12 @@ This still allows for seven potential paths per destination, in addition to the 
 % edge switch changes
 Figure \ref{fig:inflexloss} displays the resulting header, alongside the changes internal to the network for counting lost packets.
 At the edge switch, the datapath remains unchanged, with the \ac{INF} label still being used to select the appropriate virtual pipeline for the outbound packet.
-Unfortunately, Openflow does not provide more than one counter per table entry.
+Unfortunately, OpenFlow does not provide more than one counter per table entry.
 Given this constraint, extracting the necessary metrics for performing congestion balancing proceeds by maintaining two replicas of the appropriate routing table.
 One flow table is responsible for keeping count of the number of retransmitted packets per entry, while the other accounts for all other packets.
 While slightly contrived, this implementation is sufficient for providing congestion balancing as described in chapter \ref{chapter:cate}, and much of the underlying details can be abstracted from the routing controller.
 
-The inflector has the responsibility of exposing an extended Openflow \ac{API} which both implements the routing policies dictated centrally by the routing controller, and returns statistics necessary for route computation.
+The inflector has the responsibility of exposing an extended OpenFlow \ac{API} which both implements the routing policies dictated centrally by the routing controller, and returns statistics necessary for route computation.
 Whenever a route is \emph{installed} to a given plane, an inflector must insert the corresponding rule into the two parallel flow tables for loss accountability.
 Whenever a central controller requests counter metrics for a given entry, the inflector is responsible for returning not only the total number of packets observed for a given route, but also the number of retransmissions.
 This cleanly decouples the routing controller from the underlying implementation of INFLEX at the edge switch.

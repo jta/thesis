@@ -17,7 +17,7 @@ Instead, the contributed code acts as a proof-of-concept for INFLEX, allowing th
 \end{figure}
 
 To this end, a simple evaluation scenario is used, illustrated in figure \ref{fig:simtopo}.
-On one end is an INFLEX capable domain: a set of virtual hosts acting as \emph{servers} connected to an Openvswitch edge switch controlled by an inflector.
+On one end is an INFLEX capable domain: a set of virtual hosts acting as \emph{servers} connected to an Open vSwitch edge switch controlled by an inflector.
 On the other end is a remote \emph{client}.
 Typically this is an end-user device outside network operator control. We assume that the client is running a legacy network stack and connected to a switch with no \ac{SDN} functionality.
 A single physical connection between the client and this switch acts as the bottleneck for all flows, with the bandwidth set to 10Mb/s. The edge switch has four potential planes over which it can forward traffic between the \emph{servers} and the \emph{client}. We simulate failures within the INFLEX domain by artificially dropping all forwarded packets belonging to a given plane; we denote this plane as being \emph{down}. At any given moment one of the four available planes is down; each such simulated failure lasts for 15 seconds at a time, affecting planes cyclically.
@@ -157,7 +157,7 @@ For the worst possible case, all existing flows would trigger an inflection requ
 In practice even this is overly pessimistic, as an inflector could resort to a per-aggregate granularity in the case of widespread outages.
 Actual network state would strongly depend on the exact inflection strategy adopted by the transport protocol.
 One practical reference point is to investigate the resulting overhead if paths were requested on flow start, as this number will exceed retransmission timeouts under normal operating conditions.
-This is further illustrated in figure \ref{fig:flow}, which also tracks flow table size if each unique five tuple were to only generate a flow entry for 1 second, the minimum expiry time for Openflow.
+This is further illustrated in figure \ref{fig:flow}, which also tracks flow table size if each unique five tuple were to only generate a flow entry for 1 second, the minimum expiry time for OpenFlow.
 This is functionally equivalent to the flow arrival rate, and determines the expected number of requests per second sent to the controller.
 The resulting flow table size is reduced dramatically in comparison to the traditional case where state is allocated for the duration of the flow, and the order of magnitude difference is crucial for software switches in particular.
 However, under such conditions state becomes more strained by the large fluctuations imposed by \ac{DoS} attacks, suggesting that inflection requests should only be used after connection establishment; this corresponds to the grey dotted line in figure \ref{fig:flow}. Importantly, such an approach also opens the possibility of using inflection requests for assisting traffic management in addition to enabling improved resilience.
@@ -165,7 +165,7 @@ However, under such conditions state becomes more strained by the large fluctuat
 %However, a host might wish to issue an inflection request for purposes other than resilience.
 %In most cases flow entries are only issued to enforce a decision by the local controller. 
 %In trusted environments such as data centres, this state could potentially be pushed back to the host, reducing the resulting flow table size for intermediate network elements.
-%Figure \ref{fig:flow} investigates the potential gains of such an approach by reducing the flow entry duration to 1 second -- the minimum entry duration imposed by Openflow.
+%Figure \ref{fig:flow} investigates the potential gains of such an approach by reducing the flow entry duration to 1 second -- the minimum entry duration imposed by OpenFlow.
 
 %Flow-based matching is unfortunately unable to know the nature of the flow \emph{a priori}: all unique five-tuples will be forwarded to the controller independently of the size of the flow.
 %This is particularly crippling for domains which exchange traffic with the wider Internet, and are therefore subjected to malicious SYN floods and port scans on a regular basis.
