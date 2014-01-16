@@ -55,7 +55,7 @@ This definition in particular purposely ignores flows which exhibit long silence
 \subsection{Host limited}
 \label{section:rate:host}
 
-Given sufficient bandwidth and traffic to send, a flow may encounter local constraints at either end-host which cap its throughput. 
+Given sufficient bandwidth and traffic to send, a flow may encounter local constraints at either end-host which caps its throughput. 
 For instance, the buffer space allocated on both the sender and receiver side is often pre-configured, and it is common practice to tune these values down on popular servers and managed infrastructure in a bid to conserve memory or bandwidth.
 A receiver is also limited in the window size it can announce to the remote sender; if the windowscale option \cite{jacobson1992tcp} is not negotiated during the \ac{TCP} handshake, the advertised window cannot exceed 64KB.
 

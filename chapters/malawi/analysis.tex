@@ -73,7 +73,7 @@ The increased weight of \acp{AS} which resort to these methods, such as Red Hat 
 While the impact of application pacing and host limitations on rate control is decreasing, as of early 2012 60\% of all inbound traffic was still subjected to either. 
 The reduction of application pacing however may reflect the nature of the observed link, as many traditional streaming providers have migrated towards peering or \acp{CDN}, bypassing interdomain links entirely. 
 As such it is reasonable to expect the effect of application pacing to be more pronounced when considering traffic beyond transit.
-By 2011, successive capacity upgrades have lead to a less congested network, but one where predicting how bandwidth is shared is fundamentally harder due to the influence of stakeholders such as content providers and operating system vendors.
+By 2011, successive capacity upgrades have led to a less congested network, but one where predicting how bandwidth is shared is fundamentally harder due to the influence of stakeholders such as content providers and operating system vendors.
 
 \begin{figure}[t]
     \begin{subfigure}[b]{.5\linewidth}
@@ -118,7 +118,7 @@ Furthermore, the effects of content consolidation manifest themselves in the dis
 With the reduced stake of large \acp{ISP} in inbound traffic, transit traffic has become dominated by a small set of centrally managed stakeholders such as Google, lowering the effective barrier for deployment of protocol extensions.
 Conversely, the temporary drop in windowscale adoption for inbound flows in 2009 is due to the increase of traffic from Asian sources, in particular HiNet.
 
-Given the prevalence of windowscaling, the primary source of host limitation should therefore be due to the configuration of socket buffer sizes.
+Given the prevalence of windowscaling, the primary source of host limitation should therefore be the configuration of socket buffer sizes.
 Figure \ref{fig:hostwindow} shows the distribution of the average window size for flows which are flagged as being host limited.
 While the 64KB limit intrinsic to \ac{TCP} is a common upper bound on window size, other defaults are apparent and have shifted over time.
 The use of 16KB and 32KB buffer sizes (default buffer sizes for Windows XP and Vista respectively) was progressively phased out over the five year period.
